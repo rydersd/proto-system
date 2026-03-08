@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pin Detail — Minimal Dashboard Layout</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1100px;margin:0 auto;padding:24px;">
+
+  <!-- Back link -->
+  <div style="margin-bottom:20px;">
+    <a href="index.html" style="font-size:13px;color:var(--wf-accent);text-decoration:none;font-weight:600;">&larr; Back to Board</a>
+  </div>
+
+  <!-- Pin Detail: 2-column layout -->
+  <section style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:40px;">
+
+    <!-- Left: Large Image -->
+    <div class="wf-pin" data-wf-confidence="confirmed">
+      <img src="https://picsum.photos/seed/dash-layout/800/600" alt="Minimal Dashboard Layout"
+        style="width:100%;border-radius:var(--wf-wobble-radius);object-fit:cover;border:1px solid var(--wf-line);">
+    </div>
+
+    <!-- Right: Pin Info -->
+    <div>
+      <!-- Pin Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost btn-sm">&#9825; Save</button>
+          <button class="btn btn-ghost btn-sm">Share</button>
+        </div>
+        <button class="btn btn-primary btn-sm">Visit Source</button>
+      </div>
+
+      <h1 style="font-size:28px;font-weight:800;color:var(--wf-ink);margin:0 0 8px;line-height:1.2;">
+        Minimal Dashboard Layout
+      </h1>
+
+      <p style="font-size:15px;color:var(--wf-text);line-height:1.7;margin:0 0 16px;">
+        A clean, grid-based dashboard layout that prioritizes whitespace and content hierarchy.
+        Uses a 12-column grid with KPI cards at the top, a primary chart area, and a secondary
+        data table below. The sidebar is collapsible and houses navigation and filter controls.
+      </p>
+
+      <!-- Author -->
+      <div class="wf-tape" style="display:flex;align-items:center;gap:10px;padding:12px;margin-bottom:20px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;">M</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--wf-ink);">M. Chen</div>
+          <div style="font-size:12px;color:var(--wf-muted);">142 pins &middot; 28 boards</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;">Follow</button>
+      </div>
+
+      <!-- Tags -->
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+        <span class="wf-badge wf-badge-green">UI</span>
+        <span class="wf-badge">Dashboard</span>
+        <span class="wf-badge">Layout</span>
+        <span class="wf-badge">Minimal</span>
+        <span class="wf-badge">Grid</span>
+      </div>
+
+      <!-- Comments Section -->
+      <div style="border-top:1px solid var(--wf-line);padding-top:16px;">
+        <h3 style="font-size:14px;font-weight:700;color:var(--wf-ink);margin:0 0 12px;">
+          Comments <span style="color:var(--wf-muted);font-weight:400;">(3)</span>
+        </h3>
+
+        <div style="margin-bottom:12px;display:flex;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">R</div>
+          <div>
+            <div style="font-size:12px;color:var(--wf-ink);font-weight:600;">R. Tanaka <span style="font-weight:400;color:var(--wf-muted);">2d ago</span></div>
+            <p style="font-size:13px;color:var(--wf-text);margin:4px 0 0;line-height:1.5;">Love the use of whitespace here. The KPI cards are well-proportioned.</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:12px;display:flex;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-accent);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">J</div>
+          <div>
+            <div style="font-size:12px;color:var(--wf-ink);font-weight:600;">J. Park <span style="font-weight:400;color:var(--wf-muted);">5d ago</span></div>
+            <p style="font-size:13px;color:var(--wf-text);margin:4px 0 0;line-height:1.5;">Would be interesting to see this with a dark mode variant.</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;display:flex;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-amber);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">L</div>
+          <div>
+            <div style="font-size:12px;color:var(--wf-ink);font-weight:600;">L. Okafor <span style="font-weight:400;color:var(--wf-muted);">1w ago</span></div>
+            <p style="font-size:13px;color:var(--wf-text);margin:4px 0 0;line-height:1.5;">Saving this for our next sprint planning. Great reference for the analytics view.</p>
+          </div>
+        </div>
+
+        <!-- Add comment -->
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-line);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--wf-white);flex-shrink:0;">Y</div>
+          <div style="flex:1;">
+            <input type="text" class="wf-input" placeholder="Add a comment..." style="font-size:13px;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Related Pins -->
+  <section>
+    <h2 style="font-size:18px;font-weight:700;color:var(--wf-ink);margin:0 0 16px;">More Like This</h2>
+    <div class="masonry-grid" style="column-count:4;">
+
+      <div class="ds-card pin-card">
+        <div class="pin-scrap pin-scrap--img wf-tape">
+          <a href="pin-detail.html">
+            <img class="pin-img" style="height:200px;" src="https://picsum.photos/seed/card-patterns/400/200" alt="Card Component Patterns">
+          </a>
+        </div>
+        <div class="pin-scrap pin-scrap--title">
+          <div style="font-weight:600;color:var(--wf-ink);">Card Component Patterns</div>
+        </div>
+      </div>
+
+      <div class="ds-card pin-card">
+        <div class="pin-scrap pin-scrap--img wf-pin">
+          <a href="pin-detail.html">
+            <img class="pin-img" style="height:160px;" src="https://picsum.photos/seed/nav-patterns/400/160" alt="Navigation Pattern Library">
+          </a>
+        </div>
+        <div class="pin-scrap pin-scrap--title">
+          <div style="font-weight:600;color:var(--wf-ink);">Navigation Pattern Library</div>
+        </div>
+      </div>
+
+      <div class="ds-card pin-card">
+        <div class="pin-scrap pin-scrap--img">
+          <a href="pin-detail.html">
+            <img class="pin-img" style="height:240px;" src="https://picsum.photos/seed/dataviz-inspo/400/240" alt="Data Visualization Inspiration">
+          </a>
+        </div>
+        <div class="pin-scrap pin-scrap--title">
+          <div style="font-weight:600;color:var(--wf-ink);">Data Visualization Inspiration</div>
+        </div>
+      </div>
+
+      <div class="ds-card pin-card">
+        <div class="pin-scrap pin-scrap--img wf-sketch">
+          <a href="pin-detail.html">
+            <img class="pin-img" style="height:180px;" src="https://picsum.photos/seed/grid-break/400/180" alt="Responsive Grid Breakpoints">
+          </a>
+        </div>
+        <div class="pin-scrap pin-scrap--title">
+          <div style="font-weight:600;color:var(--wf-ink);">Responsive Grid Breakpoints</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- Design Notes -->
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Pin Detail</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">Detail view for a single pin. Two-column layout: large image on left, metadata/comments on right. Related pins masonry grid below. Demonstrates navigation from board to detail and back.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">Designer wants to inspect a pin at full size, read comments, see tags and author info, and discover related pins for deeper exploration.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Design Spec</div>
+      <div class="wf-spec-body">2-column grid (1fr 1fr) for pin image + info. Pin image uses wf-pin decorator. Author card with avatar, stats, follow button. Tags as wf-badge row. Comments list with avatars and timestamps. Related pins as 4-column masonry grid reusing pin-card pattern from index. Back link at top for board navigation.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+</body>
+</html>

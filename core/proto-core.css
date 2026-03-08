@@ -1,0 +1,25 @@
+/* ============================================================================
+   PROTO FRAMEWORK — CORE WIREFRAME SYSTEM
+   ============================================================================
+   Single entry point that loads all framework modules. Pages only need:
+     <link rel="stylesheet" href="../../core/proto-core.css">
+
+   Modules:
+   - proto-tokens.css      Design tokens, reset, grid, paper texture, fidelity
+   - proto-chrome.css       Context bar, nav drawer, design notes, modals
+   - proto-components.css   Typography, forms, buttons, badges, cards, tables,
+                            tabs, sections, utilities, separators, toast, state
+   - proto-story.css        Story mode, journey highlighting, scenario walkthrough
+   - proto-feedback.css     Feedback panel overlay
+   - proto-blueprint.css    Torn edges, tape, pins, stacked paper, sketch,
+                            confidence rendering, fidelity slider
+   - proto-keyframes.css    Animations
+   ============================================================================ */
+
+@import url('proto-tokens.css');
+@import url('proto-chrome.css');
+@import url('proto-components.css');
+@import url('proto-story.css');
+@import url('proto-feedback.css');
+@import url('proto-blueprint.css');
+@import url('proto-keyframes.css');

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Board — Sprint 14</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1400px;margin:0 auto;padding:24px;">
+
+  <!-- Page Header -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+    <div>
+      <h1 style="font-size:22px;font-weight:700;color:var(--wf-ink);margin:0 0 4px 0;">Sprint 14</h1>
+      <p style="font-size:13px;color:var(--wf-muted);margin:0;">Mar 3 – Mar 14, 2026 · 12 tasks · 4 team members</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-primary">+ Add Task</button>
+      <button class="btn btn-ghost">Board Settings</button>
+    </div>
+  </div>
+
+  <!-- Filter Pills -->
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button class="btn btn-secondary btn-sm" style="border-radius:999px;">All</button>
+    <button class="btn btn-ghost btn-sm" style="border-radius:999px;">My Tasks</button>
+    <button class="btn btn-ghost btn-sm" style="border-radius:999px;">Blocked</button>
+    <button class="btn btn-ghost btn-sm" style="border-radius:999px;">Unassigned</button>
+  </div>
+
+  <!-- Kanban Lanes -->
+  <div class="kanban-container">
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- BACKLOG (4 cards) -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="kanban-lane">
+      <!-- Lane Header -->
+      <div class="ds-card" style="padding:12px 16px;" data-wf-confidence="confirmed">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:14px;font-weight:700;color:var(--wf-ink);">Backlog</span>
+            <span class="wf-badge" style="font-size:11px;">4</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:16px;line-height:1;">+</button>
+        </div>
+      </div>
+
+      <!-- Card 1: API rate limiting middleware -->
+      <div class="ds-card" style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">API rate limiting middleware</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-green" style="font-size:11px;">Backend</span>
+          <span class="wf-badge" style="font-size:11px;">P2</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-accent);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Josh Reeves">JR</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Update onboarding flow copy -->
+      <div class="ds-card" style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Update onboarding flow copy</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-purple" style="font-size:11px;">Content</span>
+          <span class="wf-badge" style="font-size:11px;">P3</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Maya Chen">MC</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Dark mode token audit -->
+      <div class="ds-card" style="padding:14px 16px;" data-wf-confidence="uncertain">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Dark mode token audit</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-amber" style="font-size:11px;">Design</span>
+          <span class="wf-badge" style="font-size:11px;">P2</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-line);color:var(--wf-muted);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border:1px dashed var(--wf-muted);" title="Unassigned">—</div>
+        </div>
+      </div>
+
+      <!-- Card 4: Redis cache invalidation -->
+      <div class="ds-card wf-pin" style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Redis cache invalidation</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-green" style="font-size:11px;">Backend</span>
+          <span class="wf-badge wf-badge-red" style="font-size:11px;">P1</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Anika Kumar">AK</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- IN PROGRESS (3 cards) -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="kanban-lane">
+      <!-- Lane Header -->
+      <div class="ds-card" style="padding:12px 16px;border-left:3px solid var(--wf-accent);" data-wf-confidence="confirmed">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:14px;font-weight:700;color:var(--wf-ink);">In Progress</span>
+            <span class="wf-badge" style="font-size:11px;">3</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:16px;line-height:1;">+</button>
+        </div>
+      </div>
+
+      <!-- Card 1: Search autocomplete component -->
+      <div class="ds-card wf-tape" style="padding:14px 16px;" data-wf-confidence="confirmed">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Search autocomplete component</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge" style="font-size:11px;background:var(--wf-accent-lt);color:var(--wf-accent);">Frontend</span>
+          <span class="wf-badge wf-badge-red" style="font-size:11px;">P1</span>
+        </div>
+        <!-- Progress Bar -->
+        <div style="margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--wf-muted);margin-bottom:4px;">
+            <span>Progress</span>
+            <span>60%</span>
+          </div>
+          <div style="height:6px;background:var(--wf-tint);border-radius:3px;overflow:hidden;">
+            <div style="width:60%;height:100%;background:var(--wf-accent);border-radius:3px;"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-red);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Sam Rivera">SR</div>
+        </div>
+      </div>
+
+      <!-- Card 2: User permissions refactor -->
+      <div class="ds-card wf-torn-bottom" style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">User permissions refactor</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-green" style="font-size:11px;">Backend</span>
+          <span class="wf-badge wf-badge-red" style="font-size:11px;">P1</span>
+          <span class="wf-badge wf-badge-red" style="font-size:11px;font-weight:700;">BLOCKED</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-accent);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Josh Reeves">JR</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Design system docs site -->
+      <div class="ds-card" style="padding:14px 16px;" data-wf-confidence="partial">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Design system docs site</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-amber" style="font-size:11px;">Design</span>
+          <span class="wf-badge" style="font-size:11px;">P2</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Maya Chen">MC</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- IN REVIEW (2 cards) -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="kanban-lane">
+      <!-- Lane Header -->
+      <div class="ds-card" style="padding:12px 16px;border-left:3px solid var(--wf-amber);" data-wf-confidence="confirmed">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:14px;font-weight:700;color:var(--wf-ink);">In Review</span>
+            <span class="wf-badge" style="font-size:11px;">2</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:16px;line-height:1;">+</button>
+        </div>
+      </div>
+
+      <!-- Card 1: Notification preferences page -->
+      <div class="ds-card wf-sketch" style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Notification preferences page</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge" style="font-size:11px;background:var(--wf-accent-lt);color:var(--wf-accent);">Frontend</span>
+          <span class="wf-badge" style="font-size:11px;">P2</span>
+        </div>
+        <!-- Comments indicator -->
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;color:var(--wf-muted);">2 comments</span>
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Anika Kumar">AK</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Analytics event tracking -->
+      <div class="ds-card" style="padding:14px 16px;" data-wf-confidence="confirmed">
+        <div style="font-size:14px;font-weight:600;color:var(--wf-ink);margin-bottom:10px;">Analytics event tracking</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-green" style="font-size:11px;">Backend</span>
+          <span class="wf-badge" style="font-size:11px;">P2</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-red);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Sam Rivera">SR</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- DONE (3 cards) -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="kanban-lane">
+      <!-- Lane Header -->
+      <div class="ds-card" style="padding:12px 16px;border-left:3px solid var(--wf-green);" data-wf-confidence="confirmed">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:14px;font-weight:700;color:var(--wf-ink);">Done</span>
+            <span class="wf-badge" style="font-size:11px;">3</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:16px;line-height:1;">+</button>
+        </div>
+      </div>
+
+      <!-- Card 1: Login page redesign -->
+      <div class="ds-card" style="padding:14px 16px;opacity:0.65;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <span style="color:var(--wf-green);font-size:14px;">&#10003;</span>
+          <span style="font-size:14px;font-weight:600;color:var(--wf-muted);text-decoration:line-through;">Login page redesign</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-amber" style="font-size:11px;">Design</span>
+          <span class="wf-badge wf-badge-red" style="font-size:11px;">P1</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Maya Chen">MC</div>
+        </div>
+      </div>
+
+      <!-- Card 2: CSV export endpoint -->
+      <div class="ds-card" style="padding:14px 16px;opacity:0.65;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <span style="color:var(--wf-green);font-size:14px;">&#10003;</span>
+          <span style="font-size:14px;font-weight:600;color:var(--wf-muted);text-decoration:line-through;">CSV export endpoint</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge wf-badge-green" style="font-size:11px;">Backend</span>
+          <span class="wf-badge" style="font-size:11px;">P2</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-accent);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Josh Reeves">JR</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Accessibility audit fixes -->
+      <div class="ds-card" style="padding:14px 16px;opacity:0.65;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <span style="color:var(--wf-green);font-size:14px;">&#10003;</span>
+          <span style="font-size:14px;font-weight:600;color:var(--wf-muted);text-decoration:line-through;">Accessibility audit fixes</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="wf-badge" style="font-size:11px;background:var(--wf-accent-lt);color:var(--wf-accent);">Frontend</span>
+          <span class="wf-badge wf-badge-red" style="font-size:11px;">P1</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;" title="Anika Kumar">AK</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /kanban-container -->
+
+</main>
+
+<!-- Design Notes -->
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Sprint 14 Board</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">A Kanban-style project board showing tasks across four workflow stages: Backlog, In Progress, In Review, and Done. Each card displays task title, category badge, priority level, assignee avatar, and optional metadata like progress bars, blocked status, and comment counts. Designed to demonstrate the proto-framework's card, badge, and paper utility components in a horizontally-scrolling lane layout.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">An engineering team lead needs to visualize sprint progress at a glance — seeing which tasks are blocked, who is working on what, and how work is distributed across stages to identify bottlenecks and rebalance assignments.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Design Spec</div>
+      <div class="wf-spec-body">Full-width horizontal scroll layout with four flex columns (280-320px each). Lane headers use ds-card with left accent borders color-coded by stage. Task cards use ds-card with inline badge groups and avatar circles. Paper utilities (wf-tape, wf-pin, wf-torn-bottom, wf-sketch) add wireframe texture across cards. Confidence attributes mark validated vs speculative designs. Done column cards use reduced opacity and strikethrough titles. Filter pills at top use btn-ghost with pill border-radius. Progress bar on autocomplete card uses token-based accent fill on tint background.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Interface — Agent Chat</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<!-- Split-panel layout: sidebar + main chat area -->
+<div style="display:grid;grid-template-columns:260px 1fr;min-height:100vh;">
+
+  <!-- ===== LEFT SIDEBAR ===== -->
+  <aside style="background:var(--wf-surface);border-right:1px solid var(--wf-line);display:flex;flex-direction:column;overflow-y:auto;">
+
+    <!-- Sidebar header -->
+    <div style="padding:16px 16px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--wf-line);">
+      <span style="font-size:14px;font-weight:700;color:var(--wf-ink);">Conversations</span>
+      <button class="btn btn-primary btn-sm">+ New Chat</button>
+    </div>
+
+    <!-- Conversation list -->
+    <div style="padding:8px;flex:1;min-height:0;">
+
+      <!-- Active conversation -->
+      <div class="chat-thread wf-tape" data-thread="pipeline" data-wf-confidence="confirmed"
+           style="padding:10px 12px;border-radius:6px;background:var(--wf-accent-lt, rgba(61,109,170,0.1));border-left:3px solid var(--wf-accent);margin-bottom:4px;cursor:pointer;">
+        <div style="font-size:13px;font-weight:600;color:var(--wf-ink);margin-bottom:2px;">Q4 Pipeline Analysis</div>
+        <div style="font-size:11px;color:var(--wf-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Analyze our Q4 pipeline and identify...</div>
+        <div style="font-size:10px;color:var(--wf-muted);margin-top:4px;">2 min ago</div>
+      </div>
+
+      <!-- Past conversations -->
+      <div class="chat-thread" data-thread="rfp" style="padding:10px 12px;border-radius:6px;margin-bottom:4px;cursor:pointer;">
+        <div style="font-size:13px;font-weight:600;color:var(--wf-ink);margin-bottom:2px;">Draft RFP Response</div>
+        <div style="font-size:11px;color:var(--wf-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Help me draft a response to the...</div>
+        <div style="font-size:10px;color:var(--wf-muted);margin-top:4px;">1 hour ago</div>
+      </div>
+
+      <div class="chat-thread" data-thread="health" style="padding:10px 12px;border-radius:6px;margin-bottom:4px;cursor:pointer;">
+        <div style="font-size:13px;font-weight:600;color:var(--wf-ink);margin-bottom:2px;">Customer Health Report</div>
+        <div style="font-size:11px;color:var(--wf-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Generate a health score report for...</div>
+        <div style="font-size:10px;color:var(--wf-muted);margin-top:4px;">Yesterday</div>
+      </div>
+
+      <div class="chat-thread" data-thread="meeting" style="padding:10px 12px;border-radius:6px;margin-bottom:4px;cursor:pointer;">
+        <div style="font-size:13px;font-weight:600;color:var(--wf-ink);margin-bottom:2px;">Meeting Prep: Acme Corp</div>
+        <div style="font-size:11px;color:var(--wf-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Prepare talking points for tomorrow...</div>
+        <div style="font-size:10px;color:var(--wf-muted);margin-top:4px;">2 days ago</div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="border-top:1px solid var(--wf-line);margin:0 16px;"></div>
+
+    <!-- Agents section -->
+    <div style="padding:12px 16px 16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--wf-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Agents</div>
+
+      <div class="wf-sketch" style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:6px;border-radius:6px;background:var(--wf-canvas);">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-green);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);">R</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:600;color:var(--wf-ink);">Research Agent</div>
+        </div>
+        <span class="wf-badge wf-badge-green" style="font-size:10px;">online</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:6px;border-radius:6px;background:var(--wf-canvas);">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);">W</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:600;color:var(--wf-ink);">Writing Agent</div>
+        </div>
+        <span class="wf-badge wf-badge-green" style="font-size:10px;">online</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:6px;border-radius:6px;background:var(--wf-canvas);">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--wf-amber);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);">D</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:600;color:var(--wf-ink);">Data Analyst</div>
+        </div>
+        <span class="wf-badge wf-badge-amber" style="font-size:10px;">busy</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== MAIN CHAT AREA ===== -->
+  <div style="display:flex;flex-direction:column;min-height:0;">
+
+    <!-- Chat header -->
+    <div id="chat-header" style="padding:14px 24px;border-bottom:1px solid var(--wf-line);display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <h1 id="chat-title" style="font-size:17px;font-weight:700;color:var(--wf-ink);margin:0;">Q4 Pipeline Analysis</h1>
+      <span id="chat-agent-badge" class="wf-badge wf-badge-purple">Research Agent</span>
+    </div>
+
+    <!-- Messages area (scrollable) -->
+    <div id="chat-messages" style="flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px;">
+
+      <!-- User message 1 -->
+      <div style="display:flex;justify-content:flex-end;">
+        <div style="max-width:560px;padding:12px 16px;border-radius:12px 12px 2px 12px;background:var(--wf-accent-lt, rgba(61,109,170,0.1));color:var(--wf-ink);font-size:14px;line-height:1.5;">
+          Analyze our Q4 pipeline and identify the top 3 deals at risk.
+        </div>
+      </div>
+
+      <!-- Agent response (rich, structured) -->
+      <div data-wf-confidence="confirmed" style="display:flex;gap:10px;align-items:flex-start;">
+        <!-- Agent avatar -->
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--wf-purple);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);flex-shrink:0;">AI</div>
+        <!-- Agent message bubble -->
+        <div style="max-width:640px;padding:16px 20px;border-radius:2px 12px 12px 12px;background:var(--wf-white);border:1px solid var(--wf-line);font-size:14px;line-height:1.6;color:var(--wf-text);">
+          <p style="margin:0 0 12px;">I've analyzed the Q4 pipeline across 47 active opportunities. Here are the <strong style="color:var(--wf-ink);">top 3 deals at risk</strong> based on engagement signals, timeline slippage, and competitive activity:</p>
+
+          <!-- Embedded data table -->
+          <table class="wf-table" style="margin-bottom:14px;font-size:13px;">
+            <thead>
+              <tr>
+                <th>Deal Name</th>
+                <th style="text-align:right;">Amount</th>
+                <th>Risk Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600;color:var(--wf-ink);">Acme Corp — Platform Migration</td>
+                <td style="text-align:right;">$2.4M</td>
+                <td><span class="wf-badge wf-badge-red">High</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;color:var(--wf-ink);">TechVault — Enterprise License</td>
+                <td style="text-align:right;">$1.1M</td>
+                <td><span class="wf-badge wf-badge-red">High</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;color:var(--wf-ink);">NovaBridge — API Integration</td>
+                <td style="text-align:right;">$680K</td>
+                <td><span class="wf-badge wf-badge-amber">Medium</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Recommendations section -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:700;color:var(--wf-ink);margin-bottom:6px;">Recommendations</div>
+            <ul style="margin:0;padding-left:18px;color:var(--wf-text);font-size:13px;">
+              <li style="margin-bottom:4px;"><strong>Acme Corp</strong> — Champion went silent 3 weeks ago. Schedule an executive alignment call before Dec 15.</li>
+              <li style="margin-bottom:4px;"><strong>TechVault</strong> — Competitor (DataSync) submitted a lower bid. Prepare a differentiation deck focusing on uptime SLA.</li>
+              <li><strong>NovaBridge</strong> — Technical evaluation stalled. Offer a free POC extension through end of quarter.</li>
+            </ul>
+          </div>
+
+          <!-- Action buttons row -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--wf-tint);">
+            <button class="btn btn-primary btn-sm" onclick="wfToast('Diving deeper on Acme Corp...')">Deep Dive on Acme</button>
+            <button class="btn btn-ghost btn-sm" onclick="wfToast('Generating report...')">Export Report</button>
+            <button class="btn btn-ghost btn-sm" onclick="wfToast('Sharing with team...')">Share with Team</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent status message (in-progress action) -->
+      <div class="wf-pin" style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--wf-purple);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);flex-shrink:0;">AI</div>
+        <div style="padding:12px 16px;border-radius:2px 12px 12px 12px;background:var(--wf-white);border:1px solid var(--wf-line);font-size:13px;color:var(--wf-muted);display:flex;align-items:center;gap:8px;">
+          Researching competitor pricing...
+          <span class="wf-badge wf-badge-purple">Working...</span>
+        </div>
+      </div>
+
+      <!-- User message 2 -->
+      <div style="display:flex;justify-content:flex-end;">
+        <div style="max-width:560px;padding:12px 16px;border-radius:12px 12px 2px 12px;background:var(--wf-accent-lt, rgba(61,109,170,0.1));color:var(--wf-ink);font-size:14px;line-height:1.5;">
+          Focus on the Acme deal — what's the competitive landscape?
+        </div>
+      </div>
+
+      <!-- Agent thinking/streaming message -->
+      <div data-wf-confidence="uncertain" style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--wf-purple);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);flex-shrink:0;">AI</div>
+        <div style="max-width:640px;padding:16px 20px;border-radius:2px 12px 12px 12px;background:var(--wf-white);border:1px dashed var(--wf-line);font-size:14px;line-height:1.6;color:var(--wf-text);">
+          <p style="margin:0 0 8px;">The competitive landscape for <strong style="color:var(--wf-ink);">Acme Corp — Platform Migration</strong> involves three key players:</p>
+          <p style="margin:0 0 8px;">1. <strong style="color:var(--wf-ink);">DataSync</strong> — submitted a bid at approximately $1.8M, undercutting by 25%. Their proposal focuses on</p>
+          <!-- Typing indicator -->
+          <div style="display:flex;align-items:center;gap:4px;margin-top:6px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--wf-purple);opacity:0.7;display:inline-block;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--wf-purple);opacity:0.5;display:inline-block;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--wf-purple);opacity:0.3;display:inline-block;"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== COMPOSER ===== -->
+    <div style="padding:16px 24px;border-top:1px solid var(--wf-line);flex-shrink:0;background:var(--wf-canvas);">
+      <div style="display:flex;align-items:flex-end;gap:8px;background:var(--wf-white);border:1px solid var(--wf-line);border-radius:10px;padding:10px 14px;">
+        <!-- Input area -->
+        <div style="flex:1;min-width:0;">
+          <div contenteditable="true" style="font-size:14px;color:var(--wf-text);outline:none;min-height:20px;max-height:120px;overflow-y:auto;line-height:1.5;" data-placeholder="Ask the agent..."></div>
+          <!-- Tool buttons row -->
+          <div style="display:flex;gap:12px;margin-top:8px;padding-top:8px;border-top:1px solid var(--wf-tint);">
+            <button class="btn btn-ghost btn-sm" style="font-size:12px;padding:2px 6px;" title="Attach file">
+              <span style="font-size:15px;">&#128206;</span>
+            </button>
+            <button class="btn btn-ghost btn-sm" style="font-size:12px;padding:2px 6px;" title="Mention agent">
+              @
+            </button>
+            <button class="btn btn-ghost btn-sm" style="font-size:12px;padding:2px 6px;color:var(--wf-muted);" title="Slash command">
+              /command
+            </button>
+          </div>
+        </div>
+        <!-- Send button -->
+        <button class="btn btn-primary" style="border-radius:8px;padding:8px 16px;flex-shrink:0;" onclick="wfToast('Message sent')">Send</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===== DESIGN NOTES ===== -->
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Agent Chat Interface</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">A split-panel agentic AI chat interface with a conversation sidebar and a rich message area. Demonstrates structured agent responses with embedded data tables, action buttons, streaming states, and agent status indicators.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">A sales professional needs to quickly analyze pipeline data, get AI-driven recommendations, and take action — all within a conversational interface backed by specialized agents.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Design Spec</div>
+      <div class="wf-spec-body">
+        Layout: 260px sidebar + flexible main chat area (CSS grid). Sidebar shows conversation history and available agents with status badges. Main area has a fixed header, scrollable message thread, and a pinned composer at the bottom.
+
+        Agent responses use structured content: text, tables (wf-table), badges (wf-badge-*), and inline action buttons (btn-primary, btn-ghost). Streaming/thinking states use dashed borders and a three-dot typing indicator. The data-wf-confidence attribute differentiates confirmed responses from uncertain/in-progress ones.
+
+        Conversation list uses tape decorators (wf-tape) on the active item. Agent status card uses sketch treatment (wf-sketch). The in-progress status message uses pin decorator (wf-pin).
+
+        Composer includes a contenteditable input with tool buttons (attach, mention, slash command) and a primary send button.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+<script>
+/* Thread switching — swap chat content with scatter transition */
+(function() {
+  'use strict';
+
+  var THREADS = {
+    pipeline: {
+      title: 'Q4 Pipeline Analysis',
+      agent: 'Research Agent',
+      agentColor: 'var(--wf-purple)',
+      messages: [
+        { type: 'user', text: 'Analyze our Q4 pipeline and identify the top 3 deals at risk.' },
+        { type: 'agent', html: '<p style="margin:0 0 12px;">I\'ve analyzed the Q4 pipeline across 47 active opportunities. Here are the <strong style="color:var(--wf-ink);">top 3 deals at risk</strong>:</p><table class="wf-table" style="margin-bottom:14px;font-size:13px;"><thead><tr><th>Deal Name</th><th style="text-align:right;">Amount</th><th>Risk Level</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--wf-ink);">Acme Corp — Platform Migration</td><td style="text-align:right;">$2.4M</td><td><span class="wf-badge wf-badge-red">High</span></td></tr><tr><td style="font-weight:600;color:var(--wf-ink);">TechVault — Enterprise License</td><td style="text-align:right;">$1.1M</td><td><span class="wf-badge wf-badge-red">High</span></td></tr><tr><td style="font-weight:600;color:var(--wf-ink);">NovaBridge — API Integration</td><td style="text-align:right;">$680K</td><td><span class="wf-badge wf-badge-amber">Medium</span></td></tr></tbody></table><div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--wf-tint);"><button class="btn btn-primary btn-sm" onclick="wfToast(\'Diving deeper...\')">Deep Dive on Acme</button><button class="btn btn-ghost btn-sm" onclick="wfToast(\'Generating report...\')">Export Report</button></div>' },
+        { type: 'user', text: 'Focus on the Acme deal — what\'s the competitive landscape?' },
+        { type: 'agent', streaming: true, html: '<p style="margin:0 0 8px;">The competitive landscape for <strong style="color:var(--wf-ink);">Acme Corp</strong> involves three key players:</p><p style="margin:0 0 8px;">1. <strong style="color:var(--wf-ink);">DataSync</strong> — submitted a bid at approximately $1.8M, undercutting by 25%.</p>' }
+      ]
+    },
+    rfp: {
+      title: 'Draft RFP Response',
+      agent: 'Writing Agent',
+      agentColor: 'var(--wf-accent)',
+      messages: [
+        { type: 'user', text: 'Help me draft a response to the Meridian Corp RFP. They want a cloud migration proposal.' },
+        { type: 'agent', html: '<p style="margin:0 0 12px;">I\'ve reviewed the Meridian Corp RFP requirements. Here\'s a structured draft:</p><div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:var(--wf-ink);margin-bottom:6px;">Executive Summary</div><p style="font-size:13px;color:var(--wf-text);margin:0;line-height:1.6;">We propose a phased cloud migration leveraging our proven 3-stage methodology: Assess, Migrate, Optimize. Our team has delivered 40+ enterprise migrations with 99.9% uptime during transition.</p></div><div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:var(--wf-ink);margin-bottom:6px;">Timeline &amp; Budget</div><table class="wf-table" style="font-size:13px;"><thead><tr><th>Phase</th><th>Duration</th><th style="text-align:right;">Cost</th></tr></thead><tbody><tr><td>Assessment</td><td>4 weeks</td><td style="text-align:right;">$120K</td></tr><tr><td>Migration</td><td>12 weeks</td><td style="text-align:right;">$480K</td></tr><tr><td>Optimization</td><td>6 weeks</td><td style="text-align:right;">$200K</td></tr></tbody></table></div><div style="display:flex;gap:8px;padding-top:8px;border-top:1px solid var(--wf-tint);"><button class="btn btn-primary btn-sm" onclick="wfToast(\'Expanding section...\')">Expand Technical Section</button><button class="btn btn-ghost btn-sm" onclick="wfToast(\'Exporting...\')">Export to Doc</button></div>' },
+        { type: 'user', text: 'Add more detail to the technical approach section.' }
+      ]
+    },
+    health: {
+      title: 'Customer Health Report',
+      agent: 'Data Analyst',
+      agentColor: 'var(--wf-amber)',
+      messages: [
+        { type: 'user', text: 'Generate a health score report for our top 10 enterprise accounts.' },
+        { type: 'agent', html: '<p style="margin:0 0 12px;">Here\'s the health score analysis for your top 10 accounts based on usage, support tickets, NPS, and renewal signals:</p><table class="wf-table" style="font-size:13px;margin-bottom:14px;"><thead><tr><th>Account</th><th>Health</th><th>NPS</th><th>Risk</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--wf-ink);">GlobalTech Inc</td><td><span class="wf-badge wf-badge-green">92</span></td><td>9.2</td><td>Low</td></tr><tr><td style="font-weight:600;color:var(--wf-ink);">Meridian Corp</td><td><span class="wf-badge wf-badge-green">87</span></td><td>8.5</td><td>Low</td></tr><tr><td style="font-weight:600;color:var(--wf-ink);">Vertex Labs</td><td><span class="wf-badge wf-badge-amber">64</span></td><td>6.1</td><td>Medium</td></tr><tr><td style="font-weight:600;color:var(--wf-ink);">Apex Systems</td><td><span class="wf-badge wf-badge-red">41</span></td><td>4.2</td><td>High</td></tr></tbody></table><p style="font-size:13px;color:var(--wf-text);margin:0;"><strong style="color:var(--wf-ink);">Key insight:</strong> Apex Systems shows a 30-day decline in API usage (−62%) and 5 unresolved P1 tickets. Recommend immediate executive outreach.</p>' }
+      ]
+    },
+    meeting: {
+      title: 'Meeting Prep: Acme Corp',
+      agent: 'Research Agent',
+      agentColor: 'var(--wf-purple)',
+      messages: [
+        { type: 'user', text: 'Prepare talking points for tomorrow\'s executive meeting with Acme Corp.' },
+        { type: 'agent', html: '<p style="margin:0 0 12px;"><strong style="color:var(--wf-ink);">Meeting Brief: Acme Corp — Executive Review</strong></p><div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:var(--wf-ink);margin-bottom:6px;">Attendees</div><ul style="margin:0;padding-left:18px;font-size:13px;color:var(--wf-text);"><li>Sarah Chen (CTO) — key decision maker</li><li>Mark Rivera (VP Engineering) — technical sponsor</li><li>Lisa Patel (Procurement) — budget authority</li></ul></div><div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:var(--wf-ink);margin-bottom:6px;">Talking Points</div><ol style="margin:0;padding-left:18px;font-size:13px;color:var(--wf-text);line-height:1.8;"><li>Migration timeline — acknowledge Q1 slip, present revised plan</li><li>ROI case — 3-year TCO savings of $1.2M vs current infrastructure</li><li>Competitor differentiation — uptime SLA (99.99% vs DataSync\'s 99.9%)</li><li>Next steps — POC extension through March, exec alignment by April</li></ol></div><div style="display:flex;gap:8px;padding-top:8px;border-top:1px solid var(--wf-tint);"><button class="btn btn-primary btn-sm" onclick="wfToast(\'Creating deck...\')">Generate Slide Deck</button><button class="btn btn-ghost btn-sm" onclick="wfToast(\'Adding to calendar...\')">Add to Calendar</button></div>' },
+        { type: 'user', text: 'What\'s the latest on their competitor evaluation?' }
+      ]
+    }
+  };
+
+  var activeThread = 'pipeline';
+
+  function renderMessages(threadKey) {
+    var thread = THREADS[threadKey];
+    if (!thread) return;
+    var container = document.getElementById('chat-messages');
+    if (!container) return;
+
+    /* Update header */
+    var titleEl = document.getElementById('chat-title');
+    var badgeEl = document.getElementById('chat-agent-badge');
+    if (titleEl) titleEl.textContent = thread.title;
+    if (badgeEl) badgeEl.textContent = thread.agent;
+
+    /* Build message HTML */
+    var html = '';
+    thread.messages.forEach(function(msg) {
+      if (msg.type === 'user') {
+        html += '<div style="display:flex;justify-content:flex-end;">' +
+          '<div style="max-width:560px;padding:12px 16px;border-radius:12px 12px 2px 12px;background:var(--wf-accent-lt, rgba(61,109,170,0.1));color:var(--wf-ink);font-size:14px;line-height:1.5;">' +
+          msg.text + '</div></div>';
+      } else {
+        var border = msg.streaming ? 'border:1px dashed var(--wf-line);' : 'border:1px solid var(--wf-line);';
+        html += '<div style="display:flex;gap:10px;align-items:flex-start;">' +
+          '<div style="width:32px;height:32px;border-radius:50%;background:' + thread.agentColor + ';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--wf-white);flex-shrink:0;">AI</div>' +
+          '<div style="max-width:640px;padding:16px 20px;border-radius:2px 12px 12px 12px;background:var(--wf-white);' + border + 'font-size:14px;line-height:1.6;color:var(--wf-text);">' +
+          msg.html;
+        if (msg.streaming) {
+          html += '<div style="display:flex;align-items:center;gap:4px;margin-top:6px;">' +
+            '<span style="width:6px;height:6px;border-radius:50%;background:var(--wf-purple);opacity:0.7;display:inline-block;"></span>' +
+            '<span style="width:6px;height:6px;border-radius:50%;background:var(--wf-purple);opacity:0.5;display:inline-block;"></span>' +
+            '<span style="width:6px;height:6px;border-radius:50%;background:var(--wf-purple);opacity:0.3;display:inline-block;"></span></div>';
+        }
+        html += '</div></div>';
+      }
+    });
+
+    container.innerHTML = html;
+  }
+
+  /* Highlight active sidebar item */
+  function highlightThread(threadKey) {
+    var items = document.querySelectorAll('.chat-thread');
+    items.forEach(function(item) {
+      if (item.getAttribute('data-thread') === threadKey) {
+        item.style.background = 'var(--wf-accent-lt, rgba(61,109,170,0.1))';
+        item.style.borderLeft = '3px solid var(--wf-accent)';
+      } else {
+        item.style.background = '';
+        item.style.borderLeft = '';
+      }
+    });
+  }
+
+  /* Wire sidebar clicks */
+  document.addEventListener('click', function(e) {
+    var threadEl = e.target.closest('.chat-thread');
+    if (!threadEl) return;
+    var threadKey = threadEl.getAttribute('data-thread');
+    if (!threadKey || threadKey === activeThread) return;
+
+    activeThread = threadKey;
+    highlightThread(threadKey);
+
+    var container = document.getElementById('chat-messages');
+    if (typeof wfContentTransition === 'function' && container) {
+      wfContentTransition(container, function() {
+        renderMessages(threadKey);
+      });
+    } else {
+      renderMessages(threadKey);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

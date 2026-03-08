@@ -1,0 +1,313 @@
+/* ============================================================================
+   PROTO STORY — Story Mode, Journey Highlighting & Scenario Walkthrough
+   ============================================================================
+   Interactive narrative layer: journey dropdowns, element highlighting with
+   step numbers, story bar, Jira stories dropdown, scenario mode banner,
+   and dimming of non-active elements.
+   ============================================================================ */
+
+/* --- Story Bar ----------------------------------------------------------- */
+
+.wf-story-bar {
+  position: sticky;
+  top: 34px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.wf-story-bar-label {
+  flex: 1;
+}
+
+.wf-story-bar-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7); /* intentional: overlay on accent bar */
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.wf-story-bar-close:hover {
+  color: var(--wf-white);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Journey Dropdown ---------------------------------------------------- */
+
+.wf-journey-dropdown {
+  position: absolute;
+  top: 34px;
+  right: 8px;
+  z-index: 1002;
+  background: var(--wf-canvas);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  box-shadow: var(--wf-paper-shadow);
+  min-width: 280px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.wf-journey-dropdown-title {
+  padding: 8px 14px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--wf-muted);
+}
+
+.wf-journey-item {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--wf-text);
+  transition: background 0.1s;
+  font-family: inherit;
+}
+
+.wf-journey-item:hover {
+  background: var(--wf-surface);
+}
+
+.wf-journey-item.active {
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  font-weight: 600;
+}
+
+.wf-journey-item-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--wf-muted);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.wf-journey-item.disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* --- Jira Stories Dropdown ------------------------------------------------ */
+
+.wf-stories-dropdown {
+  position: absolute;
+  top: 34px;
+  right: 8px;
+  z-index: 1002;
+  background: var(--wf-canvas);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  box-shadow: var(--wf-paper-shadow);
+  min-width: 300px;
+  max-width: 380px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.wf-stories-dropdown-title {
+  padding: 8px 14px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--wf-muted);
+}
+
+.wf-stories-item {
+  display: block;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--wf-text);
+  line-height: 1.45;
+}
+
+.wf-stories-item:hover {
+  background: var(--wf-surface);
+}
+
+.wf-stories-id {
+  font-weight: 700;
+  color: var(--wf-accent);
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+.wf-stories-empty {
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--wf-muted);
+  font-style: italic;
+}
+
+/* --- Element Dimming & Highlighting (active story mode) ------------------ */
+
+html.story-active [data-journey] {
+  opacity: 0.12;
+  filter: grayscale(0.8);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+html.story-active [data-journey].story-hit {
+  opacity: 1;
+  filter: none;
+  position: relative;
+  box-shadow: inset 3px 0 0 var(--wf-accent);
+  background: rgba(61, 109, 170, 0.04);
+  border-radius: 4px;
+  transition: opacity 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Annotation labels on highlighted elements */
+.story-label {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(30, 42, 58, 0.15);
+  line-height: 1.5;
+}
+
+.story-label::before {
+  content: attr(data-step);
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  padding: 0 4px;
+  margin-right: 4px;
+  font-size: 9px;
+}
+
+/* Step number circle for sequencing */
+html.story-active [data-journey].story-hit::before {
+  content: attr(data-journey-step);
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  z-index: 11;
+  width: 20px;
+  height: 20px;
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(30, 42, 58, 0.2);
+}
+
+/* --- Scenario Mode ------------------------------------------------------- */
+
+.wf-scenario-banner {
+  position: sticky;
+  top: 0;
+  z-index: 998;
+  background: var(--wf-ink);
+  color: var(--wf-white);
+  padding: 16px 24px 18px;
+}
+
+.wf-scenario-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.wf-scenario-persona {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 3px 12px;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.wf-scenario-progress {
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0.7;
+  font-size: 13px;
+  flex: 1;
+}
+
+.wf-scenario-nav {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.wf-scenario-nav button {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: var(--wf-white);
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.wf-scenario-nav button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.wf-scenario-nav button:focus-visible {
+  outline: 2px solid var(--wf-white);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.wf-scenario-exit {
+  opacity: 0.6;
+}
+
+.wf-scenario-exit:hover {
+  opacity: 1;
+}
+
+.wf-scenario-narrative {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.01em;
+}
+
+/* Context bar hidden in story mode — banner replaces it */
+html.scenario-active .wf-ctx-bar {
+  display: none;
+}

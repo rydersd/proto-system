@@ -1,0 +1,544 @@
+/* ============================================================================
+   PROTO CHROME — Context Bar, Navigation Drawer, Design Notes, Modals
+   ============================================================================
+   Framework UI shell: the sticky toolbar, flyout sitemap, spec-notes panel,
+   and modal overlay system. These are the "chrome" elements that wrap every
+   wireframe page.
+   ============================================================================ */
+
+/* --- Context Bar --------------------------------------------------------- */
+
+.wf-ctx-bar {
+  background: var(--wf-surface);
+  color: var(--wf-text);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 11px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1.5px solid var(--wf-line);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
+  border-bottom: 1px solid var(--wf-line);
+}
+
+.wf-ctx-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+}
+
+.wf-ctx-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wf-ctx-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wf-ctx-hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wf-ctx-hamburger span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--wf-ink);
+  border-radius: 1px;
+}
+
+.wf-ctx-hamburger:hover span {
+  background: var(--wf-accent);
+}
+
+.wf-ctx-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wf-ctx-breadcrumbs a {
+  color: var(--wf-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.wf-ctx-breadcrumbs a:hover {
+  color: var(--wf-accent);
+}
+
+.wf-ctx-crumb-sep {
+  color: var(--wf-line);
+  font-size: 10px;
+}
+
+.wf-ctx-crumb-current {
+  color: var(--wf-ink);
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+}
+
+.wf-ctx-persona {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.wf-ctx-persona--ae {
+  background: rgba(61, 109, 170, 0.12);
+  color: var(--wf-accent);
+}
+
+.wf-ctx-persona--se {
+  background: rgba(69, 120, 90, 0.12);
+  color: var(--wf-green);
+}
+
+.wf-ctx-persona--mgr {
+  background: rgba(107, 90, 47, 0.12);
+  color: var(--wf-amber);
+}
+
+.wf-ctx-persona--legal {
+  background: rgba(107, 91, 138, 0.12);
+  color: var(--wf-purple);
+}
+
+.wf-ctx-persona--bot {
+  background: rgba(139, 69, 83, 0.12);
+  color: var(--wf-red);
+}
+
+.wf-ctx-btn {
+  background: none;
+  border: 1px solid var(--wf-line);
+  color: var(--wf-text);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.wf-ctx-btn:hover {
+  background: var(--wf-tint);
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+}
+
+/* --- Navigation Drawer --------------------------------------------------- */
+
+.wf-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 42, 58, 0.5);
+  z-index: 2000;
+  display: none;
+}
+
+.wf-nav-overlay.open {
+  display: block;
+}
+
+.wf-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  background: var(--wf-white);
+  z-index: 2001;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-nav-drawer.open {
+  transform: translateX(0);
+}
+
+.wf-nav-drawer-hd {
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--wf-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wf-nav-drawer-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-nav-drawer-subtitle {
+  font-size: 10px;
+  color: var(--wf-muted);
+  margin-top: 2px;
+}
+
+.wf-nav-drawer-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--wf-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.wf-nav-drawer-bd {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.wf-nav-drawer-section {
+  padding: 8px 20px 4px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--wf-muted);
+}
+
+.wf-nav-drawer-link {
+  display: block;
+  padding: 6px 20px;
+  font-size: 12px;
+  color: var(--wf-text);
+  text-decoration: none;
+  transition: background 0.1s;
+}
+
+.wf-nav-drawer-link:hover {
+  background: var(--wf-accent-lt);
+  color: var(--wf-accent);
+}
+
+.wf-nav-drawer-link.active {
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  font-weight: 600;
+  border-left: 3px solid var(--wf-accent);
+}
+
+.wf-nav-page-num {
+  display: inline-block;
+  width: 24px;
+  font-size: 10px;
+  color: var(--wf-muted);
+  font-family: var(--wf-mono);
+}
+
+/* --- Design Notes Panel -------------------------------------------------- */
+
+/* Hidden container in page HTML — proto-nav.js reads its content and
+   displays it in the .wf-dn-panel overlay. The wf-spec-* classes inside
+   are semantic structure only (no styling needed). */
+.wf-design-notes {
+  display: none;
+}
+
+.wf-dn-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 42, 58, 0.4);
+  z-index: 3000;
+  display: none;
+}
+
+.wf-dn-overlay.open {
+  display: block;
+}
+
+.wf-dn-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  background: var(--wf-white);
+  z-index: 3001;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-dn-panel.open {
+  transform: translateX(0);
+}
+
+.wf-dn-hd {
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--wf-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.wf-dn-hd-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-dn-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--wf-muted);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.wf-dn-close:hover {
+  color: var(--wf-ink);
+}
+
+.wf-dn-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.wf-dn-body h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0 0 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--wf-tint);
+}
+
+.wf-dn-body h3:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.wf-dn-body p {
+  font-size: 12px;
+  color: var(--wf-text);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.wf-dn-body ul {
+  font-size: 12px;
+  color: var(--wf-text);
+  line-height: 1.6;
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+
+.wf-dn-body li {
+  margin-bottom: 4px;
+}
+
+.wf-dn-body code {
+  font-family: var(--wf-mono);
+  font-size: 10px;
+  background: var(--wf-accent-lt);
+  color: var(--wf-accent);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.wf-dn-body .dn-epic-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  margin-bottom: 8px;
+}
+
+/* --- Modals -------------------------------------------------------------- */
+
+.wf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 42, 58, 0.6);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wf-modal-overlay.hidden {
+  display: none;
+}
+
+.wf-modal {
+  background: var(--wf-white);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  width: 520px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 40px rgba(30, 42, 58, 0.25);
+}
+
+.wf-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--wf-line);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.wf-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--wf-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.wf-modal-close:hover {
+  color: var(--wf-ink);
+  background: var(--wf-tint);
+  border-radius: 4px;
+}
+
+.wf-modal-close:focus-visible {
+  outline: 2px solid var(--wf-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.wf-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.wf-modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--wf-line);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  background: var(--wf-surface);
+  border-radius: 0 0 8px 8px;
+}
+
+.wf-modal-info {
+  background: var(--wf-accent-fill);
+  border: 1px solid var(--wf-accent);
+  border-radius: var(--wf-radius);
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--wf-text);
+  line-height: 1.5;
+  margin-top: 16px;
+}
+
+/* Overlay is clickable to close */
+.wf-modal-overlay { cursor: pointer; }
+.wf-modal-overlay > .wf-modal { cursor: default; }
+
+/* ============================================================================
+   PAPER CHROME — Wireframe-native styling for all framework UI
+   ============================================================================
+   The context bar, drawers, panels, dropdowns, and modals should feel like
+   part of the wireframe paper aesthetic, not a separate dark app shell.
+   ============================================================================ */
+
+/* --- Navigation Drawer: paper panel ------------------------------------- */
+.wf-nav-overlay {
+  background: rgba(30, 42, 58, 0.25);
+}
+
+.wf-nav-drawer {
+  background: var(--wf-canvas);
+  border-right: 1.5px solid var(--wf-line);
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.wf-nav-drawer-hd {
+  border-bottom: 1.5px dashed var(--wf-line);
+}
+
+/* --- Design Notes Panel: paper panel ------------------------------------ */
+.wf-dn-overlay {
+  background: rgba(30, 42, 58, 0.2);
+}
+
+.wf-dn-panel {
+  background: var(--wf-canvas);
+  border-left: 1.5px solid var(--wf-line);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.wf-dn-hd {
+  border-bottom: 1.5px dashed var(--wf-line);
+}
+
+/* --- Modals: paper card look -------------------------------------------- */
+.wf-modal-overlay {
+  background: rgba(30, 42, 58, 0.3);
+}
+
+.wf-modal {
+  background: var(--wf-canvas);
+  border: 1.5px solid var(--wf-line);
+  box-shadow: var(--wf-paper-shadow);
+}
+
+.wf-modal-header {
+  border-bottom: 1.5px dashed var(--wf-line);
+}
+
+.wf-modal-footer {
+  background: var(--wf-surface);
+  border-top: 1.5px dashed var(--wf-line);
+}

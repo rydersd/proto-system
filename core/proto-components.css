@@ -1,0 +1,829 @@
+/* ============================================================================
+   PROTO COMPONENTS — Typography, Forms, Buttons, Badges, Cards, Tables,
+                      Tabs, Sections, Utilities, Separators, Toast, State
+   ============================================================================
+   Reusable UI primitives used across all surfaces. Intentionally grouped
+   in one file for now — can be split further as the library grows.
+   ============================================================================ */
+
+/* --- Typography ---------------------------------------------------------- */
+
+h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+.caption {
+  font-size: 11px;
+  color: var(--wf-muted);
+  line-height: 1.4;
+}
+
+.overline {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--wf-muted);
+}
+
+.text-muted {
+  color: var(--wf-muted);
+}
+
+.text-accent {
+  color: var(--wf-accent);
+}
+
+.text-ink {
+  color: var(--wf-ink);
+}
+
+.text-sm {
+  font-size: 11px;
+}
+
+.text-xs {
+  font-size: 10px;
+}
+
+.text-md {
+  font-size: 14px;
+}
+
+.text-lg {
+  font-size: 16px;
+}
+
+.text-mono {
+  font-family: var(--wf-mono);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+a {
+  color: var(--wf-accent);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: var(--wf-ink);
+  text-decoration: underline;
+}
+
+/* --- Forms --------------------------------------------------------------- */
+
+.wf-form-group {
+  margin-bottom: 16px;
+}
+
+.wf-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin-bottom: 4px;
+}
+
+.wf-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1.5px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  font-size: 12px;
+  font-family: var(--wf-font);
+  color: var(--wf-text);
+  background: var(--wf-white);
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.wf-input:focus {
+  border-color: var(--wf-accent);
+  outline: none;
+}
+
+.wf-input::placeholder {
+  color: var(--wf-muted);
+}
+
+.wf-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1.5px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  font-size: 12px;
+  font-family: var(--wf-font);
+  color: var(--wf-text);
+  background: var(--wf-white);
+  box-sizing: border-box;
+  appearance: auto;
+  transition: border-color 0.15s;
+}
+
+.wf-select:focus {
+  border-color: var(--wf-accent);
+  outline: none;
+}
+
+.wf-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1.5px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  font-size: 12px;
+  font-family: var(--wf-font);
+  color: var(--wf-text);
+  background: var(--wf-white);
+  box-sizing: border-box;
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+}
+
+.wf-textarea:focus {
+  border-color: var(--wf-accent);
+  outline: none;
+}
+
+.wf-form-hint {
+  font-size: 10px;
+  color: var(--wf-muted);
+  margin-top: 4px;
+}
+
+html.wireframe .wf-input,
+html.wireframe .wf-select,
+html.wireframe .wf-textarea {
+  border-radius: var(--wf-wobble-radius);
+  filter: var(--wf-wobble-filter);
+  box-shadow:
+    0 0.5px 0.5px rgba(30, 35, 60, 0.08),
+    0 1px 2px rgba(30, 35, 60, 0.06),
+    0 2px 4px rgba(30, 35, 60, 0.04);
+}
+
+/* --- Buttons ------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--wf-font);
+  border: 1.5px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  background: var(--wf-white);
+  color: var(--wf-text);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--wf-accent);
+  color: var(--wf-accent);
+  background: var(--wf-accent-fill);
+}
+
+.btn-primary {
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  border-color: var(--wf-accent);
+}
+
+.btn-primary:hover {
+  background: var(--wf-ink);
+  border-color: var(--wf-ink);
+  color: var(--wf-white);
+}
+
+.btn-secondary {
+  background: var(--wf-white);
+  color: var(--wf-text);
+  border-color: var(--wf-line);
+}
+
+.btn-secondary:hover {
+  border-color: var(--wf-accent);
+  color: var(--wf-accent);
+}
+
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--wf-surface);
+  border-color: var(--wf-line);
+}
+
+.btn-danger {
+  background: var(--wf-red);
+  color: var(--wf-white);
+  border-color: var(--wf-red);
+}
+
+.btn-danger:hover {
+  background: var(--wf-ink);
+  border-color: var(--wf-ink);
+  color: var(--wf-white);
+}
+
+.btn-sm {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+html.wireframe .btn {
+  border-radius: var(--wf-wobble-radius);
+  filter: var(--wf-wobble-filter);
+  box-shadow:
+    0 0.5px 0.5px rgba(30, 35, 60, 0.08),
+    0 1px 2px rgba(30, 35, 60, 0.06),
+    0 2px 4px rgba(30, 35, 60, 0.04);
+}
+
+/* --- Badges -------------------------------------------------------------- */
+
+.wf-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.wf-badge-green {
+  background: rgba(69, 120, 90, 0.1);
+  color: var(--wf-green);
+  border: 1px solid var(--wf-green);
+}
+
+.wf-badge-amber {
+  background: rgba(107, 90, 47, 0.1);
+  color: var(--wf-amber);
+  border: 1px solid var(--wf-amber);
+}
+
+.wf-badge-red {
+  background: rgba(139, 69, 83, 0.1);
+  color: var(--wf-red);
+  border: 1px solid var(--wf-red);
+}
+
+.wf-badge-purple {
+  background: rgba(107, 91, 138, 0.1);
+  color: var(--wf-purple);
+  border: 1px solid var(--wf-purple);
+}
+
+/* Light contact shadow for badges in wireframe mode */
+html.wireframe .wf-badge {
+  box-shadow:
+    0 0.5px 0.5px rgba(30, 35, 60, 0.08),
+    0 1px 2px rgba(30, 35, 60, 0.06);
+}
+
+/* Wobble radius inherited from parent; no filter to keep text crisp */
+
+/* --- Cards --------------------------------------------------------------- */
+
+.wf-card {
+  background: var(--wf-white);
+  border: 1.5px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  overflow: hidden;
+}
+
+html.wireframe .wf-card {
+  box-shadow: var(--wf-paper-shadow);
+  border-radius: var(--wf-wobble-radius);
+  filter: var(--wf-wobble-filter);
+}
+
+.wf-card-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--wf-tint);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--wf-surface);
+}
+
+.wf-card-header h3 {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.wf-card-body {
+  padding: 14px 16px;
+}
+
+/* --- Tables -------------------------------------------------------------- */
+
+.wf-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 3px;
+  font-size: 12px;
+}
+
+.wf-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--wf-muted);
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--wf-line);
+  background: var(--wf-surface);
+}
+
+.wf-table tbody tr {
+  background: var(--wf-white);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--wf-tint);
+}
+
+.wf-table tbody tr:nth-child(odd) {
+  transform: rotate(-0.15deg);
+}
+
+.wf-table tbody tr:nth-child(3n) {
+  transform: rotate(0.2deg);
+}
+
+.wf-table tbody tr:nth-child(5n+2) {
+  transform: rotate(-0.1deg);
+}
+
+.wf-table td {
+  padding: 8px 10px;
+  color: var(--wf-text);
+  vertical-align: middle;
+}
+
+.wf-table td:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.wf-table td:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.wf-table tr:hover {
+  background: var(--wf-accent-fill);
+}
+
+.wf-table td a {
+  color: var(--wf-accent);
+  text-decoration: none;
+}
+
+/* Paper shadow on table rows in wireframe mode */
+html.wireframe .wf-table tbody tr {
+  box-shadow: var(--wf-paper-shadow);
+}
+
+/* No wobble filter on tables — text must stay crisp */
+
+/* --- Sketch Image Utility ------------------------------------------------ */
+
+/* Apply to any <img> to render it as a pencil sketch.
+   Requires proto-nav.js to inject the SVG filter into the DOM. */
+.wf-sketch-img {
+  filter: url(#wf-pencil-sketch);
+}
+
+/* --- Tabs ---------------------------------------------------------------- */
+
+.wf-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--wf-line);
+  margin-bottom: 12px;
+}
+
+.wf-tab {
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.wf-tab:hover {
+  color: var(--wf-ink);
+}
+
+.wf-tab.active {
+  color: var(--wf-accent);
+  border-bottom-color: var(--wf-accent);
+}
+
+/* Light contact shadow on active tab in wireframe mode */
+html.wireframe .wf-tabs {
+  box-shadow:
+    0 1px 2px rgba(30, 35, 60, 0.06),
+    0 2px 4px rgba(30, 35, 60, 0.04);
+}
+
+/* --- Section Utilities --------------------------------------------------- */
+
+.wf-section {
+  margin-bottom: 24px;
+}
+
+.wf-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--wf-tint);
+}
+
+.wf-header {
+  margin-bottom: 24px;
+}
+
+.wf-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin: 0 0 4px;
+}
+
+/* --- Utility Classes ----------------------------------------------------- */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.gap-4 {
+  gap: 4px;
+}
+
+.gap-6 {
+  gap: 6px;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-12 {
+  gap: 12px;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-24 {
+  gap: 24px;
+}
+
+.mb-4 {
+  margin-bottom: 4px;
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.mb-24 {
+  margin-bottom: 24px;
+}
+
+.mb-32 {
+  margin-bottom: 32px;
+}
+
+.mt-4 {
+  margin-top: 4px;
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.p-8 {
+  padding: 8px;
+}
+
+.p-12 {
+  padding: 12px;
+}
+
+.p-16 {
+  padding: 16px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.border-t {
+  border-top: 1px solid var(--wf-tint);
+}
+
+.border-b {
+  border-bottom: 1px solid var(--wf-tint);
+}
+
+.wf-hidden {
+  display: none !important;
+}
+
+/* --- Separators & Banners ------------------------------------------------ */
+
+.state-separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  color: var(--wf-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.state-separator::before,
+.state-separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--wf-line);
+  border-style: dashed;
+}
+
+.state-label {
+  padding: 3px 10px;
+  background: var(--wf-surface);
+  border: 1px dashed var(--wf-line);
+  border-radius: 3px;
+}
+
+.modal-banner {
+  padding: 8px 12px;
+  border-radius: var(--wf-radius);
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+
+.modal-banner.warning {
+  background: rgba(107, 90, 47, 0.08);
+  border: 1px solid var(--wf-amber);
+  color: var(--wf-amber);
+}
+
+.modal-banner.info {
+  background: var(--wf-accent-fill);
+  border: 1px solid var(--wf-accent);
+  color: var(--wf-accent);
+}
+
+.modal-banner.success {
+  background: rgba(69, 120, 90, 0.08);
+  border: 1px solid var(--wf-green);
+  color: var(--wf-green);
+}
+
+/* --- Toast Notifications ------------------------------------------------- */
+
+.wf-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 24px;
+  background: var(--wf-ink);
+  color: var(--wf-white);
+  border-radius: 8px;
+  font-size: 13px;
+  z-index: 10000;
+  animation: wfToastIn 0.25s ease-out;
+  box-shadow: var(--wf-paper-shadow);
+  max-width: 480px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.wf-toast-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* --- State Badges -------------------------------------------------------- */
+
+.wf-state-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.wf-state-badge--claimed {
+  background: rgba(61, 109, 170, 0.12);
+  color: var(--wf-accent);
+}
+
+.wf-state-badge--declined {
+  background: rgba(139, 69, 83, 0.12);
+  color: var(--wf-red);
+}
+
+.wf-state-badge--blocked {
+  background: rgba(107, 90, 47, 0.12);
+  color: var(--wf-amber);
+}
+
+.wf-state-badge--delivered {
+  background: rgba(69, 120, 90, 0.12);
+  color: var(--wf-green);
+}
+
+/* ============================================================================
+   NAPKIN MODE — Sharpie-outlined CTAs (no fill, thick dark stroke)
+   ============================================================================
+   Primary buttons: thick (3-4px) — confident sharpie double-stroke
+   Secondary/danger: medium (2-2.5px) — single firm stroke
+   Ghost/default: lighter (2px) — quick sketch mark
+   Asymmetric border-width per side = uneven marker pressure
+   Asymmetric border-radius per corner = imperfect hand-drawn rectangle
+   ============================================================================ */
+
+html.wireframe[data-wf-fidelity="napkin"] .btn {
+  background: transparent;
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+  border-width: 2px;
+  border-radius: 3px 2px 4px 2px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn:nth-child(3n+1) {
+  border-width: 2px 2.5px 2px 2px;
+  border-radius: 2px 3px 2px 4px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn:nth-child(3n+2) {
+  border-width: 2px 2px 2.5px 2px;
+  border-radius: 4px 2px 3px 2px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-primary {
+  border-width: 3px 3.5px 3px 4px;
+  border-radius: 3px 2px 4px 3px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-primary:nth-child(3n+1) {
+  border-width: 3.5px 3px 4px 3px;
+  border-radius: 2px 4px 3px 2px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-primary:nth-child(3n+2) {
+  border-width: 4px 3px 3px 3.5px;
+  border-radius: 4px 3px 2px 3px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-primary:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-secondary {
+  border-width: 2px 2.5px 2.5px 2px;
+  border-radius: 2px 3px 2px 4px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-danger {
+  border-width: 2.5px 2px 2px 2.5px;
+  border-radius: 3px 4px 2px 3px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-danger:hover,
+html.wireframe[data-wf-fidelity="napkin"] .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-ghost {
+  border-color: transparent;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wf-ink);
+}

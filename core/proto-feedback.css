@@ -1,0 +1,272 @@
+/* ============================================================================
+   PROTO FEEDBACK — Feedback Panel Overlay
+   ============================================================================
+   Modal-style feedback form: overlay, header with page badge, type pills,
+   textarea, screenshot drop zone, and submit button.
+   ============================================================================ */
+
+/* Overlay */
+.wf-fb-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 42, 58, 0.3);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.wf-fb-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Panel */
+.wf-fb-panel {
+  background: var(--wf-canvas);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  width: 480px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--wf-paper-shadow);
+  transform: translateY(12px);
+  transition: transform 0.2s ease;
+}
+
+.wf-fb-overlay.open .wf-fb-panel {
+  transform: translateY(0);
+}
+
+/* Header */
+.wf-fb-hd {
+  padding: 14px 20px;
+  border-bottom: 1.5px dashed var(--wf-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wf-fb-hd-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wf-fb-hd-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-fb-page-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+}
+
+.wf-fb-hd-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--wf-muted);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.wf-fb-hd-close:hover {
+  color: var(--wf-ink);
+}
+
+/* Story chips */
+.wf-fb-stories {
+  padding: 8px 20px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--wf-tint);
+}
+
+.wf-fb-story-chip {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--wf-surface);
+  color: var(--wf-muted);
+  border: 1px solid var(--wf-tint);
+}
+
+/* Body / Form */
+.wf-fb-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+.wf-fb-field {
+  margin-bottom: 14px;
+}
+
+.wf-fb-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin-bottom: 6px;
+}
+
+.wf-fb-optional {
+  font-weight: 400;
+  color: var(--wf-muted);
+}
+
+/* Type pills */
+.wf-fb-type-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.wf-fb-type-pill {
+  cursor: pointer;
+}
+
+.wf-fb-type-pill input {
+  display: none;
+}
+
+.wf-fb-type-pill span {
+  display: inline-block;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1.5px solid var(--wf-line);
+  border-radius: 4px;
+  color: var(--wf-text);
+  background: var(--wf-white);
+  transition: all 0.15s;
+}
+
+.wf-fb-type-pill:hover span {
+  border-color: var(--wf-accent);
+  color: var(--wf-accent);
+}
+
+.wf-fb-type-pill input:checked + span {
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  border-color: var(--wf-accent);
+}
+
+/* Textarea */
+.wf-fb-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  font-size: 12px;
+  font-family: var(--wf-font);
+  color: var(--wf-text);
+  background: var(--wf-white);
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+}
+
+.wf-fb-textarea:focus {
+  border-color: var(--wf-accent);
+  outline: none;
+}
+
+/* Screenshot drop zone */
+.wf-fb-drop {
+  border: 2px dashed var(--wf-line);
+  border-radius: var(--wf-radius);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wf-fb-drop:hover {
+  border-color: var(--wf-accent);
+  background: var(--wf-accent-fill);
+}
+
+.wf-fb-drop-hint {
+  font-size: 11px;
+  color: var(--wf-muted);
+}
+
+.wf-fb-img-preview {
+  max-width: 100%;
+  max-height: 120px;
+  border-radius: var(--wf-radius);
+}
+
+.wf-fb-img-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.wf-fb-paste-btn,
+.wf-fb-clear-btn {
+  background: none;
+  border: none;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-accent);
+  cursor: pointer;
+  padding: 2px 4px;
+  font-family: inherit;
+}
+
+.wf-fb-paste-btn:hover,
+.wf-fb-clear-btn:hover {
+  text-decoration: underline;
+}
+
+.wf-fb-clear-btn {
+  color: var(--wf-red);
+}
+
+/* Actions / Submit */
+.wf-fb-actions {
+  padding-top: 8px;
+  border-top: 1px solid var(--wf-tint);
+}
+
+.wf-fb-submit-btn {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--wf-font);
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  border: none;
+  border-radius: var(--wf-radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.wf-fb-submit-btn:hover {
+  background: var(--wf-ink);
+}

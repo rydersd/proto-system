@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Record Name — Project Name</title>
+  <link rel="stylesheet" href="core/proto-core.css">
+  <link rel="stylesheet" href="surfaces/salesforce.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<div class="sfdc-record-page">
+
+  <!-- Record Header -->
+  <div class="sfdc-record-header">
+    <div class="sfdc-record-header-top">
+      <div class="sfdc-record-info">
+        <div class="sfdc-record-type">Opportunity</div>
+        <h1 class="sfdc-record-name">Record Name</h1>
+      </div>
+      <div class="sfdc-record-actions">
+        <button class="sfdc-btn">Edit</button>
+        <button class="sfdc-btn-primary">Mark as Current Stage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlights Bar -->
+  <div class="sfdc-highlights-bar">
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Amount</div>
+      <div class="sfdc-highlight-value">$2.4M</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Stage</div>
+      <div class="sfdc-highlight-value">Discovery</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Close Date</div>
+      <div class="sfdc-highlight-value">Q2 2026</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Owner</div>
+      <div class="sfdc-highlight-value">User Name</div>
+    </div>
+  </div>
+
+  <!-- Path Bar -->
+  <div class="sfdc-path-bar">
+    <span class="sfdc-path-step complete">Stage 1</span>
+    <span class="sfdc-path-step current">Stage 2</span>
+    <span class="sfdc-path-step">Stage 3</span>
+    <span class="sfdc-path-step">Stage 4</span>
+    <button class="sfdc-path-complete-btn">Mark Stage as Complete</button>
+  </div>
+
+  <!-- 3-Column Layout -->
+  <div class="sfdc-record-layout">
+
+    <!-- LEFT: Related Lists -->
+    <div class="sfdc-col-related">
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Related Items (2)</h3></div>
+        <div class="sfdc-card-body">
+          <a href="#" class="sfdc-related-item">
+            <div class="sfdc-related-info">
+              <div class="sfdc-related-title">Related Record</div>
+              <div class="sfdc-related-sub">Type · Role</div>
+            </div>
+            <div class="sfdc-related-meta">$500K</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Record Detail -->
+    <div class="sfdc-col-record">
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Details</h3></div>
+        <div class="sfdc-card-body">
+          <div class="sfdc-detail-grid">
+            <div class="sfdc-detail-field">
+              <label>Field Name</label>
+              <div class="sfdc-field-value">Field Value</div>
+            </div>
+            <div class="sfdc-detail-field">
+              <label>Status</label>
+              <div class="sfdc-field-value"><span class="wf-badge wf-badge-green">Active</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Activity -->
+    <div class="sfdc-col-activity">
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Activity Timeline</h3></div>
+        <div class="sfdc-card-body">
+          <a href="#" class="sfdc-feed-item-link">
+            <div class="sfdc-feed-avatar system">📝</div>
+            <div class="sfdc-feed-body">
+              <div class="sfdc-feed-text"><strong>Note</strong> — Description · User Name</div>
+              <div class="sfdc-feed-time">Mar 5, 2:30 PM</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Record Name</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">Salesforce record page showing key details, related lists, and activity.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="core/proto-nav.js"></script>
+
+</body>
+</html>

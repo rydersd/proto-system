@@ -1,0 +1,266 @@
+/* ============================================================================
+   PROTO BLUEPRINT — Paper Utilities, Fidelity & Confidence
+   ============================================================================
+   Physical-artifact effects: torn edges, tape, pushpins, stacked paper,
+   sketch borders. Plus the multi-fidelity slider and confidence-aware
+   rendering system.
+   ============================================================================ */
+
+/* --- Torn Edge ---
+   SVG filter chain per element:
+   1. feTurbulence creates organic Perlin tear noise (unique random seed per element)
+   2. feDisplacementMap rips the shape along that noise
+   3. Shadow copy of displaced shape, offset + blurred
+   4. Second feTurbulence (low-freq curl noise) displaces the shadow
+      so depth varies along the edge — simulates uneven paper curl/lift
+   5. Composite: varying shadow behind torn shape
+
+   Each .wf-torn-* element gets a unique filter at init via randomizeTornEdges()
+   in proto-nav.js, so every tear is different. */
+.wf-torn-top,
+.wf-torn-bottom {
+  position: relative;
+  overflow: visible;
+}
+.wf-torn-top::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: inherit;
+  filter: var(--wf-torn-filter, url(#wf-torn-edge));
+  z-index: -1;
+}
+
+.wf-torn-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: inherit;
+  filter: var(--wf-torn-filter, url(#wf-torn-edge));
+  transform: scaleY(-1);
+  z-index: -1;
+}
+
+/* Napkin mode — soften torn edges to light gray paper fiber */
+html.wireframe[data-wf-fidelity="napkin"] .wf-torn-top::before,
+html.wireframe[data-wf-fidelity="napkin"] .wf-torn-bottom::after {
+  filter: var(--wf-torn-filter, url(#wf-torn-edge)) blur(0.5px);
+}
+
+/* --- Tape Effect --- */
+.wf-tape {
+  position: relative;
+}
+.wf-tape::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 80px;
+  height: 24px;
+  background: var(--wf-tape-color);
+  border: 1px solid var(--wf-tape-border);
+  opacity: 0.85;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wf-tape-left::before {
+  left: 16px;
+  transform: rotate(3deg);
+}
+
+.wf-tape-right::before {
+  left: auto;
+  right: 16px;
+  transform: rotate(-3deg);
+}
+
+/* --- Pushpin Effect --- */
+.wf-pin {
+  position: relative;
+}
+.wf-pin::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--wf-pin-color);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --- Stacked Paper Effect --- */
+.wf-stacked {
+  position: relative;
+}
+.wf-stacked::before,
+.wf-stacked::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: var(--wf-surface);
+  z-index: -1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: var(--wf-radius);
+}
+.wf-stacked::before {
+  transform: rotate(-1.2deg);
+}
+.wf-stacked::after {
+  transform: rotate(0.8deg);
+  inset: 6px;
+}
+
+/* --- Sketch Border --- */
+.wf-sketch {
+  border: 2px solid var(--wf-ink);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+/* --- Confidence-Aware Rendering --- */
+[data-wf-confidence="uncertain"] {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+  filter: var(--wf-wobble-filter);
+  opacity: 0.85;
+}
+
+[data-wf-confidence="partial"] {
+  border-radius: 8px 4px 6px 3px / 3px 6px 4px 8px !important;
+}
+
+[data-wf-confidence="confirmed"] {
+  border-radius: var(--wf-radius) !important;
+  filter: none;
+}
+
+/* At polished fidelity, uncertain still shows dashed border as visual cue */
+html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
+  filter: none;
+  border-style: dashed;
+  opacity: 0.9;
+  border-radius: var(--wf-radius) !important;
+}
+
+/* --- Fidelity Slider (Context Bar) --- */
+.wf-ctx-fidelity {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--wf-tint);
+  font-weight: 600;
+}
+
+.wf-ctx-fidelity label {
+  opacity: 0.7;
+}
+
+.wf-ctx-fidelity input[type="range"] {
+  width: 60px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.wf-ctx-fidelity input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--wf-white);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.wf-ctx-fidelity input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--wf-white);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+#wf-fidelity-text {
+  min-width: 50px;
+  font-size: 9px;
+  opacity: 0.6;
+}
+
+/* --- Napkin Fidelity Overrides — slider legibility ---------------------- */
+html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-fidelity {
+  color: var(--wf-muted);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-fidelity label { opacity: 1; }
+html.wireframe[data-wf-fidelity="napkin"] #wf-fidelity-text { opacity: 0.9; }
+
+/* --- Napkin: Corner Notch — paper dog-ear effect on cards --------------- */
+html.wireframe[data-wf-fidelity="napkin"] .wf-card,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card,
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card,
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card {
+  position: relative;
+  overflow: visible;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .wf-card::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card::after,
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: var(--wf-notch-size, 12px);
+  height: var(--wf-notch-size, 12px);
+  background: var(--wf-canvas);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  filter: blur(0.3px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Preserve existing ::after effects — no corner notch on stacked/torn */
+html.wireframe[data-wf-fidelity="napkin"] .wf-stacked::after {
+  clip-path: none;
+  /* Rest of stacked styles inherited from base rules */
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .wf-torn-bottom::after {
+  clip-path: none;
+  filter: var(--wf-torn-filter, url(#wf-torn-edge));
+}
+
+/* Per-element notch size variation */
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+1)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+1)::after { --wf-notch-size: 11px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+2)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+2)::after { --wf-notch-size: 14px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+3)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+3)::after { --wf-notch-size: 10px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+4)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+4)::after { --wf-notch-size: 16px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+5)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+5)::after { --wf-notch-size: 12px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+6)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+6)::after { --wf-notch-size: 13px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+7)::after,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+7)::after { --wf-notch-size: 15px; }

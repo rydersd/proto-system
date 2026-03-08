@@ -1,0 +1,342 @@
+/* ============================================================================
+   PROTO TOKENS — Design Tokens, Global Reset & Page Chrome
+   ============================================================================
+   Color palette, typography scale, spacing, blueprint grid, paper texture,
+   watermark, and wireframe badge. This file defines the visual foundation
+   that every other module builds on.
+   ============================================================================ */
+
+:root {
+  --wf-ink:         #1e2a3a;
+  --wf-text:        #3b4f68;
+  --wf-muted:       #4a5f7f;
+  --wf-line:        #b0bdd0;
+  --wf-tint:        #dce4ef;
+  --wf-surface:     #edf1f7;
+  --wf-canvas:      #f0f4fa;
+  --wf-white:       #ffffff;
+  --wf-accent:      #3d6daa;
+  --wf-accent-lt:   #e8eff8;
+  --wf-accent-fill: rgba(61, 109, 170, 0.07);
+  --wf-red:         #8b4553;
+  --wf-amber:       #6b5a2f;
+  --wf-green:       #45785a;
+  --wf-purple:      #6b5b8a;
+  --wf-font:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --wf-mono:        'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --wf-radius:      4px;
+  --wf-paper-shadow:
+    0 0.5px 0.5px rgba(30, 35, 60, 0.10),
+    0 1px 1px rgba(30, 35, 60, 0.07),
+    0 2px 2px rgba(30, 35, 60, 0.05),
+    0 4px 4px rgba(30, 35, 60, 0.035),
+    0 8px 8px rgba(30, 35, 60, 0.02),
+    0 16px 16px rgba(30, 35, 60, 0.012);
+  --wf-tape-color: rgba(220, 228, 200, 0.55);
+  --wf-tape-border: rgba(180, 190, 160, 0.3);
+  --wf-pin-color: #c0392b;
+}
+
+html.wireframe {
+  background: var(--wf-canvas);
+  --wf-wobble-radius: 4px 12px 2px 10px / 10px 2px 12px 4px;
+  --wf-grain-opacity: 0.12;
+  --wf-grid-opacity: 0.08;
+  --wf-shadow-scale: 1;
+  --wf-wobble-filter: url(#wf-line-wobble);
+}
+
+html.wireframe[data-wf-fidelity="napkin"] {
+  --wf-wobble-radius: 2px 1px 3px 1px / 1px 2px 1px 3px;
+  --wf-wobble-filter: none;
+  --wf-grain-opacity: 0.4;
+  --wf-grid-opacity: 0.06;
+  --wf-shadow-scale: 1.5;
+  /* White paper prototype — no sepia, no warmth */
+  --wf-canvas: #ffffff;
+  --wf-surface: #f8f8f8;
+  --wf-white: #ffffff;
+  --wf-ink: #1a1a1a;
+  --wf-text: #2a2a2a;
+  --wf-muted: #888888;
+  --wf-line: #aaaaaa;
+  --wf-tint: #e0e0e0;
+  --wf-accent: #1a1a1a;
+  --wf-accent-lt: #f0f0f0;
+  --wf-accent-fill: rgba(0, 0, 0, 0.04);
+  /* Semantic colors removed — grayscale(1) filter handles desaturation */
+  --wf-paper-shadow:
+    0 0.5px 1px rgba(0, 0, 0, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    0 16px 32px rgba(0, 0, 0, 0.025),
+    0 24px 48px rgba(0, 0, 0, 0.015);
+}
+
+html.wireframe[data-wf-fidelity="polished"] {
+  --wf-wobble-radius: var(--wf-radius);
+  --wf-grain-opacity: 0;
+  --wf-grid-opacity: 0.02;
+  --wf-shadow-scale: 0;
+  --wf-wobble-filter: none;
+}
+
+/* ── Napkin: Card Transform Variation — "loose papers on a desk" ──────── */
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+1),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+1),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+1),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+1) {
+  transform: rotate(-0.3deg) perspective(800px) rotateY(0.2deg) rotateX(-0.1deg);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+2),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+2),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+2),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+2) {
+  transform: rotate(0.2deg) perspective(800px) rotateY(-0.15deg) rotateX(0.1deg);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+3),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+3),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+3),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+3) {
+  transform: rotate(0.4deg) perspective(800px) rotateY(0.1deg) rotateX(0.15deg);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+4),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+4),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+4),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+4) {
+  transform: rotate(-0.15deg) perspective(800px) rotateY(-0.25deg) rotateX(-0.05deg);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+5),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+5),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+5),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+5) {
+  transform: rotate(0.25deg) perspective(800px) rotateY(0.3deg) rotateX(0.1deg);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+6),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+6),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+6),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+6) {
+  transform: rotate(-0.5deg) perspective(800px) rotateY(-0.1deg) rotateX(0.2deg);
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7n+7),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7n+7),
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:nth-child(7n+7),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7n+7) {
+  transform: rotate(0.1deg) perspective(800px) rotateY(0.2deg) rotateX(-0.15deg);
+}
+
+/* Hover: lift without rotation */
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:hover,
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:hover,
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card:hover,
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Napkin: Anti-alias Softening — sub-pixel halo on cards ───────────── */
+html.wireframe[data-wf-fidelity="napkin"] .wf-card,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card,
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card {
+  outline: 0.5px solid rgba(0, 0, 0, 0.03);
+}
+
+html.wireframe body {
+  font-family: var(--wf-font);
+  color: var(--wf-text);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 99px, rgba(61, 109, 170, calc(var(--wf-grid-opacity) * 2)) 100px),
+    repeating-linear-gradient(90deg, transparent, transparent 99px, rgba(61, 109, 170, calc(var(--wf-grid-opacity) * 2)) 100px),
+    repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(61, 109, 170, var(--wf-grid-opacity)) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(61, 109, 170, var(--wf-grid-opacity)) 20px),
+    var(--wf-canvas);
+  position: relative;
+}
+
+/* Napkin mode — full grayscale strips all remaining hardcoded color
+   (surface CSS, inline styles, avatar backgrounds, etc.) */
+html.wireframe[data-wf-fidelity="napkin"] body {
+  filter: grayscale(1);
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(0, 0, 0, var(--wf-grid-opacity)) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0, 0, 0, var(--wf-grid-opacity)) 20px),
+    var(--wf-canvas);
+}
+
+/* Watermark — rotated, full page, very faint */
+html.wireframe::before {
+  content: 'WIREFRAME — NOT FINAL DESIGN';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 48px;
+  font-weight: 700;
+  color: rgba(61, 109, 170, 0.04);
+  transform: translate(-50%, -50%) rotate(-30deg);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Fixed bottom badge */
+html.wireframe::after {
+  content: 'WIREFRAME · FOR DISCUSSION ONLY';
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--wf-muted);
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: var(--wf-radius);
+  padding: 6px 10px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Paper grain texture overlay — napkin mode only.
+   Natural paper texture gives the "working on actual paper" feel. */
+html.wireframe[data-wf-fidelity="napkin"] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url(textures/natural-paper.png) repeat;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Per-element paper texture — napkin mode only.
+   Each card gets its own paper grain so siblings look like different
+   cuts from one sheet. Offset varies per nth-child. */
+html.wireframe[data-wf-fidelity="napkin"] .wf-card,
+html.wireframe[data-wf-fidelity="napkin"] .ds-card,
+html.wireframe[data-wf-fidelity="napkin"] .ds-kpi-card,
+html.wireframe[data-wf-fidelity="napkin"] .ds-sidebar-card,
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card {
+  background-color: var(--wf-white);
+  background-image: url(textures/natural-paper.png);
+  background-repeat: repeat;
+  background-blend-mode: overlay;
+  background-position: var(--wf-tex-offset, 0 0);
+}
+
+/* Vary texture offset per sibling — napkin mode only */
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(2),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(2),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(2) { --wf-tex-offset: -40px -30px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(3),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(3),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(3) { --wf-tex-offset: -80px -60px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(4),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(4),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(4) { --wf-tex-offset: -120px -20px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(5),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(5),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(5) { --wf-tex-offset: -30px -90px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(6),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(6),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(6) { --wf-tex-offset: -70px -50px; }
+html.wireframe[data-wf-fidelity="napkin"] .wf-card:nth-child(7),
+html.wireframe[data-wf-fidelity="napkin"] .ds-card:nth-child(7),
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-card:nth-child(7) { --wf-tex-offset: -110px -80px; }
+
+/* ============================================================================
+   NAPKIN STENCILS — Coffee stains, scribbles & sketch marks
+   ============================================================================
+   Scattered pseudo-randomly across the page background in napkin mode only.
+   Uses fixed-position SVG overlays at low opacity so they feel like
+   artifacts left behind on the paper, not part of the wireframe content.
+   ============================================================================ */
+
+/* Container for stencil overlays — injected by proto-nav.js in napkin mode */
+.wf-stencil-layer {
+  display: none;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .wf-stencil-layer {
+  display: block;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Individual stencils — positioned absolutely within the layer.
+   The layer itself handles visibility via display: none/block. */
+.wf-stencil {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Coffee ring — top right area */
+.wf-stencil--coffee-1 {
+  top: 8%;
+  right: 6%;
+  width: 160px;
+  height: 160px;
+  opacity: 0.35;
+}
+
+/* Coffee double ring — lower left */
+.wf-stencil--coffee-2 {
+  bottom: 15%;
+  left: 3%;
+  width: 200px;
+  height: 180px;
+  opacity: 0.25;
+  transform: rotate(12deg);
+}
+
+/* Coffee spill — mid-right edge */
+.wf-stencil--spill {
+  top: 45%;
+  right: -20px;
+  width: 150px;
+  height: 130px;
+  opacity: 0.3;
+  transform: rotate(-15deg);
+}
+
+/* Scribble — illegible handwriting, upper left */
+.wf-stencil--scribble-1 {
+  top: 22%;
+  left: 8%;
+  width: 130px;
+  height: 65px;
+  opacity: 0.5;
+  transform: rotate(-3deg);
+}
+
+/* Sketch doodle — small flowchart, lower right */
+.wf-stencil--scribble-2 {
+  bottom: 25%;
+  right: 10%;
+  width: 100px;
+  height: 85px;
+  opacity: 0.4;
+  transform: rotate(5deg);
+}
+
+/* Wavy lines — hurried note, center left */
+.wf-stencil--scribble-3 {
+  top: 65%;
+  left: 5%;
+  width: 115px;
+  height: 50px;
+  opacity: 0.35;
+  transform: rotate(-1deg);
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard — Charts Demo</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- Page Header -->
+  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+    <div>
+      <h1 style="font-size:22px;font-weight:700;color:var(--wf-ink);margin:0 0 4px 0;">Analytics Dashboard</h1>
+      <p id="header-subtitle" style="font-size:13px;color:var(--wf-muted);margin:0;">Real-time metrics</p>
+    </div>
+    <button class="btn btn-primary" onclick="location.reload()">Refresh Data</button>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="ds-kpi-grid" style="margin-bottom:24px;" id="kpi-grid">
+    <!-- KPI cards injected by JS -->
+  </div>
+
+  <!-- Chart Row 1: Bar + Donut -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+
+    <!-- Bar Chart -->
+    <div class="ds-card wf-tape" data-wf-confidence="confirmed">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Revenue by Quarter</span>
+        <span class="wf-badge">6 quarters</span>
+      </div>
+      <div class="ds-card-body" id="chart-bar">
+        <!-- SVG bar chart injected by JS -->
+      </div>
+    </div>
+
+    <!-- Donut Chart -->
+    <div class="ds-card wf-pin" data-wf-confidence="partial">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Revenue by Source</span>
+        <span class="wf-badge wf-badge-purple">auto-grouped</span>
+      </div>
+      <div class="ds-card-body" id="chart-donut">
+        <!-- SVG donut chart injected by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Row 2: Data Table -->
+  <div style="margin-bottom:20px;">
+
+    <!-- Top Customers Table -->
+    <div class="ds-card wf-sketch" data-wf-confidence="confirmed">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Top Customers by Revenue</span>
+        <span class="wf-badge wf-badge-green" id="customer-count-badge">20 accounts</span>
+      </div>
+      <!-- Filter toolbar -->
+      <div id="table-filters" style="display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--wf-line);align-items:center;flex-wrap:wrap;">
+        <input type="text" class="wf-input" id="filter-search" placeholder="Search customers..." style="flex:1;min-width:180px;">
+        <select class="wf-select" id="filter-status">
+          <option value="">All Statuses</option>
+          <option value="Active">Active</option>
+          <option value="At Risk">At Risk</option>
+          <option value="Churned">Churned</option>
+        </select>
+        <select class="wf-select" id="filter-region">
+          <option value="">All Sectors</option>
+          <option value="Western Spiral Arm">Western Spiral Arm</option>
+          <option value="Eastern Spiral Arm">Eastern Spiral Arm</option>
+          <option value="Outer Rim">Outer Rim</option>
+          <option value="Galactic Core">Galactic Core</option>
+        </select>
+      </div>
+      <div class="ds-card-body" id="table-customers" style="padding:0;">
+        <!-- Table injected by JS -->
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Design Notes -->
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Analytics Dashboard</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">A dashboard with two functional SVG charts (bar, donut) and a data table that regenerate random data on each page reload. Demonstrates pure SVG chart rendering and table components using framework design tokens — no external libraries. KPI cards show randomized metrics with trend indicators.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">Product manager needs a quick overview of key business metrics — revenue trends, user growth, traffic sources, and conversion funnel health — all in one glanceable view.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Design Spec</div>
+      <div class="wf-spec-body">Single-column layout at 1200px max-width. 4-up KPI grid at top. Row of 2-column chart cards (bar + donut), then a full-width data table below. Charts use responsive SVG with viewBox. Table uses wf-table with status badges and color-coded growth values. Colors pulled from CSS custom properties at runtime. Paper utilities (tape on bar chart, pin on donut, sketch on table) add wireframe texture.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+<script>
+/* Re-render on bfcache restore (back/forward navigation) so data randomizes */
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) renderDashboard();
+});
+
+function renderDashboard() {
+  /* ===================================================================
+     DESIGN TOKEN READER
+     Read CSS custom properties so SVG rendering stays in sync with the
+     framework's token system. Never hardcode hex in chart output.
+     =================================================================== */
+  var root = getComputedStyle(document.documentElement);
+  function token(name) { return root.getPropertyValue(name).trim() || name; }
+  var C = {
+    accent: token('--wf-accent'),
+    green:  token('--wf-green'),
+    amber:  token('--wf-amber'),
+    red:    token('--wf-red'),
+    purple: token('--wf-purple'),
+    ink:    token('--wf-ink'),
+    text:   token('--wf-text'),
+    muted:  token('--wf-muted'),
+    line:   token('--wf-line'),
+    tint:   token('--wf-tint'),
+    surface:token('--wf-surface')
+  };
+
+  /* ===================================================================
+     UTILITY HELPERS
+     =================================================================== */
+
+  /* Random integer between min and max (inclusive) */
+  function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  /* Random float between min and max */
+  function randFloat(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  /* Format a number as currency shorthand */
+  function fmtCurrency(n) {
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return '$' + (n / 1e3).toFixed(0) + 'K';
+    return '$' + n.toFixed(0);
+  }
+
+  /* Format a number with commas */
+  function fmtNumber(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  /* Escape HTML for safe SVG text */
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  /* ===================================================================
+     HEADER SUBTITLE — generated timestamp
+     =================================================================== */
+  var now = new Date();
+  var timeStr = now.toLocaleString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: 'numeric', minute: '2-digit', hour12: true
+  });
+  document.getElementById('header-subtitle').textContent =
+    'Real-time metrics \u00B7 Last updated: ' + timeStr;
+
+  /* ===================================================================
+     KPI CARDS — random values on each reload
+     =================================================================== */
+  (function renderKPIs() {
+    var revenue = randInt(1000000, 5000000);
+    var users   = randInt(10000, 50000);
+    var convRate = randFloat(2, 8);
+    var aov      = randInt(50, 200);
+
+    var kpis = [
+      {
+        value: fmtCurrency(revenue),
+        label: 'Total Revenue',
+        delta: randInt(-15, 25),
+        confidence: 'confirmed'
+      },
+      {
+        value: fmtNumber(users),
+        label: 'Active Users',
+        delta: randInt(-10, 20),
+        confidence: 'confirmed'
+      },
+      {
+        value: convRate.toFixed(1) + '%',
+        label: 'Conversion Rate',
+        delta: randFloat(-2, 3).toFixed(1),
+        confidence: 'partial'
+      },
+      {
+        value: '$' + aov,
+        label: 'Avg Order Value',
+        delta: randInt(-12, 18),
+        confidence: 'confirmed'
+      }
+    ];
+
+    var html = '';
+    kpis.forEach(function(kpi) {
+      var isUp = parseFloat(kpi.delta) >= 0;
+      var trendClass = isUp ? 'ds-kpi-up' : 'ds-kpi-down';
+      var arrow = isUp ? '\u2191' : '\u2193';
+      var deltaAbs = Math.abs(parseFloat(kpi.delta));
+      html += '<div class="ds-kpi-card" data-wf-confidence="' + kpi.confidence + '">'
+            + '  <div class="ds-kpi-value">' + kpi.value + '</div>'
+            + '  <div class="ds-kpi-label">' + kpi.label + '</div>'
+            + '  <div class="ds-kpi-trend ' + trendClass + '">'
+            +      arrow + ' ' + deltaAbs + '% vs last period'
+            + '  </div>'
+            + '</div>';
+    });
+    document.getElementById('kpi-grid').innerHTML = html;
+  })();
+
+  /* ===================================================================
+     CHART 1: BAR CHART — Revenue by Quarter
+     6 bars, Q1 2025 through Q2 2026, random $200K-$800K
+     =================================================================== */
+  (function renderBarChart() {
+    var labels = ['Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025', 'Q1 2026', 'Q2 2026'];
+    var values = labels.map(function() { return randInt(200000, 800000); });
+    var maxVal = Math.max.apply(null, values);
+
+    /* Chart dimensions within viewBox */
+    var vw = 500, vh = 250;
+    var padL = 60, padR = 20, padT = 20, padB = 40;
+    var chartW = vw - padL - padR;
+    var chartH = vh - padT - padB;
+
+    /* Y-axis scale: round max up to nearest 100K */
+    var yMax = Math.ceil(maxVal / 100000) * 100000;
+    var ySteps = 4;
+    var yStep = yMax / ySteps;
+
+    /* Bar geometry */
+    var barCount = values.length;
+    var barGap = chartW / barCount;
+    var barW = barGap * 0.6;
+    var barOffset = (barGap - barW) / 2;
+
+    var svg = '<svg viewBox="0 0 ' + vw + ' ' + vh + '" width="100%" height="220" '
+            + 'style="font-family:inherit;" role="img" aria-label="Bar chart showing revenue by quarter">';
+
+    /* Gridlines */
+    for (var g = 0; g <= ySteps; g++) {
+      var gy = padT + chartH - (g / ySteps) * chartH;
+      var gridVal = g * yStep;
+      svg += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (vw - padR) + '" y2="' + gy + '" '
+           + 'stroke="' + C.line + '" stroke-opacity="0.25" stroke-width="1"/>';
+      svg += '<text x="' + (padL - 8) + '" y="' + (gy + 4) + '" text-anchor="end" '
+           + 'font-size="11" fill="' + C.muted + '">' + fmtCurrency(gridVal) + '</text>';
+    }
+
+    /* Bars with animation */
+    values.forEach(function(val, i) {
+      var barH = (val / yMax) * chartH;
+      var bx = padL + i * barGap + barOffset;
+      var by = padT + chartH - barH;
+
+      /* Animated bar: starts at zero height, transitions to full */
+      svg += '<rect x="' + bx + '" y="' + (padT + chartH) + '" width="' + barW + '" height="0" '
+           + 'fill="' + C.accent + '" rx="2">'
+           + '<title>' + labels[i] + ': ' + fmtCurrency(val) + '</title>'
+           + '<animate attributeName="y" from="' + (padT + chartH) + '" to="' + by + '" '
+           + 'dur="0.6s" begin="' + (i * 0.08) + 's" fill="freeze"/>'
+           + '<animate attributeName="height" from="0" to="' + barH + '" '
+           + 'dur="0.6s" begin="' + (i * 0.08) + 's" fill="freeze"/>'
+           + '</rect>';
+
+      /* Value label above bar */
+      svg += '<text x="' + (bx + barW / 2) + '" y="' + (by - 6) + '" text-anchor="middle" '
+           + 'font-size="10" fill="' + C.text + '" opacity="0">'
+           + fmtCurrency(val)
+           + '<animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.5s" fill="freeze"/>'
+           + '</text>';
+
+      /* X-axis label */
+      svg += '<text x="' + (bx + barW / 2) + '" y="' + (padT + chartH + 20) + '" text-anchor="middle" '
+           + 'font-size="11" fill="' + C.muted + '">' + labels[i] + '</text>';
+    });
+
+    svg += '</svg>';
+    document.getElementById('chart-bar').innerHTML = svg;
+  })();
+
+  /* ===================================================================
+     CHART 2: DONUT CHART — Revenue by Source
+     3-7 random categories, aggregate smallest into "Other" if > 5
+     =================================================================== */
+  (function renderDonutChart() {
+    var allSources = ['Direct', 'Organic Search', 'Paid Ads', 'Referral', 'Social Media', 'Email', 'Affiliate', 'Partner'];
+    var sliceColors = [C.accent, C.green, C.amber, C.red, C.purple];
+
+    /* Pick 3-7 random categories */
+    var count = randInt(3, 7);
+    var shuffled = allSources.slice().sort(function() { return Math.random() - 0.5; });
+    var picked = shuffled.slice(0, count);
+
+    /* Generate random values and convert to percentages */
+    var rawVals = picked.map(function() { return randInt(5, 100); });
+    var rawTotal = rawVals.reduce(function(a, b) { return a + b; }, 0);
+    var slices = picked.map(function(name, i) {
+      return { name: name, pct: (rawVals[i] / rawTotal) * 100 };
+    });
+
+    /* Sort descending by percentage */
+    slices.sort(function(a, b) { return b.pct - a.pct; });
+
+    /* If more than 5 slices, aggregate the smallest into "Other" */
+    if (slices.length > 5) {
+      var top4 = slices.slice(0, 4);
+      var rest = slices.slice(4);
+      var otherPct = rest.reduce(function(s, d) { return s + d.pct; }, 0);
+      top4.push({ name: 'Other', pct: otherPct });
+      slices = top4;
+    }
+
+    /* Generate a total revenue for the center label */
+    var totalRevenue = randFloat(1.5, 5.0);
+
+    /* SVG donut via stroke-dasharray on circles */
+    var vw = 500, vh = 220;
+    var cx = vw / 2, cy = 100;
+    var r = 72;
+    var circumference = 2 * Math.PI * r;
+    var strokeW = 32;
+
+    var svg = '<svg viewBox="0 0 ' + vw + ' ' + vh + '" width="100%" height="200" '
+            + 'style="font-family:inherit;" role="img" aria-label="Donut chart showing revenue by source">';
+
+    /* Draw slices as circles with stroke-dasharray */
+    var offset = 0;
+    slices.forEach(function(slice, i) {
+      var arcLen = (slice.pct / 100) * circumference;
+      var color = sliceColors[i % sliceColors.length];
+      slice._color = color;
+
+      svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" '
+           + 'stroke="' + color + '" stroke-width="' + strokeW + '" '
+           + 'stroke-dasharray="' + arcLen + ' ' + (circumference - arcLen) + '" '
+           + 'stroke-dashoffset="' + (-offset) + '" '
+           + 'transform="rotate(-90 ' + cx + ' ' + cy + ')">'
+           + '<title>' + esc(slice.name) + ': ' + slice.pct.toFixed(1) + '%</title>'
+           + '</circle>';
+
+      offset += arcLen;
+    });
+
+    /* Center text */
+    svg += '<text x="' + cx + '" y="' + (cy - 6) + '" text-anchor="middle" '
+         + 'font-size="18" font-weight="700" fill="' + C.ink + '">'
+         + '$' + totalRevenue.toFixed(1) + 'M</text>';
+    svg += '<text x="' + cx + '" y="' + (cy + 12) + '" text-anchor="middle" '
+         + 'font-size="11" fill="' + C.muted + '">Total Revenue</text>';
+
+    svg += '</svg>';
+
+    /* Legend as HTML below the chart — easier to read and responsive */
+    var legendHtml = '<div style="display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:center;padding:12px 16px 4px;border-top:1px solid var(--wf-line);margin-top:8px;">';
+    slices.forEach(function(slice) {
+      legendHtml += '<div style="display:flex;align-items:center;gap:6px;">'
+                  + '<span style="width:10px;height:10px;border-radius:50%;background:' + slice._color + ';flex-shrink:0;"></span>'
+                  + '<span style="font-size:13px;color:var(--wf-text);font-weight:600;">' + esc(slice.name) + '</span>'
+                  + '<span style="font-size:13px;color:var(--wf-muted);">' + slice.pct.toFixed(1) + '%</span>'
+                  + '</div>';
+    });
+    legendHtml += '</div>';
+
+    document.getElementById('chart-donut').innerHTML = svg + legendHtml;
+  })();
+
+  /* ===================================================================
+     DATA TABLE: Top Customers by Revenue
+     20 rows of HHGTTG-themed data with search and filter support
+     =================================================================== */
+  (function renderCustomerTable() {
+    var names = [
+      'Sirius Cybernetics Corp', 'Megadodo Publications', 'Magrathea Custom Planets',
+      'Vogon Constructor Fleet', 'Heart of Gold Enterprises', 'Milliways Restaurant Group',
+      'Infinite Improbability Inc', 'Zaphod Beeblebrox Industries', 'Deep Thought Computing',
+      'Slartibartfast Design Co', 'Golgafrincham Ark Fleet', 'Nutrimatic Drinks Corp',
+      'Bistromath Navigation', 'Sub-Etha Publishing', 'Damogran Research Council',
+      'Pan Galactic Gargle Blasters Inc', 'Trillian Analytics', 'Fenchurch Systems',
+      'Hotblack Desiato Media', 'Disaster Area Records'
+    ];
+    var regions = ['Western Spiral Arm', 'Eastern Spiral Arm', 'Outer Rim', 'Galactic Core'];
+    var statuses = [
+      { label: 'Active', badge: 'wf-badge-green' },
+      { label: 'At Risk', badge: 'wf-badge-amber' },
+      { label: 'Churned', badge: 'wf-badge-red' }
+    ];
+
+    /* Generate all 20 rows with random data */
+    var allRows = names.map(function(name) {
+      var revenue = randInt(4200, 420000);
+      var growth = randFloat(-42, 42);
+      var status = statuses[randInt(0, statuses.length - 1)];
+      var region = regions[randInt(0, regions.length - 1)];
+      return {
+        name: name,
+        revenue: revenue,
+        growth: growth,
+        status: status,
+        region: region
+      };
+    });
+
+    /* Sort by revenue descending, then assign ranks */
+    allRows.sort(function(a, b) { return b.revenue - a.revenue; });
+    allRows.forEach(function(row, i) { row.rank = i + 1; });
+
+    /* Render a filtered subset of rows into the table */
+    function renderRows(filtered) {
+      var html = '<table class="wf-table" style="width:100%;">'
+               + '<thead><tr>'
+               + '<th>Rank</th>'
+               + '<th>Customer Name</th>'
+               + '<th style="text-align:right;">Revenue</th>'
+               + '<th style="text-align:right;">Growth</th>'
+               + '<th>Status</th>'
+               + '<th>Region</th>'
+               + '</tr></thead><tbody>';
+
+      if (filtered.length === 0) {
+        html += '<tr><td colspan="6" style="text-align:center;color:' + C.muted + ';padding:24px;">'
+              + 'No customers match the current filters'
+              + '</td></tr>';
+      }
+
+      filtered.forEach(function(row) {
+        var growthVal = row.growth.toFixed(1);
+        var isUp = row.growth >= 0;
+        var growthColor = isUp ? C.green : C.red;
+        var growthSign = isUp ? '+' : '';
+
+        html += '<tr>'
+              + '<td style="color:' + C.muted + ';">' + row.rank + '</td>'
+              + '<td style="font-weight:600;">' + esc(row.name) + '</td>'
+              + '<td style="text-align:right;">' + fmtCurrency(row.revenue) + '</td>'
+              + '<td style="text-align:right;color:' + growthColor + ';">'
+              +   growthSign + growthVal + '%'
+              + '</td>'
+              + '<td><span class="wf-badge ' + row.status.badge + '">' + row.status.label + '</span></td>'
+              + '<td>' + row.region + '</td>'
+              + '</tr>';
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('table-customers').innerHTML = html;
+
+      /* Update badge count in card header */
+      var badge = document.getElementById('customer-count-badge');
+      if (badge) {
+        badge.textContent = filtered.length + ' of ' + allRows.length + ' accounts';
+      }
+    }
+
+    /* Apply all three filters (search, status, region) together */
+    function applyFilters() {
+      var searchTerm = document.getElementById('filter-search').value.toLowerCase();
+      var statusFilter = document.getElementById('filter-status').value;
+      var regionFilter = document.getElementById('filter-region').value;
+
+      var filtered = allRows.filter(function(row) {
+        /* Search: match against customer name */
+        if (searchTerm && row.name.toLowerCase().indexOf(searchTerm) === -1) {
+          return false;
+        }
+        /* Status dropdown */
+        if (statusFilter && row.status.label !== statusFilter) {
+          return false;
+        }
+        /* Region dropdown */
+        if (regionFilter && row.region !== regionFilter) {
+          return false;
+        }
+        return true;
+      });
+
+      renderRows(filtered);
+    }
+
+    /* Wire up filter controls */
+    document.getElementById('filter-search').addEventListener('input', applyFilters);
+    document.getElementById('filter-status').addEventListener('change', applyFilters);
+    document.getElementById('filter-region').addEventListener('change', applyFilters);
+
+    /* Initial render with all rows */
+    renderRows(allRows);
+  })();
+
+}
+
+/* Run on initial load */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderDashboard);
+} else {
+  renderDashboard();
+}
+</script>
+
+</body>
+</html>

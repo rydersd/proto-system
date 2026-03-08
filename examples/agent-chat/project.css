@@ -1,0 +1,66 @@
+/* Agent Chat — project-specific CSS */
+
+/* ── Wireframe mode: paper treatment for chat elements ──
+   Chat uses inline-styled divs, not framework card classes,
+   so we target by attribute selectors and apply wobble + shadow. */
+
+/* Agent message bubbles (left-aligned, rounded top-left flat) */
+html.wireframe [style*="border-radius:2px 12px 12px 12px"] {
+  border-radius: var(--wf-wobble-radius) !important;
+  box-shadow: var(--wf-paper-shadow);
+  filter: var(--wf-wobble-filter);
+  background-image: url(../../core/textures/textured-paper.png);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+}
+
+/* User message bubbles (right-aligned, rounded bottom-right flat) */
+html.wireframe [style*="border-radius:12px 12px 2px 12px"] {
+  border-radius: var(--wf-wobble-radius) !important;
+  box-shadow: var(--wf-paper-shadow);
+  filter: var(--wf-wobble-filter);
+  background-image: url(../../core/textures/textured-paper.png);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+}
+
+/* Streaming/thinking bubble (dashed border variant) */
+html.wireframe [style*="border:1px dashed"] {
+  border-radius: var(--wf-wobble-radius) !important;
+}
+
+/* Composer box */
+html.wireframe [style*="border-radius:10px"] {
+  border-radius: var(--wf-wobble-radius) !important;
+  box-shadow: var(--wf-paper-shadow);
+  filter: var(--wf-wobble-filter);
+}
+
+/* Agent avatars — wobble the circles */
+html.wireframe [style*="border-radius:50%"] {
+  filter: var(--wf-wobble-filter);
+}
+
+/* Sidebar conversation items */
+html.wireframe aside [style*="border-radius:6px"] {
+  border-radius: var(--wf-wobble-radius) !important;
+  filter: var(--wf-wobble-filter);
+}
+
+/* Napkin mode — use natural paper texture + overlay blend for white bg */
+html.wireframe[data-wf-fidelity="napkin"] [style*="border-radius:2px 12px 12px 12px"],
+html.wireframe[data-wf-fidelity="napkin"] [style*="border-radius:12px 12px 2px 12px"] {
+  background-image: url(../../core/textures/natural-paper.png);
+  background-blend-mode: overlay;
+}
+
+/* Polished mode — strip all wireframe treatments */
+html.wireframe[data-wf-fidelity="polished"] [style*="border-radius:2px 12px 12px 12px"],
+html.wireframe[data-wf-fidelity="polished"] [style*="border-radius:12px 12px 2px 12px"],
+html.wireframe[data-wf-fidelity="polished"] [style*="border-radius:10px"],
+html.wireframe[data-wf-fidelity="polished"] aside [style*="border-radius:6px"] {
+  border-radius: revert !important;
+  box-shadow: none;
+  filter: none;
+  background-image: none;
+}

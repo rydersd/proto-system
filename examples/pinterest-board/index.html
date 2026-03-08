@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Board — Design Inspiration</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- Top Bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+    <h1 style="font-size:22px;font-weight:700;color:var(--wf-ink);margin:0;">Design Inspiration</h1>
+    <div style="display:flex;align-items:center;gap:12px;flex:1;justify-content:flex-end;flex-wrap:wrap;">
+      <div class="wf-form-group" style="margin:0;min-width:200px;max-width:320px;flex:1;">
+        <input type="text" class="wf-input" placeholder="Search pins...">
+      </div>
+      <button class="btn btn-primary">+ Add Pin</button>
+    </div>
+  </div>
+
+  <!-- Filter Pills -->
+  <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+    <button class="btn btn-ghost btn-sm">All</button>
+    <button class="btn btn-sm" style="background:var(--wf-accent);color:var(--wf-white);border-color:var(--wf-accent);">UI Patterns</button>
+    <button class="btn btn-ghost btn-sm">Typography</button>
+    <button class="btn btn-ghost btn-sm">Color</button>
+    <button class="btn btn-ghost btn-sm">Layout</button>
+    <button class="btn btn-ghost btn-sm">Motion</button>
+  </div>
+
+  <!-- Masonry Grid -->
+  <div class="masonry-grid">
+
+    <!-- Pin 1: Minimal Dashboard Layout -->
+    <div class="ds-card pin-card" data-wf-confidence="confirmed">
+      <div class="pin-scrap pin-scrap--img wf-pin">
+        <a href="pin-detail.html"><img class="pin-img" style="height:280px;" src="https://picsum.photos/seed/dash-layout/400/280" alt="Minimal dashboard layout inspiration"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Minimal Dashboard Layout</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">M</div>
+          <span style="font-size:12px;color:var(--wf-muted);">M. Chen</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-green">UI</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 2: Brutalist Typography Study -->
+    <div class="ds-card pin-card" data-wf-confidence="partial">
+      <div class="pin-scrap pin-scrap--img wf-tape">
+        <a href="pin-detail.html"><img class="pin-img" style="height:120px;" src="https://picsum.photos/seed/brutalist-type/400/120" alt="Brutalist typography study"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Brutalist Typography Study</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">R</div>
+          <span style="font-size:12px;color:var(--wf-muted);">R. Tanaka</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-purple">TYPE</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 3: Gradient Color System -->
+    <div class="ds-card pin-card">
+      <div class="pin-scrap pin-scrap--img">
+        <a href="pin-detail.html"><img class="pin-img" style="height:180px;" src="https://picsum.photos/seed/gradient-color/400/180" alt="Gradient color system"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);margin-bottom:4px;">Gradient Color System</div>
+        <p style="font-size:12px;color:var(--wf-muted);margin:0;line-height:1.4;">Exploring seamless gradient transitions between brand tokens for hero sections and backgrounds.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-amber);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">L</div>
+          <span style="font-size:12px;color:var(--wf-muted);">L. Okafor</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-amber">COLOR</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 4: Card Component Patterns -->
+    <div class="ds-card pin-card" data-wf-confidence="confirmed">
+      <div class="pin-scrap pin-scrap--img wf-pin">
+        <a href="pin-detail.html"><img class="pin-img" style="height:300px;" src="https://picsum.photos/seed/card-patterns/400/300" alt="Card component patterns"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Card Component Patterns</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-accent);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">J</div>
+          <span style="font-size:12px;color:var(--wf-muted);">J. Park</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-green">UI</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9829;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 5: Whitespace in Editorial Design -->
+    <div class="ds-card pin-card">
+      <div class="pin-scrap pin-scrap--img wf-sketch">
+        <a href="pin-detail.html"><img class="pin-img" style="height:120px;" src="https://picsum.photos/seed/whitespace-ed/400/120" alt="Whitespace in editorial design"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Whitespace in Editorial Design</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-line);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">S</div>
+          <span style="font-size:12px;color:var(--wf-muted);">S. Kim</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge">LAYOUT</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 6: Motion Principles for Micro-interactions -->
+    <div class="ds-card pin-card" data-wf-confidence="partial">
+      <div class="pin-scrap pin-scrap--img">
+        <a href="pin-detail.html"><img class="pin-img" style="height:200px;" src="https://picsum.photos/seed/motion-micro/400/200" alt="Motion principles for micro-interactions"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Motion Principles for Micro-interactions</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">A</div>
+          <span style="font-size:12px;color:var(--wf-muted);">A. Rivera</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-purple">MOTION</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 7: Data Visualization Inspiration -->
+    <div class="ds-card pin-card" data-wf-confidence="uncertain">
+      <div class="pin-scrap pin-scrap--img wf-stacked">
+        <a href="pin-detail.html"><img class="pin-img" style="height:260px;" src="https://picsum.photos/seed/dataviz-inspo/400/260" alt="Data visualization inspiration"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);margin-bottom:4px;">Data Visualization Inspiration</div>
+        <p style="font-size:12px;color:var(--wf-muted);margin:0;line-height:1.4;">Chart patterns, axis styling, and annotation strategies for dashboards.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">D</div>
+          <span style="font-size:12px;color:var(--wf-muted);">D. Nguyen</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-green">DATA</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 8: Dark Mode Token Strategy -->
+    <div class="ds-card pin-card">
+      <div class="pin-scrap pin-scrap--img wf-torn-bottom">
+        <a href="pin-detail.html"><img class="pin-img" style="height:140px;" src="https://picsum.photos/seed/dark-tokens/400/140" alt="Dark mode token strategy"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Dark Mode Token Strategy</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-amber);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">K</div>
+          <span style="font-size:12px;color:var(--wf-muted);">K. Fischer</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-amber">COLOR</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 9: Responsive Grid Breakpoints -->
+    <div class="ds-card pin-card" data-wf-confidence="partial">
+      <div class="pin-scrap pin-scrap--img">
+        <a href="pin-detail.html"><img class="pin-img" style="height:180px;" src="https://picsum.photos/seed/grid-break/400/180" alt="Responsive grid breakpoints"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Responsive Grid Breakpoints</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-accent);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">T</div>
+          <span style="font-size:12px;color:var(--wf-muted);">T. Williams</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge">LAYOUT</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 10: Accessible Color Contrast -->
+    <div class="ds-card pin-card" data-wf-confidence="confirmed">
+      <div class="pin-scrap pin-scrap--img">
+        <a href="pin-detail.html"><img class="pin-img" style="height:200px;" src="https://picsum.photos/seed/a11y-color/400/200" alt="Accessible color contrast"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);margin-bottom:4px;">Accessible Color Contrast</div>
+        <p style="font-size:12px;color:var(--wf-muted);margin:0;line-height:1.4;">WCAG AA and AAA contrast ratio examples for common UI patterns.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-red);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">E</div>
+          <span style="font-size:12px;color:var(--wf-muted);">E. Vasquez</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-red">A11Y</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9829;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 11: Hand-drawn UI Elements -->
+    <div class="ds-card pin-card" data-wf-confidence="uncertain">
+      <div class="pin-scrap pin-scrap--img wf-tape">
+        <a href="pin-detail.html"><img class="pin-img" style="height:240px;" src="https://picsum.photos/seed/hand-drawn/400/240" alt="Hand-drawn UI elements"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Hand-drawn UI Elements</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-purple);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">N</div>
+          <span style="font-size:12px;color:var(--wf-muted);">N. Petrova</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-purple">STYLE</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+    <!-- Pin 12: Navigation Pattern Library -->
+    <div class="ds-card pin-card">
+      <div class="pin-scrap pin-scrap--img wf-sketch">
+        <a href="pin-detail.html"><img class="pin-img" style="height:120px;" src="https://picsum.photos/seed/nav-patterns/400/120" alt="Navigation pattern library"></a>
+      </div>
+      <div class="pin-scrap pin-scrap--title">
+        <div style="font-weight:600;color:var(--wf-ink);">Navigation Pattern Library</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="pin-scrap pin-scrap--action">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--wf-green);color:var(--wf-white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">C</div>
+          <span style="font-size:12px;color:var(--wf-muted);">C. Andersen</span>
+        </div>
+        <div class="pin-scrap pin-scrap--tag"><span class="wf-badge wf-badge-green">UI</span></div>
+        <div class="pin-scrap pin-scrap--action"><button class="btn btn-ghost btn-sm">&#9825;</button></div>
+      </div>
+    </div>
+
+  </div><!-- /masonry-grid -->
+
+  <!-- Load More -->
+  <div style="text-align:center;padding:32px 0;">
+    <button class="btn btn-secondary">Load More</button>
+  </div>
+
+</main>
+
+<!-- Design Notes -->
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Design Inspiration</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">A Pinterest-style masonry mood board for collecting and organizing design inspiration. Uses CSS multi-column layout to create the staggered card grid. Each pin is a transparent card container where individual elements (image, title, badge, avatar, heart) appear as separate paper scraps with their own shadows and slight rotations — creating a corkboard aesthetic.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">Designer needs a visual space to collect, categorize, and browse design references — quickly scanning inspiration by category (UI, typography, color, layout, motion) and saving favorites for later use in projects.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Design Spec</div>
+      <div class="wf-spec-body">Top bar with title, search input, and primary add-pin button. Filter pill row with category toggles (one active shown with accent background). 4-column CSS masonry grid (responsive: 3 cols at 1024px, 2 cols at 768px) using column-count and break-inside:avoid. 12 pin cards with varied placeholder heights (120-300px) for visual rhythm. Each card is a transparent container (.pin-card) with individual paper scrap children (.pin-scrap): image scrap with paper shadow and optional tape/pin/sketch utilities, title strip on its own paper, badge as tiny paper tag, and avatar+heart as small action scraps. Paper utilities distributed for texture: wf-pin (pins 1, 4), wf-tape (pins 2, 11), wf-sketch (pins 5, 12), wf-stacked (pin 7), wf-torn-bottom (pin 8). Confidence attributes mark design certainty. Load More button centered at bottom.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+</body>
+</html>

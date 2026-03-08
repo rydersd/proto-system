@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" width="180" height="160">
+  <!-- Coffee spill — irregular puddle with feathered edges -->
+  <defs>
+    <filter id="spill-blur" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+    </filter>
+    <filter id="spill-edge" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="42"/>
+      <feDisplacementMap in="SourceGraphic" scale="8"/>
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+    <radialGradient id="spillGrad" cx="45%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#5C3A1E" stop-opacity="0.15"/>
+      <stop offset="40%" stop-color="#5C3A1E" stop-opacity="0.1"/>
+      <stop offset="70%" stop-color="#5C3A1E" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#5C3A1E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Main spill shape — organic blob -->
+  <path d="M70,30 C95,18 130,25 145,45 C158,62 155,88 148,105
+           C140,125 118,138 95,140 C72,142 48,132 35,115
+           C20,96 22,70 30,52 C38,35 52,28 70,30 Z"
+        fill="url(#spillGrad)" filter="url(#spill-edge)"/>
+  <!-- Darker center -->
+  <ellipse cx="88" cy="78" rx="30" ry="25" fill="#5C3A1E" fill-opacity="0.06" filter="url(#spill-blur)"/>
+  <!-- Edge darkening on one side (pooling) -->
+  <path d="M120,90 C135,95 142,110 135,125 C128,135 110,138 100,132"
+        fill="none" stroke="#5C3A1E" stroke-width="6" stroke-opacity="0.08"
+        stroke-linecap="round" filter="url(#spill-blur)"/>
+</svg>

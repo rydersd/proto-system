@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme Corp IBX Expansion — Sales Portal</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<div class="sfdc-record-page">
+
+  <!-- Record Header -->
+  <div class="sfdc-record-header">
+    <div class="sfdc-record-header-top">
+      <div class="sfdc-record-info">
+        <div class="sfdc-record-type">Opportunity</div>
+        <h1 class="sfdc-record-name">Acme Corp — IBX Expansion</h1>
+      </div>
+      <div class="sfdc-record-actions">
+        <button class="sfdc-btn">Edit</button>
+        <button class="sfdc-btn-primary">Mark Stage as Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlights Bar -->
+  <div class="sfdc-highlights-bar">
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Amount</div>
+      <div class="sfdc-highlight-value">$1.2M</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Stage</div>
+      <div class="sfdc-highlight-value">Discovery</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Close Date</div>
+      <div class="sfdc-highlight-value">Q3 2026</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Owner</div>
+      <div class="sfdc-highlight-value">Steve Rogers</div>
+    </div>
+    <div class="sfdc-highlight">
+      <div class="sfdc-highlight-label">Partner</div>
+      <div class="sfdc-highlight-value">CloudBridge SI</div>
+    </div>
+  </div>
+
+  <!-- Path Bar -->
+  <div class="sfdc-path-bar">
+    <span class="sfdc-path-step complete">Qualification</span>
+    <span class="sfdc-path-step current">Discovery</span>
+    <span class="sfdc-path-step">Proposal</span>
+    <span class="sfdc-path-step">Negotiation</span>
+    <span class="sfdc-path-step">Closed Won</span>
+    <button class="sfdc-path-complete-btn">Mark as Complete</button>
+  </div>
+
+  <!-- 3-Column Layout -->
+  <div class="sfdc-record-layout">
+
+    <!-- LEFT: Related Lists -->
+    <div class="sfdc-col-related">
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Contacts (3)</h3></div>
+        <div class="sfdc-card-body">
+          <a href="#" class="sfdc-related-item">
+            <div class="sfdc-related-icon accent">A</div>
+            <div class="sfdc-related-info">
+              <div class="sfdc-related-title">Alex Chen</div>
+              <div class="sfdc-related-sub">VP Infrastructure · Decision Maker</div>
+            </div>
+          </a>
+          <a href="#" class="sfdc-related-item">
+            <div class="sfdc-related-icon green">M</div>
+            <div class="sfdc-related-info">
+              <div class="sfdc-related-title">Maria Santos</div>
+              <div class="sfdc-related-sub">Director IT · Technical Evaluator</div>
+            </div>
+          </a>
+          <a href="#" class="sfdc-related-item">
+            <div class="sfdc-related-icon">P</div>
+            <div class="sfdc-related-info">
+              <div class="sfdc-related-title">Pat Williams</div>
+              <div class="sfdc-related-sub">Procurement · Signer</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Deal Room</h3></div>
+        <div class="sfdc-card-body">
+          <a href="deal-room.html" class="sfdc-related-item">
+            <div class="sfdc-related-icon purple">#</div>
+            <div class="sfdc-related-info">
+              <div class="sfdc-related-title">#acme-ibx-expansion</div>
+              <div class="sfdc-related-sub">5 members · 12 messages today</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Record Detail -->
+    <div class="sfdc-col-record">
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Opportunity Details</h3></div>
+        <div class="sfdc-card-body">
+          <div class="sfdc-detail-grid">
+            <div class="sfdc-detail-field">
+              <label>Account</label>
+              <div class="sfdc-field-value">Acme Corporation</div>
+            </div>
+            <div class="sfdc-detail-field">
+              <label>Type</label>
+              <div class="sfdc-field-value">New Business</div>
+            </div>
+            <div class="sfdc-detail-field">
+              <label>Products</label>
+              <div class="sfdc-field-value">IBX Colocation, Fabric Connect</div>
+            </div>
+            <div class="sfdc-detail-field">
+              <label>Region</label>
+              <div class="sfdc-field-value">Americas — US West</div>
+            </div>
+            <div class="sfdc-detail-field">
+              <label>Source</label>
+              <div class="sfdc-field-value"><span class="wf-badge wf-badge-green">Partner Sourced</span></div>
+            </div>
+            <div class="sfdc-detail-field">
+              <label>Next Step</label>
+              <div class="sfdc-field-value">Technical POC scheduled for Mar 12</div>
+            </div>
+            <div class="sfdc-detail-field full">
+              <label>Description</label>
+              <div class="sfdc-field-value">Acme is expanding their hybrid cloud infrastructure. They need 3 additional cabinets in SV5 with Fabric Connect to AWS and Azure. Evaluating Equinix vs CoreSite vs QTS.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Activity -->
+    <div class="sfdc-col-activity">
+      <div class="sfdc-card">
+        <div class="sfdc-card-header"><h3>Activity Timeline</h3></div>
+        <div class="sfdc-card-body">
+          <a href="deal-room.html" class="sfdc-feed-item-link" title="View in Slack">
+            <div class="sfdc-feed-avatar slack">🔗</div>
+            <div class="sfdc-feed-body">
+              <div class="sfdc-feed-text"><strong>Deal room update</strong> — Steve shared call notes · Steve Rogers</div>
+              <div class="sfdc-feed-time">Today, 9:15 AM</div>
+            </div>
+          </a>
+          <div class="sfdc-feed-item" style="cursor:default;">
+            <div class="sfdc-feed-avatar system">📞</div>
+            <div class="sfdc-feed-body">
+              <div class="sfdc-feed-text"><strong>Call logged</strong> — 45 min call with Alex Chen</div>
+              <div class="sfdc-feed-time">Yesterday, 3:00 PM</div>
+            </div>
+          </div>
+          <a href="#" class="sfdc-feed-item-link" title="View in Slack">
+            <div class="sfdc-feed-avatar slack">🔗</div>
+            <div class="sfdc-feed-body">
+              <div class="sfdc-feed-text"><strong>MEDDPICC updated</strong> — Decision Criteria confirmed · Marvin</div>
+              <div class="sfdc-feed-time">Mar 3, 2:30 PM</div>
+            </div>
+          </a>
+          <div class="sfdc-feed-item" style="cursor:default;">
+            <div class="sfdc-feed-avatar system">📝</div>
+            <div class="sfdc-feed-body">
+              <div class="sfdc-feed-text"><strong>Stage changed</strong> — Qualification → Discovery</div>
+              <div class="sfdc-feed-time">Mar 1, 10:00 AM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Acme Corp — IBX Expansion</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">Salesforce opportunity record showing deal details, contacts, Slack deal room link, and activity timeline combining native SF and Slack-sourced events.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">AE needs a single view of the opportunity with all context — deal details, key contacts, MEDDPICC progress, and recent activity from both Salesforce and Slack.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+</body>
+</html>

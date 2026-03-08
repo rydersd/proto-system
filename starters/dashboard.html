@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Project Name</title>
+  <link rel="stylesheet" href="core/proto-core.css">
+  <link rel="stylesheet" href="surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <h1 style="font-size:20px;font-weight:700;color:var(--wf-ink);margin-bottom:16px;">Dashboard</h1>
+
+  <!-- KPI Row -->
+  <div class="ds-kpi-grid" style="margin-bottom:24px;">
+    <div class="ds-kpi-card">
+      <div class="ds-kpi-value">42</div>
+      <div class="ds-kpi-label">Active Items</div>
+      <div class="ds-kpi-delta up">↑ 8% vs last month</div>
+    </div>
+    <div class="ds-kpi-card">
+      <div class="ds-kpi-value">$1.2M</div>
+      <div class="ds-kpi-label">Total Value</div>
+    </div>
+    <div class="ds-kpi-card">
+      <div class="ds-kpi-value">87%</div>
+      <div class="ds-kpi-label">Completion Rate</div>
+      <div class="ds-kpi-delta down">↓ 2% vs last month</div>
+    </div>
+    <div class="ds-kpi-card">
+      <div class="ds-kpi-value">5</div>
+      <div class="ds-kpi-label">Pending Reviews</div>
+    </div>
+  </div>
+
+  <!-- 2-Column Content -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+    <div class="ds-card">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Recent Activity</span>
+        <button class="btn btn-sm btn-ghost">View All</button>
+      </div>
+      <div class="ds-card-body">
+        <table class="wf-table">
+          <thead>
+            <tr><th>Item</th><th>Status</th><th>Updated</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Item Alpha</td>
+              <td><span class="wf-badge wf-badge-green">Active</span></td>
+              <td>2 hours ago</td>
+            </tr>
+            <tr>
+              <td>Item Beta</td>
+              <td><span class="wf-badge wf-badge-amber">Pending</span></td>
+              <td>Yesterday</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Quick Actions</span>
+      </div>
+      <div class="ds-card-body" style="display:flex;flex-direction:column;gap:8px;">
+        <button class="btn btn-primary" style="width:100%;">Create New Item</button>
+        <button class="btn btn-secondary" style="width:100%;">View Reports</button>
+        <button class="btn btn-ghost" style="width:100%;">Settings</button>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Dashboard</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">Overview dashboard with KPIs, recent activity table, and quick actions.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">User needs at-a-glance status of their portfolio and quick access to common actions.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="core/proto-nav.js"></script>
+
+</body>
+</html>

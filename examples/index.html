@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples — Proto-System Framework</title>
+  <link rel="stylesheet" href="../core/proto-core.css">
+  <link rel="stylesheet" href="../surfaces/internal-ds.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- Page Header -->
+  <div style="margin-bottom:24px;">
+    <h1 style="font-size:22px;font-weight:700;color:var(--wf-ink);margin:0 0 6px 0;">Proto-System Framework — Examples</h1>
+    <p style="font-size:14px;color:var(--wf-muted);margin:0;">Click any example to explore the wireframe. Use the dropdown next to the title to jump between examples.</p>
+  </div>
+
+  <!-- Example Cards Grid -->
+  <div class="example-grid">
+
+    <!-- Sales Portal -->
+    <div class="ds-card wf-tape">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Sales Portal</span>
+        <span class="wf-badge">internal</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">3 screens: Dashboard, Slack Deal Room, SFDC Record</p>
+        <a href="test-project/dashboard.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="ds-card wf-pin">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Data Table</span>
+        <span class="wf-badge">internal</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">Rich data table with search, filters, pagination</p>
+        <a href="data-table/index.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+    <!-- Agent Chat -->
+    <div class="ds-card wf-sketch">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Agent Chat</span>
+        <span class="wf-badge wf-badge-purple">AI</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">AI assistant with structured responses, streaming</p>
+        <a href="agent-chat/index.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+    <!-- Newspaper -->
+    <div class="ds-card wf-tape">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Newspaper</span>
+        <span class="wf-badge">editorial</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">Editorial layout with masthead, columns, sidebar</p>
+        <a href="newspaper/index.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+    <!-- Pinterest Board -->
+    <div class="ds-card wf-pin">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Pinterest Board</span>
+        <span class="wf-badge">masonry</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">Masonry mood board with varied cards</p>
+        <a href="pinterest-board/index.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="ds-card wf-sketch">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Kanban Board</span>
+        <span class="wf-badge">agile</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">Sprint board with 4 lanes, task cards</p>
+        <a href="kanban-board/index.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+    <!-- Charts Dashboard -->
+    <div class="ds-card">
+      <div class="ds-card-header">
+        <span class="ds-card-title">Charts Dashboard</span>
+        <span class="wf-badge wf-badge-green">charts</span>
+      </div>
+      <div class="ds-card-body">
+        <p class="example-card-desc">SVG charts + data table with random data on reload</p>
+        <a href="charts-dashboard/index.html" class="btn btn-primary" style="width:100%;display:block;text-align:center;text-decoration:none;">Open</a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Design Notes -->
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Proto-System Examples</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">Framework showcase landing page linking to all 7 example projects. Each card shows the project name, description, surface type badge, and a button to open it.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">A developer or designer exploring the proto-system framework wants to quickly browse all available examples and jump into any one to see the framework in action.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Design Spec</div>
+      <div class="wf-spec-body">3-column responsive grid of ds-card components. Each card uses a paper utility (tape, pin, or sketch) for wireframe texture. Cards include hover lift effect. Buttons use wfNavigate() for scatter page transitions in napkin mode.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="framework-nav.js"></script>
+<script src="../core/proto-nav.js"></script>
+<script src="../core/proto-scatter-gl.js"></script>
+<script src="example-nav.js"></script>
+
+</body>
+</html>

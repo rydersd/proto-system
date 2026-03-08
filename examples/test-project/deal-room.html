@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Room — Sales Portal</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/slack.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<div class="slack-app">
+
+<div class="slack-rail">
+  <div class="slack-rail-workspace">S</div>
+  <button class="slack-rail-btn active"><span class="slack-rail-icon">⌂</span>Home</button>
+  <button class="slack-rail-btn"><span class="slack-rail-icon">✉</span>DMs</button>
+  <button class="slack-rail-btn"><span class="slack-rail-icon">⚡</span>Activity</button>
+  <button class="slack-rail-btn"><span class="slack-rail-icon">⋯</span>More</button>
+</div>
+
+<div class="slack-sidebar">
+  <div class="slack-workspace-header">
+    <span class="workspace-name">Sales Portal</span>
+    <span class="workspace-menu">▾</span>
+  </div>
+  <div class="slack-nav-section">
+    <div class="slack-nav-section-title">Deal Rooms</div>
+    <a href="#" class="slack-nav-item slack-nav-item-active"># acme-ibx-expansion</a>
+    <a href="#" class="slack-nav-item"># globaltech-fabric</a>
+    <a href="#" class="slack-nav-item"># dataflow-metal-ha</a>
+  </div>
+</div>
+
+<div class="slack-main">
+  <div class="slack-channel-header">
+    <div class="flex items-center gap-8">
+      <span class="slack-channel-name"># acme-ibx-expansion</span>
+      <span class="slack-channel-meta">5 members</span>
+    </div>
+    <div class="slack-channel-tabs">
+      <a href="#" class="slack-channel-tab active"><span class="slack-tab-icon">💬</span> Messages</a>
+      <a href="#" class="slack-channel-tab"><span class="slack-tab-icon">📋</span> Canvas</a>
+      <a class="slack-channel-tab"><span class="slack-tab-icon">📎</span> Files</a>
+    </div>
+  </div>
+
+  <div class="slack-messages">
+
+    <div class="slack-message">
+      <div class="slack-message-header">
+        <span class="slack-message-avatar slack-message-avatar--bot" style="background:var(--wf-muted);color:var(--wf-white)">M</span>
+        <span class="slack-message-sender">Marvin <span class="slack-message-badge">APP</span></span>
+        <span class="slack-message-time">Today at 9:00 AM</span>
+      </div>
+      <div class="slack-message-content">
+        <div class="slack-message-text">
+          <strong>Deal Snapshot — Acme Corp IBX Expansion</strong><br>
+          Stage: Discovery · Amount: $1.2M · Close: Q3 2026<br>
+          MEDDPICC Score: 42% — <em>Decision Criteria and Paper Process need attention</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="slack-message">
+      <div class="slack-message-header">
+        <span class="slack-message-avatar" style="background:var(--wf-accent);color:var(--wf-white)">S</span>
+        <span class="slack-message-sender">Steve Rogers</span>
+        <span class="slack-message-time">Today at 9:15 AM</span>
+      </div>
+      <div class="slack-message-content">
+        <div class="slack-message-text">Had a great call with the VP Infra yesterday. They're evaluating three options — we need to nail the technical proof of concept next week.</div>
+        <button class="slack-thread-count" aria-label="View thread">💬 2 replies</button>
+      </div>
+    </div>
+
+    <div class="slack-message">
+      <div class="slack-message-header">
+        <span class="slack-message-avatar" style="background:var(--wf-green);color:var(--wf-white)">J</span>
+        <span class="slack-message-sender">Jordan Reeves</span>
+        <span class="slack-message-time">Today at 10:30 AM</span>
+      </div>
+      <div class="slack-message-content">
+        <div class="slack-message-text">Updated the <a href="opp-record.html">opportunity record</a> with the new timeline. Close date moved to Q3.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="slack-composer">
+    <textarea class="slack-composer-input" placeholder="Message #acme-ibx-expansion" aria-label="Message input"></textarea>
+    <div class="slack-composer-hint">Press Enter to send · Shift+Enter for new line</div>
+  </div>
+</div>
+
+</div>
+
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Deal Room — Acme IBX Expansion</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">Slack deal room channel for Acme Corp IBX Expansion opportunity. Bot posts daily snapshots, team collaborates on deal strategy. Links to SFDC opportunity record.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">AE needs a shared space for the deal team to coordinate on strategy, share updates, and track MEDDPICC progress without leaving Slack.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../framework-nav.js"></script>
+<script src="../../core/proto-nav.js"></script>
+<script src="../../core/proto-scatter-gl.js"></script>
+<script src="../example-nav.js"></script>
+
+</body>
+</html>

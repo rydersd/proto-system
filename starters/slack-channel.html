@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channel Name — Project Name</title>
+  <link rel="stylesheet" href="core/proto-core.css">
+  <link rel="stylesheet" href="surfaces/slack.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<div class="slack-app">
+
+<div class="slack-rail">
+  <div class="slack-rail-workspace">W</div>
+  <button class="slack-rail-btn active"><span class="slack-rail-icon">⌂</span>Home</button>
+  <button class="slack-rail-btn"><span class="slack-rail-icon">✉</span>DMs</button>
+  <button class="slack-rail-btn"><span class="slack-rail-icon">⚡</span>Activity</button>
+  <button class="slack-rail-btn"><span class="slack-rail-icon">⋯</span>More</button>
+</div>
+
+<div class="slack-sidebar">
+  <div class="slack-workspace-header">
+    <span class="workspace-name">Workspace Name</span>
+    <span class="workspace-menu">▾</span>
+  </div>
+  <div class="slack-nav-section">
+    <div class="slack-nav-section-title">Channels</div>
+    <a href="#" class="slack-nav-item slack-nav-item-active"># channel-name</a>
+  </div>
+  <div class="slack-nav-section">
+    <div class="slack-nav-section-title">Direct Messages</div>
+    <a href="#" class="slack-nav-item">
+      <span class="slack-nav-avatar" style="background:var(--wf-muted);color:var(--wf-white)">B</span> Bot Name
+    </a>
+  </div>
+</div>
+
+<div class="slack-main">
+  <div class="slack-channel-header">
+    <div class="flex items-center gap-8">
+      <span class="slack-channel-name"># channel-name</span>
+      <span class="slack-channel-meta">3 members</span>
+    </div>
+    <div class="slack-channel-tabs">
+      <a href="#" class="slack-channel-tab active"><span class="slack-tab-icon">💬</span> Messages</a>
+      <a href="#" class="slack-channel-tab"><span class="slack-tab-icon">📋</span> Canvas</a>
+      <a class="slack-channel-tab"><span class="slack-tab-icon">📎</span> Files</a>
+      <button class="slack-channel-tab slack-tab-add" aria-label="Add tab">+</button>
+    </div>
+  </div>
+
+  <div class="slack-messages">
+
+    <div class="slack-message">
+      <div class="slack-message-header">
+        <span class="slack-message-avatar" style="background:var(--wf-accent);color:var(--wf-white)">U</span>
+        <span class="slack-message-sender">User Name</span>
+        <span class="slack-message-time">2 hours ago</span>
+      </div>
+      <div class="slack-message-content">
+        <div class="slack-message-text">Replace with your message content.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="slack-composer">
+    <textarea class="slack-composer-input" placeholder="Message #channel-name" aria-label="Message input"></textarea>
+  </div>
+</div>
+
+</div>
+
+<div class="wf-design-notes">
+  <div class="wf-spec-panel">
+    <div class="wf-spec-header">Channel Name</div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">Summary</div>
+      <div class="wf-spec-body">What this channel page shows.</div>
+    </div>
+    <div class="wf-spec-section">
+      <div class="wf-spec-section-title">JTBD</div>
+      <div class="wf-spec-body">What job this serves.</div>
+    </div>
+  </div>
+</div>
+
+<script src="project-data.js"></script>
+<script src="core/proto-nav.js"></script>
+
+</body>
+</html>

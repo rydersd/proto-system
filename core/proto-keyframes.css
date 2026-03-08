@@ -1,0 +1,44 @@
+/* ============================================================================
+   PROTO KEYFRAMES — Animations
+   ============================================================================ */
+
+@keyframes wfToastIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes wfFlashIn {
+  0%   { background-color: rgba(61, 109, 170, 0.12); }
+  100% { background-color: transparent; }
+}
+
+@keyframes wfScrollFlash {
+  0%   { box-shadow: 0 0 0 3px rgba(61, 109, 170, 0.4); background-color: rgba(61, 109, 170, 0.08); }
+  100% { box-shadow: 0 0 0 0 transparent; background-color: transparent; }
+}
+
+/* After-state flash: subtle highlight when content swaps in */
+.wf-just-updated {
+  animation: wfFlashIn 1.5s ease-out;
+}
+
+/* Scroll-to-thread highlight flash */
+.wf-scroll-highlight {
+  animation: wfScrollFlash 1.5s ease-out;
+  border-radius: 6px;
+}
+
+/* --- Paper Scatter Page Transition ---------------------------------------- */
+
+/* Scatter elements get GPU compositing + preserve 3D curl during animation */
+.wf-scattering {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}

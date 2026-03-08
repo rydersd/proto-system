@@ -1,0 +1,837 @@
+/* Proto-System Surface: Salesforce — requires proto-core.css */
+
+.sfdc-record-page { padding: 0; }
+
+/* ── Record Header ──────────────────────────────────────────── */
+.sfdc-record-header {
+  background: var(--wf-white);
+  border-bottom: 1px solid var(--wf-line);
+  padding: 16px 24px 0;
+}
+.sfdc-record-header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.sfdc-record-icon {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700;
+  flex-shrink: 0;
+}
+.sfdc-record-icon svg { width: 20px; height: 20px; fill: currentColor; }
+.sfdc-record-info { flex: 1; }
+.sfdc-record-type {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--wf-muted); margin-bottom: 2px;
+}
+.sfdc-record-name {
+  font-size: 20px; font-weight: 700; color: var(--wf-ink);
+}
+.sfdc-record-actions {
+  display: flex; gap: 8px; align-items: center;
+}
+
+/* ── Highlights Bar ─────────────────────────────────────────── */
+.sfdc-highlights-bar {
+  display: flex;
+  gap: 0;
+  padding: 12px 0;
+  margin: 0 0 0 0;
+  border-top: 1px solid var(--wf-tint);
+  border-bottom: 1px solid var(--wf-tint);
+}
+.sfdc-highlight {
+  flex: 1;
+  padding: 0 20px;
+  border-right: 1px solid var(--wf-tint);
+  min-width: 0;
+}
+.sfdc-highlight:last-child { border-right: none; }
+.sfdc-highlight-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-muted); margin-bottom: 2px;
+}
+.sfdc-highlight-value {
+  font-size: 14px; font-weight: 600; color: var(--wf-ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sfdc-highlight-value a { color: var(--wf-accent); text-decoration: none; }
+.sfdc-highlight-value a:hover { text-decoration: underline; }
+.sfdc-highlight-value .warn { color: var(--wf-amber); }
+.sfdc-highlight-value .danger { color: var(--wf-red); }
+.sfdc-highlight-value .success { color: var(--wf-green); }
+
+/* ── Path Bar (Stage Path) ──────────────────────────────────── */
+.sfdc-path-bar {
+  display: flex;
+  gap: 0;
+  padding: 12px 0 16px;
+  align-items: center;
+}
+.sfdc-path-complete-btn {
+  flex-shrink: 0;
+  margin-left: 10px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--wf-white);
+  background: var(--wf-accent);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sfdc-path-complete-btn:hover { background: var(--wf-ink); }
+.sfdc-path-complete-btn svg { width: 12px; height: 12px; }
+.sfdc-path-step {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--wf-muted);
+  background: var(--wf-surface);
+  border: 1px solid var(--wf-line);
+  border-right: none;
+  position: relative;
+  cursor: default;
+}
+.sfdc-path-step:first-child { border-radius: 4px 0 0 4px; }
+.sfdc-path-step:last-child { border-radius: 0 4px 4px 0; border-right: 1px solid var(--wf-line); }
+.sfdc-path-step.complete {
+  background: var(--wf-accent);
+  color: var(--wf-white);
+  border-color: var(--wf-accent);
+}
+.sfdc-path-step.current {
+  background: var(--wf-white);
+  color: var(--wf-accent);
+  border-color: var(--wf-accent);
+  border-width: 2px;
+  font-weight: 800;
+}
+.sfdc-path-step.lost {
+  background: var(--wf-red);
+  color: var(--wf-white);
+  border-color: var(--wf-red);
+}
+
+/* Path step — interactive */
+.sfdc-path-step { cursor: pointer; transition: opacity 0.15s; position: relative; }
+.sfdc-path-step:hover { opacity: 0.85; }
+.sfdc-path-step.active { outline: 2px solid var(--wf-ink); outline-offset: -2px; z-index: 1; }
+
+/* SF chevron icon (triangle-in-circle) — right-facing → down-facing on expand */
+.sfdc-path-chevron {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+.sfdc-path-chevron::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 52%;
+  width: 0; height: 0;
+  border-left: 4px solid currentColor;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  transform: translate(-40%, -50%);
+}
+.sfdc-path-step.active .sfdc-path-chevron { transform: rotate(90deg); }
+
+/* Expandable path detail panel */
+.sfdc-path-detail {
+  display: none;
+  background: var(--wf-white);
+  border: 2px solid var(--wf-accent);
+  border-radius: 0 0 6px 6px;
+  padding: 16px 20px;
+  margin: -1px 0 12px;
+  animation: pathSlideDown 0.2s ease-out;
+}
+.sfdc-path-detail.open { display: block; }
+@keyframes pathSlideDown { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+.sfdc-path-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.sfdc-path-detail-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+.sfdc-path-detail-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--wf-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+.sfdc-path-detail-close:hover { color: var(--wf-ink); }
+
+.sfdc-path-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 20px;
+  margin-bottom: 12px;
+}
+.sfdc-path-field-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--wf-muted);
+  margin-bottom: 2px;
+}
+.sfdc-path-field-value {
+  font-size: 12px;
+  color: var(--wf-ink);
+  font-weight: 500;
+}
+.sfdc-path-field-value .empty {
+  color: var(--wf-muted);
+  font-style: italic;
+}
+.sfdc-path-guidance {
+  background: var(--wf-surface);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--wf-text);
+  line-height: 1.55;
+  border-left: 3px solid var(--wf-accent);
+}
+.sfdc-path-guidance strong { color: var(--wf-ink); }
+
+/* Interactive feed items */
+.sfdc-feed-item-link {
+  display: flex;
+  gap: 10px;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--wf-tint);
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+  margin: 0 -8px;
+  transition: background 0.12s;
+}
+.sfdc-feed-item-link:last-child { border-bottom: none; }
+.sfdc-feed-item-link:hover { background: var(--wf-surface); }
+.sfdc-feed-item-link:focus-visible { outline: 2px solid var(--wf-accent); outline-offset: -2px; }
+.sfdc-feed-item-link .sfdc-feed-text { color: var(--wf-text); }
+.sfdc-feed-item-link .sfdc-feed-time { color: var(--wf-muted); }
+.sfdc-feed-item-link .sfdc-feed-screen {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-accent);
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.sfdc-feed-item-link .sfdc-feed-screen::before {
+  content: "→";
+  font-size: 9px;
+}
+
+/* ── 3-Column Record Layout ─────────────────────────────────── */
+.sfdc-record-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 16px;
+  padding: 16px 24px 32px;
+  align-items: start;
+}
+@media (max-width: 1200px) {
+  .sfdc-record-layout { grid-template-columns: 260px 1fr; }
+  .sfdc-record-layout .sfdc-col-activity { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  .sfdc-record-layout { grid-template-columns: 1fr; }
+}
+
+.sfdc-col-related { display: flex; flex-direction: column; gap: 12px; }
+.sfdc-col-record { display: flex; flex-direction: column; gap: 12px; }
+.sfdc-col-activity { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── SFDC Card ──────────────────────────────────────────────── */
+.sfdc-card {
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.sfdc-card-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--wf-tint);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--wf-surface);
+}
+.sfdc-card-header h3 {
+  font-size: 12px; font-weight: 700; color: var(--wf-ink);
+  margin: 0; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.sfdc-card-header-action {
+  font-size: 11px; color: var(--wf-accent); text-decoration: none;
+  font-weight: 600; cursor: pointer;
+}
+.sfdc-card-header-action:hover { text-decoration: underline; }
+.sfdc-card-body { padding: 14px 16px; }
+
+/* Accent-bordered card variant */
+.sfdc-card-accent { border-left: 3px solid var(--wf-accent); }
+.sfdc-card-green { border-left: 3px solid var(--wf-green); }
+.sfdc-card-amber { border-left: 3px solid var(--wf-amber); }
+.sfdc-card-red { border-left: 3px solid var(--wf-red); }
+.sfdc-card-purple { border-left: 3px solid var(--wf-purple); }
+
+/* ── Detail Grid (field-value pairs) ────────────────────────── */
+.sfdc-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+.sfdc-detail-field {}
+.sfdc-detail-field label {
+  display: block;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-muted); margin-bottom: 2px;
+}
+.sfdc-detail-field .sfdc-field-value {
+  font-size: 13px; color: var(--wf-ink); font-weight: 500; line-height: 1.4;
+}
+.sfdc-detail-field .sfdc-field-value a {
+  color: var(--wf-accent); text-decoration: none;
+}
+.sfdc-detail-field .sfdc-field-value a:hover { text-decoration: underline; }
+.sfdc-detail-field.full { grid-column: span 2; }
+
+/* ── Related List Items ─────────────────────────────────────── */
+.sfdc-related-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--wf-tint);
+}
+.sfdc-related-item:last-child { border-bottom: none; }
+.sfdc-related-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--wf-tint);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 10px; font-weight: 700; color: var(--wf-ink);
+}
+.sfdc-related-icon.green { background: rgba(69,120,90,0.15); color: var(--wf-green); }
+.sfdc-related-icon.amber { background: rgba(107,90,47,0.15); color: var(--wf-amber); }
+.sfdc-related-icon.red { background: rgba(139,69,83,0.15); color: var(--wf-red); }
+.sfdc-related-icon.purple { background: rgba(107,91,138,0.15); color: var(--wf-purple); }
+.sfdc-related-icon.accent { background: rgba(61,109,170,0.15); color: var(--wf-accent); }
+.sfdc-related-info { flex: 1; min-width: 0; }
+.sfdc-related-title {
+  font-size: 12px; font-weight: 600; color: var(--wf-ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sfdc-related-title a { color: var(--wf-accent); text-decoration: none; }
+.sfdc-related-sub { font-size: 11px; color: var(--wf-muted); }
+.sfdc-related-meta {
+  font-size: 11px; color: var(--wf-muted); text-align: right; white-space: nowrap;
+}
+.sfdc-related-meta .overdue { color: var(--wf-red); font-weight: 600; }
+
+/* ── Activity Feed ──────────────────────────────────────────── */
+.sfdc-feed-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--wf-tint);
+}
+.sfdc-feed-item:last-child { border-bottom: none; }
+.sfdc-feed-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--wf-tint);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 10px; font-weight: 700; color: var(--wf-muted);
+}
+.sfdc-feed-avatar.system { background: var(--wf-surface); color: var(--wf-accent); }
+.sfdc-feed-avatar.slack { background: var(--wf-ink); color: var(--wf-white); }
+.sfdc-feed-body { flex: 1; }
+.sfdc-feed-text {
+  font-size: 12px; color: var(--wf-text); line-height: 1.5;
+}
+.sfdc-feed-text strong { color: var(--wf-ink); }
+.sfdc-feed-text a { color: var(--wf-accent); text-decoration: none; }
+.sfdc-feed-time {
+  font-size: 10px; color: var(--wf-muted); margin-top: 2px;
+}
+
+/* ── MEDDPICC Summary Card (SFDC version) ───────────────────── */
+.sfdc-meddpicc-card { }
+.sfdc-meddpicc-strip {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+/* Chips inside SFDC strip fill equally like pills did */
+.sfdc-meddpicc-strip .meddpicc-chip {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+}
+.sfdc-meddpicc-pill {
+  flex: 1;
+  text-align: center;
+  padding: 6px 2px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1.5px solid var(--wf-line);
+  background: var(--wf-surface);
+  color: var(--wf-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.sfdc-meddpicc-pill:hover { border-color: var(--wf-accent); color: var(--wf-accent); }
+.sfdc-meddpicc-pill.unknown { background: var(--wf-surface); color: var(--wf-muted); border-color: var(--wf-line); }
+.sfdc-meddpicc-pill.partial { background: rgba(107,90,47,0.1); color: var(--wf-amber); border-color: var(--wf-amber); }
+.sfdc-meddpicc-pill.confirmed { background: rgba(69,120,90,0.1); color: var(--wf-green); border-color: var(--wf-green); }
+.sfdc-meddpicc-pill.needs-review { background: rgba(107,91,138,0.1); color: var(--wf-purple); border-color: var(--wf-purple); }
+.sfdc-meddpicc-pill.needs-review::after {
+  content: ''; position: absolute; top: -3px; right: -3px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--wf-purple);
+}
+.sfdc-meddpicc-pill-label {
+  display: block; font-size: 8px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  margin-top: 1px; opacity: 0.8;
+}
+
+.sfdc-meddpicc-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; color: var(--wf-muted);
+  padding-top: 8px; border-top: 1px solid var(--wf-tint);
+}
+.sfdc-meddpicc-meta a { color: var(--wf-accent); text-decoration: none; font-weight: 600; }
+
+/* Completeness bar */
+.sfdc-completeness-bar {
+  height: 6px; background: var(--wf-tint); border-radius: 3px;
+  overflow: hidden; margin-bottom: 6px;
+}
+.sfdc-completeness-fill {
+  height: 100%; border-radius: 3px; transition: width 0.3s;
+}
+.sfdc-completeness-fill.low { background: var(--wf-red); }
+.sfdc-completeness-fill.mid { background: var(--wf-amber); }
+.sfdc-completeness-fill.high { background: var(--wf-green); }
+
+/* ── Slack Deal Room Tile ───────────────────────────────────── */
+.sfdc-slack-tile {
+  background: var(--wf-surface);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px;
+  padding: 14px;
+}
+.sfdc-slack-channel {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+}
+.sfdc-slack-hash {
+  font-size: 18px; font-weight: 800; color: var(--wf-ink);
+}
+.sfdc-slack-channel-name {
+  font-size: 13px; font-weight: 700; color: var(--wf-ink);
+}
+.sfdc-slack-channel-meta {
+  font-size: 10px; color: var(--wf-muted);
+}
+.sfdc-slack-msg {
+  display: flex; gap: 8px; padding: 6px 0;
+  border-top: 1px solid var(--wf-tint);
+}
+.sfdc-slack-msg-avatar {
+  width: 24px; height: 24px; border-radius: 4px;
+  background: var(--wf-tint);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: var(--wf-ink); flex-shrink: 0;
+}
+.sfdc-slack-msg-author {
+  font-size: 11px; font-weight: 700; color: var(--wf-ink);
+}
+.sfdc-slack-msg-author span { font-weight: 400; color: var(--wf-muted); margin-left: 4px; }
+.sfdc-slack-msg-text {
+  font-size: 11px; color: var(--wf-text); margin-top: 1px;
+}
+.sfdc-slack-actions {
+  display: flex; gap: 8px; margin-top: 10px; padding-top: 8px;
+  border-top: 1px solid var(--wf-tint);
+}
+
+/* ── Missing Stage Requirements Banner ──────────────────────── */
+.sfdc-stage-banner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: rgba(107,90,47,0.06);
+  border: 1px solid var(--wf-amber);
+  border-radius: 4px;
+  font-size: 11px; color: var(--wf-amber);
+}
+.sfdc-stage-banner.ok {
+  background: rgba(69,120,90,0.06);
+  border-color: var(--wf-green);
+  color: var(--wf-green);
+}
+.sfdc-stage-banner strong { font-weight: 700; }
+
+/* ── CPQ/Paper Process Summary ──────────────────────────────── */
+.sfdc-summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--wf-tint);
+  font-size: 12px;
+}
+.sfdc-summary-row:last-child { border-bottom: none; }
+.sfdc-summary-label { color: var(--wf-muted); font-weight: 600; font-size: 11px; }
+.sfdc-summary-value { color: var(--wf-ink); font-weight: 500; }
+.sfdc-summary-value a { color: var(--wf-accent); text-decoration: none; }
+
+/* ── SFDC Buttons ───────────────────────────────────────────── */
+.sfdc-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px;
+  font-size: 11px; font-weight: 600; font-family: var(--wf-font);
+  border: 1.5px solid var(--wf-line); border-radius: 4px;
+  background: var(--wf-white); color: var(--wf-text);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.15s;
+}
+.sfdc-btn:hover { border-color: var(--wf-accent); color: var(--wf-accent); }
+.sfdc-btn-primary { background: var(--wf-accent); color: var(--wf-white); border-color: var(--wf-accent); }
+.sfdc-btn-primary:hover { background: #2c5a94; }
+.sfdc-btn-slack {
+  background: var(--wf-ink); color: var(--wf-white); border-color: var(--wf-ink);
+}
+.sfdc-btn-slack:hover { background: #162232; }
+.sfdc-btn-sm { padding: 4px 10px; font-size: 10px; }
+
+/* ── SFDC Tabs ──────────────────────────────────────────────── */
+.sfdc-tabs {
+  display: flex; gap: 0; border-bottom: 2px solid var(--wf-line);
+  margin-bottom: 12px;
+}
+.sfdc-tab {
+  padding: 8px 16px;
+  font-size: 11px; font-weight: 600;
+  color: var(--wf-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer; text-decoration: none;
+  transition: all 0.15s;
+}
+.sfdc-tab:hover { color: var(--wf-ink); }
+.sfdc-tab.active { color: var(--wf-accent); border-bottom-color: var(--wf-accent); }
+
+/* ── SFDC Table (for reports/lists) ─────────────────────────── */
+.sfdc-table {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+}
+.sfdc-table th {
+  text-align: left; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  color: var(--wf-muted); padding: 8px 10px;
+  border-bottom: 2px solid var(--wf-line);
+  background: var(--wf-surface);
+}
+.sfdc-table td {
+  padding: 8px 10px; border-bottom: 1px solid var(--wf-tint);
+  color: var(--wf-text); vertical-align: middle;
+}
+.sfdc-table tr:hover { background: var(--wf-accent-fill); }
+.sfdc-table td a { color: var(--wf-accent); text-decoration: none; }
+
+/* ── Dashboard / Reports ────────────────────────────────────── */
+.sfdc-dashboard {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 16px; padding: 16px 24px;
+}
+@media (max-width: 900px) { .sfdc-dashboard { grid-template-columns: 1fr; } }
+
+.sfdc-chart-card {
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.sfdc-chart-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--wf-tint);
+  font-size: 12px; font-weight: 700; color: var(--wf-ink);
+  background: var(--wf-surface);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sfdc-chart-body {
+  padding: 20px 16px;
+  min-height: 160px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sfdc-chart-placeholder {
+  width: 100%; height: 140px;
+  background: var(--wf-surface);
+  border: 1px dashed var(--wf-line);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--wf-muted); font-style: italic;
+}
+
+/* Bar chart wireframe */
+.sfdc-bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; width: 100%; }
+.sfdc-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.sfdc-bar {
+  width: 100%; border-radius: 3px 3px 0 0;
+  transition: height 0.3s;
+}
+.sfdc-bar.accent { background: var(--wf-accent); }
+.sfdc-bar.green { background: var(--wf-green); }
+.sfdc-bar.amber { background: var(--wf-amber); }
+.sfdc-bar.red { background: var(--wf-red); }
+.sfdc-bar.muted { background: var(--wf-tint); }
+.sfdc-bar-label { font-size: 9px; color: var(--wf-muted); text-align: center; }
+
+/* Donut chart placeholder */
+.sfdc-donut {
+  width: 100px; height: 100px; border-radius: 50%;
+  border: 12px solid var(--wf-tint); position: relative;
+}
+.sfdc-donut-segment {
+  position: absolute; inset: -12px; border-radius: 50%;
+  border: 12px solid transparent;
+}
+.sfdc-donut-center {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: var(--wf-ink);
+}
+
+/* ── Evidence Log Specific ──────────────────────────────────── */
+.sfdc-evidence-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 9px; font-weight: 700; padding: 2px 6px;
+  border-radius: 3px;
+}
+.sfdc-evidence-badge.attested { background: rgba(69,120,90,0.1); color: var(--wf-green); }
+.sfdc-evidence-badge.unattested { background: rgba(107,90,47,0.1); color: var(--wf-amber); }
+.sfdc-evidence-source {
+  font-size: 10px; color: var(--wf-muted); font-family: var(--wf-mono);
+}
+
+/* ── Paper Process Steps ────────────────────────────────────── */
+.sfdc-paper-steps {
+  display: flex; gap: 0; margin-bottom: 12px;
+}
+.sfdc-paper-step {
+  flex: 1; text-align: center; padding: 6px 4px;
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-muted);
+  background: var(--wf-surface); border: 1px solid var(--wf-line); border-right: none;
+}
+.sfdc-paper-step:first-child { border-radius: 4px 0 0 4px; }
+.sfdc-paper-step:last-child { border-radius: 0 4px 4px 0; border-right: 1px solid var(--wf-line); }
+.sfdc-paper-step.complete { background: var(--wf-green); color: var(--wf-white); border-color: var(--wf-green); }
+.sfdc-paper-step.current { background: var(--wf-white); color: var(--wf-accent); border-color: var(--wf-accent); border-width: 2px; }
+
+/* ── Suggested Status Banner ────────────────────────────────── */
+.sfdc-suggestion-banner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 4px;
+  background: rgba(107,91,138,0.06);
+  border: 1px solid var(--wf-purple);
+  font-size: 11px; color: var(--wf-purple);
+  margin-bottom: 12px;
+}
+.sfdc-suggestion-banner strong { font-weight: 700; }
+.sfdc-suggestion-banner .sfdc-btn { margin-left: auto; }
+
+/* ── Partner Involvement Card */
+.sfdc-partner-card { border: 2px solid var(--wf-accent); }
+.sfdc-partner-card .sfdc-card-header {
+  background: var(--wf-accent); color: var(--wf-white);
+}
+.sfdc-partner-card .sfdc-card-header h3 { color: var(--wf-white); }
+.sfdc-partner-card .sfdc-card-header-action { color: rgba(255,255,255,0.8); }
+
+.sfdc-partner-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 600;
+  background: var(--wf-surface); color: var(--wf-ink);
+  margin-bottom: 10px;
+}
+.sfdc-partner-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--wf-green);
+}
+
+.sfdc-partner-org {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px; background: var(--wf-surface);
+  border-radius: 6px; margin-bottom: 10px;
+}
+.sfdc-partner-org-logo {
+  width: 40px; height: 40px; border-radius: 6px;
+  background: var(--wf-tint);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--wf-ink); font-size: 14px; flex-shrink: 0;
+}
+.sfdc-partner-org-name { font-size: 13px; font-weight: 700; color: var(--wf-ink); }
+.sfdc-partner-org-tier { font-size: 11px; color: var(--wf-muted); }
+
+.sfdc-partner-contact {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 0; border-bottom: 1px solid var(--wf-tint);
+}
+.sfdc-partner-contact:last-child { border-bottom: none; }
+.sfdc-partner-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--wf-muted);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--wf-white); font-size: 11px; font-weight: 600; flex-shrink: 0;
+}
+.sfdc-partner-contact-name { font-size: 12px; font-weight: 600; color: var(--wf-ink); }
+.sfdc-partner-contact-role { font-size: 11px; color: var(--wf-muted); }
+.sfdc-partner-contact-action {
+  font-size: 11px; color: var(--wf-accent); text-decoration: none; margin-left: auto;
+}
+
+.sfdc-partner-meta {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-top: 10px; font-size: 12px;
+}
+.sfdc-partner-meta dt { color: var(--wf-muted); font-weight: 500; }
+.sfdc-partner-meta dd { color: var(--wf-ink); font-weight: 600; margin: 0; }
+
+.sfdc-partner-protection {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px; margin-top: 10px;
+  background: rgba(69,120,90,0.06); border: 1px solid var(--wf-green);
+  border-radius: 4px; font-size: 11px; color: var(--wf-green); font-weight: 600;
+}
+.sfdc-partner-protection.expiring {
+  background: rgba(107,90,47,0.06); border-color: var(--wf-amber); color: var(--wf-amber);
+}
+
+/* Related action link (View All, Add Contact) */
+.sfdc-related-action {
+  display: block; font-size: 11px; color: var(--wf-accent);
+  text-decoration: none; font-weight: 600; margin-top: 8px;
+  padding-top: 8px; border-top: 1px solid var(--wf-tint);
+}
+.sfdc-related-action:hover { text-decoration: underline; }
+
+/* SFDC detail label/value (fix missing classes from sf-01) */
+.sfdc-detail-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-muted); margin-bottom: 2px;
+}
+.sfdc-detail-value {
+  font-size: 13px; color: var(--wf-ink); font-weight: 500; line-height: 1.4;
+}
+.sfdc-detail-value a { color: var(--wf-accent); text-decoration: none; }
+
+/* ============================================================================
+   BLUEPRINT PAPER ADAPTATIONS
+   ============================================================================ */
+
+html.wireframe .sfdc-card {
+  box-shadow: var(--wf-paper-shadow);
+  border-radius: var(--wf-wobble-radius);
+  filter: var(--wf-wobble-filter);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+html.wireframe .sfdc-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(30, 35, 60, 0.10),
+    0 2px 4px rgba(30, 35, 60, 0.08),
+    0 4px 8px rgba(30, 35, 60, 0.06),
+    0 8px 16px rgba(30, 35, 60, 0.04),
+    0 16px 32px rgba(30, 35, 60, 0.025);
+}
+
+html.wireframe .sfdc-chart-card {
+  box-shadow: var(--wf-paper-shadow);
+  filter: var(--wf-wobble-filter);
+}
+
+html.wireframe .sfdc-btn,
+html.wireframe .sfdc-btn-primary {
+  filter: var(--wf-wobble-filter);
+  border-radius: var(--wf-wobble-radius);
+}
+
+html.wireframe .sfdc-related-icon,
+html.wireframe .sfdc-feed-avatar {
+  filter: var(--wf-wobble-filter);
+}
+
+html.wireframe .sfdc-path-step {
+  filter: var(--wf-wobble-filter);
+}
+
+html.wireframe .sfdc-highlights-bar {
+  filter: var(--wf-wobble-filter);
+}
+
+/* ── Napkin mode — sharpie-outlined SFDC buttons ── */
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-btn-primary {
+  background: transparent;
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+  border-width: 3.5px 3px 4px 3px;
+  border-radius: 2px 4px 3px 2px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-btn-primary:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-path-complete-btn {
+  background: transparent;
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+  border-width: 2px 2.5px 2.5px 2px;
+  border-radius: 2px 3px 2px 4px;
+}
+
+html.wireframe[data-wf-fidelity="napkin"] .sfdc-path-complete-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wf-ink);
+  border-color: var(--wf-ink);
+}

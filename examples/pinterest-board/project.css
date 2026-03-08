@@ -1,0 +1,86 @@
+/* Mood Board — masonry layout */
+
+.masonry-grid {
+  column-count: 4;
+  column-gap: 16px;
+}
+
+.masonry-grid > * {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1024px) {
+  .masonry-grid { column-count: 3; }
+}
+
+@media (max-width: 768px) {
+  .masonry-grid { column-count: 2; }
+}
+
+/* Sketchy image treatment — SVG edge-detection pencil sketch */
+.pin-img {
+  width: 100%;
+  display: block;
+  border-radius: var(--wf-wobble-radius);
+  object-fit: cover;
+  filter: url(#wf-pencil-sketch);
+}
+
+/* --- Paper Scrap Cards -------------------------------------------------- */
+
+/* Container: transparent, no card chrome — children are individual scraps */
+.pin-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+html.wireframe .pin-card {
+  box-shadow: none;
+  filter: none;
+}
+
+/* Each child element is its own paper scrap */
+.pin-scrap {
+  background: var(--wf-white);
+  box-shadow: var(--wf-paper-shadow);
+  border-radius: var(--wf-wobble-radius);
+  padding: 6px;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.pin-scrap:nth-child(odd) { transform: rotate(-0.5deg); }
+.pin-scrap:nth-child(even) { transform: rotate(0.3deg); }
+.pin-scrap:nth-child(3n) { transform: rotate(0.7deg); }
+
+/* Image scrap — no padding, full bleed */
+.pin-scrap--img {
+  padding: 0;
+  overflow: hidden;
+}
+
+.pin-scrap--img .pin-img {
+  border-radius: var(--wf-wobble-radius);
+}
+
+/* Title strip */
+.pin-scrap--title {
+  padding: 8px 10px;
+}
+
+/* Small tag scrap for badges */
+.pin-scrap--tag {
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+/* Action scrap — small, floated */
+.pin-scrap--action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+}

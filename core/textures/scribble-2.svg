@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" width="120" height="100">
+  <!-- Rough sketch — small box/flowchart doodle with arrows -->
+  <defs>
+    <filter id="sk-blur" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#sk-blur)" fill="none" stroke="#2a2a2a" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Small rectangle sketch -->
+    <path d="M20,20 L72,18 L74,48 L22,50 Z" stroke-width="1.5" stroke-opacity="0.12"/>
+    <!-- Arrow down from box -->
+    <path d="M47,50 L46,68" stroke-width="1.3" stroke-opacity="0.1"/>
+    <path d="M42,62 L46,68 L50,62" stroke-width="1.2" stroke-opacity="0.1"/>
+    <!-- Second smaller box below -->
+    <path d="M30,70 L62,69 L63,88 L31,89 Z" stroke-width="1.2" stroke-opacity="0.1"/>
+    <!-- X mark in corner (like a deletion) -->
+    <path d="M85,25 L100,40 M100,25 L85,40" stroke-width="1.8" stroke-opacity="0.08"/>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" width="160" height="80">
+  <!-- Indecipherable scribble — like someone testing a pen or jotting a quick note -->
+  <defs>
+    <filter id="scr-blur" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.4"/>
+    </filter>
+  </defs>
+  <g filter="url(#scr-blur)" fill="none" stroke="#2a2a2a" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main scribble line — illegible cursive -->
+    <path d="M12,45 C18,32 25,38 32,42 C38,46 35,30 42,28
+             C48,26 52,40 58,38 C64,36 60,24 68,22
+             C74,20 78,36 85,34 C90,32 88,20 95,22
+             C100,24 98,38 105,36 C110,34 108,26 115,28
+             C120,30 118,42 125,40 C130,38 128,30 135,32
+             C140,34 138,44 145,42"
+          stroke-width="1.8" stroke-opacity="0.15"/>
+    <!-- Second pass — slightly offset for pen pressure variation -->
+    <path d="M14,47 C20,34 26,40 33,44 C39,48 36,32 43,30
+             C49,28 53,42 59,40 C65,38 61,26 69,24
+             C75,22 79,38 86,36"
+          stroke-width="1.2" stroke-opacity="0.1"/>
+    <!-- Underline/cross-out gesture -->
+    <path d="M15,55 C45,52 75,54 110,51 C120,50 130,53 142,50"
+          stroke-width="1.5" stroke-opacity="0.08"/>
+  </g>
+</svg>

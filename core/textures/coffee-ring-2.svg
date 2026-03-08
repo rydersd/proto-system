@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220" width="240" height="220">
+  <!-- Coffee stain — overlapping double ring with splatter -->
+  <defs>
+    <filter id="blur2" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+    <filter id="blur2s" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.8"/>
+    </filter>
+    <radialGradient id="ringA" cx="50%" cy="50%" r="50%">
+      <stop offset="72%" stop-color="#5C3A1E" stop-opacity="0"/>
+      <stop offset="80%" stop-color="#5C3A1E" stop-opacity="0.2"/>
+      <stop offset="86%" stop-color="#5C3A1E" stop-opacity="0.28"/>
+      <stop offset="90%" stop-color="#5C3A1E" stop-opacity="0.12"/>
+      <stop offset="95%" stop-color="#5C3A1E" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#5C3A1E" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ringB" cx="50%" cy="50%" r="50%">
+      <stop offset="68%" stop-color="#5C3A1E" stop-opacity="0"/>
+      <stop offset="76%" stop-color="#5C3A1E" stop-opacity="0.15"/>
+      <stop offset="83%" stop-color="#5C3A1E" stop-opacity="0.2"/>
+      <stop offset="90%" stop-color="#5C3A1E" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#5C3A1E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- First ring -->
+  <ellipse cx="95" cy="105" rx="75" ry="70" fill="url(#ringA)" filter="url(#blur2)"/>
+  <!-- Second ring, offset and rotated -->
+  <ellipse cx="140" cy="100" rx="65" ry="62" fill="url(#ringB)" filter="url(#blur2)" transform="rotate(8, 140, 100)"/>
+  <!-- Overlap darkening -->
+  <ellipse cx="118" cy="102" rx="30" ry="28" fill="#5C3A1E" fill-opacity="0.05" filter="url(#blur2)"/>
+  <!-- Small splatter dots -->
+  <circle cx="55" cy="68" r="3" fill="#5C3A1E" fill-opacity="0.12" filter="url(#blur2s)"/>
+  <circle cx="180" cy="140" r="2.5" fill="#5C3A1E" fill-opacity="0.1" filter="url(#blur2s)"/>
+  <circle cx="168" cy="52" r="2" fill="#5C3A1E" fill-opacity="0.08" filter="url(#blur2s)"/>
+  <circle cx="42" cy="130" r="1.8" fill="#5C3A1E" fill-opacity="0.09" filter="url(#blur2s)"/>
+  <ellipse cx="200" cy="85" rx="4" ry="2.5" fill="#5C3A1E" fill-opacity="0.07" filter="url(#blur2s)" transform="rotate(-20, 200, 85)"/>
+</svg>
