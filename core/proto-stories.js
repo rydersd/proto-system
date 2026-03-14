@@ -1,5 +1,5 @@
 /* ========================================================================
-   Proto-System Design Stories Renderer (proto-stories.js)
+   Nib Design Stories Renderer (proto-stories.js)
 
    Reads window.DESIGN_STORIES and window.PROJECT_PHASES and generates
    the design stories page: auto-validation warnings, project metrics,

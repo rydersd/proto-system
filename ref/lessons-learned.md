@@ -6,11 +6,11 @@
 
 **What happened:** pp-selfserve had an old copy of proto-nav.js missing the 3-tab notes split and "Notes" rename.
 
-**Root cause:** No sync mechanism between proto-system source of truth and project copies. Authors copy files once and forget.
+**Root cause:** No sync mechanism between nib source of truth and project copies. Authors copy files once and forget.
 
-**Fix:** Always sync core files from proto-system before making changes. Consider symlinks or a build step.
+**Fix:** Always sync core files from nib before making changes. Consider symlinks or a build step.
 
-**Framework instruction:** Before editing any page, verify core/ files match proto-system.
+**Framework instruction:** Before editing any page, verify core/ files match nib.
 
 ## 2. Wrong WIREFRAME_CONFIG Keys
 

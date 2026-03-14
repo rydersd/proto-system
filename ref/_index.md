@@ -1,4 +1,4 @@
-# Proto-System Reference Index
+# Nib Reference Index
 
 > Read this first. It tells you which refs to load for your task.
 

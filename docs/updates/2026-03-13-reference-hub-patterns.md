@@ -19,11 +19,11 @@
 
 ## Why
 
-The eqPartners prototype achieved high fidelity because it included structural deliverables — sitemap, JTBD hub, user flows, story reference, personas — that frame the wireframes with information architecture and user context. When PP-Selfserve was built from proto-system, these deliverables were missing because:
+The eqPartners prototype achieved high fidelity because it included structural deliverables — sitemap, JTBD hub, user flows, story reference, personas — that frame the wireframes with information architecture and user context. When PP-Selfserve was built from nib, these deliverables were missing because:
 
 1. `ref/new-project.md` had 6 steps — none mentioned sitemap, JTBD, flows, personas, or stories
 2. No starters existed for these page types
 3. No ref doc explained the "reference hub" pattern (view-control nav linking reference pages)
 4. `ref/navigation.md` documented JOURNEYS and SCENARIOS but not how to build hub pages that visualize them
 
-This update ensures future projects built from proto-system achieve eqPartners-level completeness by documenting patterns and providing starters for every structural deliverable.
+This update ensures future projects built from nib achieve eqPartners-level completeness by documenting patterns and providing starters for every structural deliverable.

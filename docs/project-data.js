@@ -1,6 +1,6 @@
 /* Documentation Project Data */
 window.WIREFRAME_CONFIG = {
-  title: 'Proto-System Docs',
+  title: 'Nib Docs',
   subtitle: 'Framework Documentation'
 };
 

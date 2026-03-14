@@ -1,7 +1,7 @@
-/* Proto-System Examples — project configuration */
+/* Nib Examples — project configuration */
 
 window.WIREFRAME_CONFIG = {
-  title: 'Proto-System Examples',
+  title: 'Nib Examples',
   subtitle: '7 example projects',
   fallbackPage: 'index.html'
 };

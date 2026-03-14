@@ -1,4 +1,4 @@
-# Proto-System Architecture
+# Nib Architecture
 
 > How the pieces connect. Read this to understand the system mental model before building pages.
 

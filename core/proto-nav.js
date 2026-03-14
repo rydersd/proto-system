@@ -1,5 +1,5 @@
 /* ========================================================================
-   Proto-System Navigation Engine (proto-nav.js)
+   Nib Navigation Engine (proto-nav.js)
 
    Reads data from window.SECTIONS, window.JOURNEYS, window.STORY_MAP,
    window.STORY_TITLES, window.SCENARIOS, window.DESIGN_STORIES,

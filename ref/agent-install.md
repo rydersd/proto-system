@@ -2,7 +2,7 @@
 
 ## Quick Install
 
-Copy agent definitions from proto-system to your local Claude config:
+Copy agent definitions from nib to your local Claude config:
 
 ```bash
 # Create directories
@@ -40,4 +40,4 @@ cp ref/sfdc-review-pipeline-SKILL.md ~/.claude/skills/sfdc-review-pipeline/SKILL
 
 ## Source of truth
 
-Agent definitions are maintained in `ref/` within the proto-system repository. If you update an agent definition, re-run the copy commands above to sync.
+Agent definitions are maintained in `ref/` within the nib repository. If you update an agent definition, re-run the copy commands above to sync.

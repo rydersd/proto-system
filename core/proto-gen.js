@@ -1,5 +1,5 @@
 /* ========================================================================
-   Proto-System Declarative Page Blueprint Renderer (proto-gen.js)
+   Nib Declarative Page Blueprint Renderer (proto-gen.js)
 
    Reads window.PAGE_BLUEPRINT and generates a compliant wireframe page.
    Transforms structured data into framework-standard HTML using the

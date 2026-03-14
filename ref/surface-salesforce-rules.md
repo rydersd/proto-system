@@ -1,6 +1,6 @@
 # Salesforce Lightning Design System Rules
 
-> Authoritative rules for building Salesforce-style wireframes in proto-system. Grounded in the official Lightning Design System 2 (SLDS 2), Cosmos theme, and WCAG 2.1 AA accessibility standards.
+> Authoritative rules for building Salesforce-style wireframes in nib. Grounded in the official Lightning Design System 2 (SLDS 2), Cosmos theme, and WCAG 2.1 AA accessibility standards.
 
 ## How This Document Was Established
 
@@ -29,11 +29,11 @@ All official hooks use the `--slds` namespace:
 | Role | Semantic purpose | `container`, `on-surface`, `disabled` |
 | Range | Scale level | `1`, `2`, `3`, `4` |
 
-### Proto-System Mapping
+### Nib Mapping
 
-Proto-system uses `--wf-*` tokens instead of `--slds-g-*` hooks. The Salesforce surface CSS (`surfaces/salesforce.css`) maps framework tokens to SLDS-equivalent visual roles:
+Nib uses `--wf-*` tokens instead of `--slds-g-*` hooks. The Salesforce surface CSS (`surfaces/salesforce.css`) maps framework tokens to SLDS-equivalent visual roles:
 
-| SLDS 2 Hook | Proto-System Token | Purpose |
+| SLDS 2 Hook | Nib Token | Purpose |
 |-------------|-------------------|---------|
 | `--slds-g-color-surface-1` | `var(--wf-white)` | Primary background |
 | `--slds-g-color-surface-container-1` | `var(--wf-surface)` | Card/container background |
@@ -79,7 +79,7 @@ These ratios are **mandatory** — SLDS 2 enforces them:
 | UI components (borders, icons, focus rings) | 3:1 against adjacent colors |
 | Non-text content (charts, status indicators) | 3:1 against background |
 
-**Rules for proto-system wireframes:**
+**Rules for nib wireframes:**
 - Never use `--wf-muted` text on `--wf-surface` background — insufficient contrast
 - Status badges must use their color-on-white variant (the `wf-badge-*` classes handle this)
 - Icon-only buttons need visible borders or backgrounds, not just color
@@ -111,7 +111,7 @@ SLDS deprecated **Salesforce Sans** in Summer '21 (Safe Harbor release). The def
 ```css
 /* SLDS 2 default (post Summer '21): */
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-/* Proto-system: */
+/* Nib: */
 font-family: var(--wf-font); /* system stack — already aligned */
 ```
 
@@ -119,11 +119,11 @@ font-family: var(--wf-font); /* system stack — already aligned */
 - Salesforce Sans is no longer bundled or loaded by default
 - Existing orgs that previously used Salesforce Sans were migrated automatically
 - The system-ui stack renders platform-native (San Francisco on macOS/iOS, Segoe UI on Windows, Roboto on Android)
-- Proto-system's `var(--wf-font)` system stack already matches this behavior — no changes needed
+- Nib's `var(--wf-font)` system stack already matches this behavior — no changes needed
 
 ### Type Scale
 
-SLDS 2 uses a scaled type system via `--slds-g-font-size-base` with 15 graduated sizes. Proto-system maps to these approximate ranges:
+SLDS 2 uses a scaled type system via `--slds-g-font-size-base` with 15 graduated sizes. Nib maps to these approximate ranges:
 
 | SLDS Purpose | SLDS Range | Proto Size | Proto Usage |
 |-------------|-----------|-----------|-------------|
@@ -149,7 +149,7 @@ SLDS 2 uses a scaled type system via `--slds-g-font-size-base` with 15 graduated
 
 ### Spacing Scale
 
-SLDS 2 uses `--slds-g-spacing-*` hooks with a root-font-size-based scale. Proto-system uses pixel values:
+SLDS 2 uses `--slds-g-spacing-*` hooks with a root-font-size-based scale. Nib uses pixel values:
 
 | Context | SLDS Approach | Proto Value |
 |---------|--------------|------------|
@@ -317,7 +317,7 @@ SLDS 2 supports two density modes:
 | Comfy | Standard (12-16px) | Relaxed | Default, readability |
 | Compact | Reduced (8-10px) | Tight | Data-heavy views, power users |
 
-Proto-system defaults to Comfy density.
+Nib defaults to Comfy density.
 
 ---
 
@@ -325,7 +325,7 @@ Proto-system defaults to Comfy density.
 
 ### WCAG 2.1 AA Compliance (Mandatory)
 
-SLDS 2 base components conform to WCAG 2.1 AA. Proto-system wireframes MUST maintain:
+SLDS 2 base components conform to WCAG 2.1 AA. Nib wireframes MUST maintain:
 
 1. **Text contrast**: 4.5:1 minimum (3:1 for large text)
 2. **Non-text contrast**: 3:1 for UI component boundaries (buttons, inputs, focus states)
@@ -407,7 +407,7 @@ Key visual and architectural differences:
 | Spacing | Compact | More generous whitespace |
 | Cognitive load | Information-dense | Reduced, at-a-glance views |
 
-### Migration Implications for Proto-System
+### Migration Implications for Nib
 
 The current `surfaces/salesforce.css` follows SLDS 1 patterns (sharp corners, compact density). To align with Cosmos:
 - Cards could use `border-radius: 8px` instead of `6px`
@@ -426,7 +426,7 @@ SLDS 2 is described as "the foundation of our agentic design system." Components
 - Conversation design patterns exist for agent UIs
 - "Vibe coding" guidance helps agents generate SLDS-compliant UI
 
-**For proto-system:** This aligns with our agent-consumable ref docs approach. Agents generating Salesforce wireframes should read this rules file to produce SLDS-compliant output.
+**For nib:** This aligns with our agent-consumable ref docs approach. Agents generating Salesforce wireframes should read this rules file to produce SLDS-compliant output.
 
 ---
 
@@ -521,7 +521,7 @@ SLDS 2 is described as "the foundation of our agentic design system." Components
 
 ## 12. Lightning Web Component Styling
 
-Understanding LWC styling constraints is critical when translating wireframes into production Salesforce UI. Proto-system wireframes bypass these constraints (we target the outer DOM directly), but agents and developers should know what's feasible in real implementation.
+Understanding LWC styling constraints is critical when translating wireframes into production Salesforce UI. Nib wireframes bypass these constraints (we target the outer DOM directly), but agents and developers should know what's feasible in real implementation.
 
 ### Shadow DOM Constraints
 
@@ -577,9 +577,9 @@ During the SLDS 1 → SLDS 2 transition, always provide fallback values:
 
 This ensures components render correctly in orgs that haven't yet migrated to SLDS 2 / Cosmos theme.
 
-### What This Means for Proto-System Wireframes
+### What This Means for Nib Wireframes
 
-- Proto-system CSS targets the outer DOM directly — no Shadow DOM in wireframes
+- Nib CSS targets the outer DOM directly — no Shadow DOM in wireframes
 - All `.sfdc-*` classes work without restriction in our HTML wireframes
 - When annotating wireframes, note components that will face Shadow DOM constraints in production
 - Use `data-wf-confidence="partial"` on elements where the real LWC customization may be limited by available hooks
@@ -660,7 +660,7 @@ These patterns need custom Lightning Web Components:
 | Custom path/flow UIs | Stage bars with custom behavior or branching |
 | Interactive dashboards | Drill-down, filtering beyond standard report charts |
 
-### Proto-System Wireframe Guidance
+### Nib Wireframe Guidance
 
 When wireframing Salesforce pages, annotate implementation effort:
 

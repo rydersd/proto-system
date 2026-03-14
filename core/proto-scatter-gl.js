@@ -1,5 +1,5 @@
 /* ========================================================================
-   Proto-System WebGL Paper Curl Transition (proto-scatter-gl.js)
+   Nib WebGL Paper Curl Transition (proto-scatter-gl.js)
 
    Every visible element becomes an individual scrap of roughly torn paper,
    held to the surface by invisible glue stick adhesive.

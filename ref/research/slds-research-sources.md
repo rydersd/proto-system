@@ -95,11 +95,11 @@
 
 ## Existing Framework Analysis
 
-### 17. Proto-System `surfaces/salesforce.css`
+### 17. Nib `surfaces/salesforce.css`
 - **File**: `/Users/ryders/Developer/GitHub/proto_framework/surfaces/salesforce.css` (838 lines)
 - **What was analyzed**: Complete existing SFDC surface implementation. Confirmed class inventory, component patterns, token usage, wireframe-mode paper adaptations, napkin-mode sharpie overrides, responsive breakpoints.
 
-### 18. Proto-System `ref/surface-salesforce.md`
+### 18. Nib `ref/surface-salesforce.md`
 - **File**: `/Users/ryders/Developer/GitHub/proto_framework/ref/surface-salesforce.md` (227 lines)
 - **What was analyzed**: Existing agent reference doc for Salesforce wireframes. Confirmed record page structure, card patterns, detail grid, related lists, activity feed, path detail, tabs, buttons, class reference, and rules.
 
@@ -113,7 +113,7 @@
 ### 20. Salesforce Release Notes — Summer '21 Font Change
 - **URL**: https://help.salesforce.com/s/articleView?id=release-notes.rn_lex_font_change.htm
 - **What was extracted**: Salesforce Sans deprecation in Summer '21, migration to system-ui font stack (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif`), automatic migration of existing orgs, platform-native rendering behavior.
-- **Key finding**: Salesforce Sans is no longer bundled or loaded by default. The system font stack renders platform-native text, which aligns with proto-system's existing `var(--wf-font)` approach.
+- **Key finding**: Salesforce Sans is no longer bundled or loaded by default. The system font stack renders platform-native text, which aligns with nib's existing `var(--wf-font)` approach.
 
 ### 21. Salesforce Help — Lightning App Builder
 - **URL**: https://help.salesforce.com/s/articleView?id=sf.lightning_app_builder_overview.htm

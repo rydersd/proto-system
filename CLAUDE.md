@@ -1,8 +1,8 @@
-# CLAUDE.md — Proto-System Framework
+# CLAUDE.md — Nib Framework
 
 ## What This Is
 
-Proto-system is an agent-consumable wireframe prototyping framework. It provides shared CSS, JS, and reference documentation so that agents can rapidly generate consistent, professional wireframe pages for any project.
+Nib is an agent-consumable wireframe prototyping framework. It provides shared CSS, JS, and reference documentation so that agents can rapidly generate consistent, professional wireframe pages for any project.
 
 ## How to Use This Framework
 
