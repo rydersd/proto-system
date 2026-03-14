@@ -57,7 +57,7 @@
    * @param {Array|string|HTMLElement} [children] - Child elements or text
    * @returns {HTMLElement}
    */
-  function el(tag, attrs, children) {
+  function wfGenEl(tag, attrs, children) {
     var node = document.createElement(tag);
     if (attrs) {
       var keys = Object.keys(attrs);
@@ -209,7 +209,7 @@
     } else {
       label = approach || 'Unknown';
     }
-    return el('span', { className: cls }, label);
+    return wfGenEl('span', { className: cls }, label);
   }
 
   /* ======================================================================
@@ -237,7 +237,7 @@
       cls += ' wf-ds-status--deferred';
       label = 'Deferred';
     }
-    return el('span', { className: cls }, label);
+    return wfGenEl('span', { className: cls }, label);
   }
 
   /* ======================================================================
@@ -312,14 +312,14 @@
   function renderWarnings(warnings) {
     if (!warnings || warnings.length === 0) return null;
 
-    var section = el('div', { className: 'wf-section wf-ds-warnings' });
-    section.appendChild(el('div', { className: 'wf-section-title' }, [
-      el('span', null, 'Validation Warnings'),
-      el('span', { className: 'wf-badge wf-badge-amber' }, String(warnings.length))
+    var section = wfGenEl('div', { className: 'wf-section wf-ds-warnings' });
+    section.appendChild(wfGenEl('div', { className: 'wf-section-title' }, [
+      wfGenEl('span', null, 'Validation Warnings'),
+      wfGenEl('span', { className: 'wf-badge wf-badge-amber' }, String(warnings.length))
     ]));
 
     for (var w = 0; w < warnings.length; w++) {
-      section.appendChild(el('div', { className: 'wf-ds-warning' }, warnings[w]));
+      section.appendChild(wfGenEl('div', { className: 'wf-ds-warning' }, warnings[w]));
     }
 
     return section;
@@ -419,18 +419,10 @@
    * @returns {HTMLElement}
    */
   function renderMetrics(metrics) {
-    var section = el('div', { className: 'wf-section' });
-    section.appendChild(el('div', { className: 'wf-section-title' }, 'Project Metrics'));
+    var section = wfGenEl('div', { className: 'wf-section' });
+    section.appendChild(wfGenEl('div', { className: 'wf-section-title' }, 'Project Metrics'));
 
-    var metricsGrid = el('div', { className: 'wf-ds-metrics' });
-
-    var grid = el('div', {
-      style: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-        gap: '12px'
-      }
-    });
+    var metricsGrid = wfGenEl('div', { className: 'wf-ds-metrics' });
 
     /* Status breakdown */
     var statusLabels = [
@@ -442,46 +434,45 @@
     for (var sl = 0; sl < statusLabels.length; sl++) {
       var item = statusLabels[sl];
       var count = metrics.statusCounts[item.key] || 0;
-      var metric = el('div', { className: 'wf-ds-metric' });
-      metric.appendChild(el('div', { className: 'wf-ds-metric-value' }, String(count)));
-      metric.appendChild(el('div', { className: 'wf-ds-metric-label' }, item.label));
-      grid.appendChild(metric);
+      var metric = wfGenEl('div', { className: 'wf-ds-metric' });
+      metric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-value' }, String(count)));
+      metric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-label' }, item.label));
+      metricsGrid.appendChild(metric);
     }
 
     /* Approach mix — show counts to avoid rounding errors */
-    var mixMetric = el('div', { className: 'wf-ds-metric' });
-    mixMetric.appendChild(el('div', { className: 'wf-ds-metric-value' }, [
-      el('span', { className: 'wf-ds-approach wf-ds-approach--oob', style: { marginRight: '4px' } }, metrics.approachMix.oob + ' OOB'),
-      el('span', { className: 'wf-ds-approach wf-ds-approach--config', style: { marginRight: '4px' } }, metrics.approachMix.config + ' Config'),
-      el('span', { className: 'wf-ds-approach wf-ds-approach--custom-lwc' }, metrics.approachMix.customLwc + ' Custom LWC')
+    var mixMetric = wfGenEl('div', { className: 'wf-ds-metric' });
+    mixMetric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-value' }, [
+      wfGenEl('span', { className: 'wf-ds-approach wf-ds-approach--oob', style: { marginRight: '4px' } }, metrics.approachMix.oob + ' OOB'),
+      wfGenEl('span', { className: 'wf-ds-approach wf-ds-approach--config', style: { marginRight: '4px' } }, metrics.approachMix.config + ' Config'),
+      wfGenEl('span', { className: 'wf-ds-approach wf-ds-approach--custom-lwc' }, metrics.approachMix.customLwc + ' Custom LWC')
     ]));
-    mixMetric.appendChild(el('div', { className: 'wf-ds-metric-label' }, 'Approach Mix'));
-    grid.appendChild(mixMetric);
+    mixMetric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-label' }, 'Approach Mix'));
+    metricsGrid.appendChild(mixMetric);
 
     /* Coverage */
-    var coverageMetric = el('div', { className: 'wf-ds-metric' });
-    coverageMetric.appendChild(el('div', { className: 'wf-ds-metric-value' }, metrics.coveredPages + ' / ' + metrics.totalPages));
-    coverageMetric.appendChild(el('div', { className: 'wf-ds-metric-label' }, 'Pages with Story Assignments'));
-    grid.appendChild(coverageMetric);
+    var coverageMetric = wfGenEl('div', { className: 'wf-ds-metric' });
+    coverageMetric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-value' }, metrics.coveredPages + ' / ' + metrics.totalPages));
+    coverageMetric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-label' }, 'Pages with Story Assignments'));
+    metricsGrid.appendChild(coverageMetric);
 
     /* Phase readiness */
     if (metrics.phaseReadiness.length > 0) {
-      var readinessMetric = el('div', { className: 'wf-ds-metric', style: { gridColumn: '1 / -1' } });
-      var readinessVal = el('div', { className: 'wf-ds-metric-value' });
+      var readinessMetric = wfGenEl('div', { className: 'wf-ds-metric', style: { gridColumn: '1 / -1' } });
+      var readinessVal = wfGenEl('div', { className: 'wf-ds-metric-value' });
       for (var pr = 0; pr < metrics.phaseReadiness.length; pr++) {
         var phReady = metrics.phaseReadiness[pr];
         var phBadgeColor = phReady.ready ? 'green' : 'amber';
         var phBadgeClass = 'wf-badge wf-badge-' + phBadgeColor;
         var phLabel = 'Phase ' + phReady.phase + ': ' + phReady.label;
         var readyText = phReady.ready ? 'Ready' : 'Blocked';
-        readinessVal.appendChild(el('span', { className: phBadgeClass, style: { marginRight: '8px' } }, phLabel + ' — ' + readyText));
+        readinessVal.appendChild(wfGenEl('span', { className: phBadgeClass, style: { marginRight: '8px' } }, phLabel + ' — ' + readyText));
       }
       readinessMetric.appendChild(readinessVal);
-      readinessMetric.appendChild(el('div', { className: 'wf-ds-metric-label' }, 'Phase Readiness'));
-      grid.appendChild(readinessMetric);
+      readinessMetric.appendChild(wfGenEl('div', { className: 'wf-ds-metric-label' }, 'Phase Readiness'));
+      metricsGrid.appendChild(readinessMetric);
     }
 
-    metricsGrid.appendChild(grid);
     section.appendChild(metricsGrid);
     return section;
   }
@@ -500,12 +491,12 @@
   function renderRoadmap(storyIndex) {
     if (!PROJECT_PHASES || PROJECT_PHASES.length === 0) return null;
 
-    var section = el('div', { className: 'wf-section' });
-    section.appendChild(el('div', { className: 'wf-section-title' }, 'Implementation Roadmap'));
+    var section = wfGenEl('div', { className: 'wf-section' });
+    section.appendChild(wfGenEl('div', { className: 'wf-section-title' }, 'Implementation Roadmap'));
 
-    var roadmapInner = el('div', { className: 'wf-ds-roadmap' });
+    var roadmapInner = wfGenEl('div', { className: 'wf-ds-roadmap' });
 
-    var container = el('div', {
+    var container = wfGenEl('div', {
       style: {
         display: 'flex',
         alignItems: 'flex-start',
@@ -521,20 +512,20 @@
       var systemDeps = phase.systemDeps || [];
 
       /* Phase card */
-      var phaseCard = el('div', { className: 'wf-ds-roadmap-phase wf-card' });
+      var phaseCard = wfGenEl('div', { className: 'wf-ds-roadmap-phase wf-card' });
 
       /* Phase header */
-      var phaseHeader = el('div', { className: 'wf-card-header' });
-      phaseHeader.appendChild(el('h3', null, 'Phase ' + phase.phase + ': ' + phase.label));
+      var phaseHeader = wfGenEl('div', { className: 'wf-card-header' });
+      phaseHeader.appendChild(wfGenEl('h3', null, 'Phase ' + phase.phase + ': ' + phase.label));
       phaseCard.appendChild(phaseHeader);
 
-      var phaseBody = el('div', { className: 'wf-card-body' });
+      var phaseBody = wfGenEl('div', { className: 'wf-card-body' });
 
       /* Story IDs with approach badges */
       for (var si = 0; si < stories.length; si++) {
         var storyId = stories[si];
         var story = storyIndex[storyId];
-        var storyRow = el('div', {
+        var storyRow = wfGenEl('div', {
           style: {
             display: 'flex',
             alignItems: 'center',
@@ -547,16 +538,16 @@
         });
 
         /* Story ID as anchor link */
-        var storyLink = el('a', { href: '#' + storyAnchor(storyId) }, storyId);
+        var storyLink = wfGenEl('a', { href: '#' + storyAnchor(storyId) }, storyId);
         storyRow.appendChild(storyLink);
 
         /* Story title if known */
         if (story && story.title) {
-          storyRow.appendChild(el('span', { className: 'text-muted', style: { flex: '1', fontSize: '11px', marginLeft: '4px' } }, story.title));
+          storyRow.appendChild(wfGenEl('span', { className: 'text-muted', style: { flex: '1', fontSize: '11px', marginLeft: '4px' } }, story.title));
         } else if (STORY_TITLES[storyId]) {
-          storyRow.appendChild(el('span', { className: 'text-muted', style: { flex: '1', fontSize: '11px', marginLeft: '4px' } }, STORY_TITLES[storyId]));
+          storyRow.appendChild(wfGenEl('span', { className: 'text-muted', style: { flex: '1', fontSize: '11px', marginLeft: '4px' } }, STORY_TITLES[storyId]));
         } else {
-          storyRow.appendChild(el('span', { style: { flex: '1' } }));
+          storyRow.appendChild(wfGenEl('span', { style: { flex: '1' } }));
         }
 
         /* Find the approach for this story in this specific phase */
@@ -574,10 +565,10 @@
 
       /* System dependency callouts */
       if (systemDeps.length > 0) {
-        var depsContainer = el('div', { className: 'wf-ds-roadmap-deps', style: { marginTop: '8px' } });
-        depsContainer.appendChild(el('div', { className: 'overline', style: { marginBottom: '4px' } }, 'System Dependencies'));
+        var depsContainer = wfGenEl('div', { className: 'wf-ds-roadmap-deps', style: { marginTop: '8px' } });
+        depsContainer.appendChild(wfGenEl('div', { className: 'overline', style: { marginBottom: '4px' } }, 'System Dependencies'));
         for (var sd = 0; sd < systemDeps.length; sd++) {
-          depsContainer.appendChild(el('div', {
+          depsContainer.appendChild(wfGenEl('div', {
             style: {
               fontSize: '11px',
               color: 'var(--wf-amber)',
@@ -607,7 +598,7 @@
         }
       }
       if (phaseApproachTotal > 0) {
-        var mixRow = el('div', {
+        var mixRow = wfGenEl('div', {
           style: {
             marginTop: '8px',
             paddingTop: '8px',
@@ -619,13 +610,13 @@
           }
         });
         if (phaseApproaches.oob > 0) {
-          mixRow.appendChild(el('span', { className: 'wf-ds-approach wf-ds-approach--oob' }, 'OOB: ' + phaseApproaches.oob));
+          mixRow.appendChild(wfGenEl('span', { className: 'wf-ds-approach wf-ds-approach--oob' }, 'OOB: ' + phaseApproaches.oob));
         }
         if (phaseApproaches.config > 0) {
-          mixRow.appendChild(el('span', { className: 'wf-ds-approach wf-ds-approach--config' }, 'Config: ' + phaseApproaches.config));
+          mixRow.appendChild(wfGenEl('span', { className: 'wf-ds-approach wf-ds-approach--config' }, 'Config: ' + phaseApproaches.config));
         }
         if (phaseApproaches['custom-lwc'] > 0) {
-          mixRow.appendChild(el('span', { className: 'wf-ds-approach wf-ds-approach--custom-lwc' }, 'Custom: ' + phaseApproaches['custom-lwc']));
+          mixRow.appendChild(wfGenEl('span', { className: 'wf-ds-approach wf-ds-approach--custom-lwc' }, 'Custom: ' + phaseApproaches['custom-lwc']));
         }
         phaseBody.appendChild(mixRow);
       }
@@ -635,8 +626,8 @@
 
       /* Dependency arrow between phases (except after last) */
       if (p < PROJECT_PHASES.length - 1) {
-        var arrow = el('div', { className: 'wf-ds-roadmap-arrow' });
-        arrow.appendChild(el('span', {
+        var arrow = wfGenEl('div', { className: 'wf-ds-roadmap-arrow' });
+        arrow.appendChild(wfGenEl('span', {
           style: {
             fontSize: '20px',
             color: 'var(--wf-muted)',
@@ -662,7 +653,7 @@
    * @returns {HTMLElement}
    */
   function renderFilterPills() {
-    var section = el('div', { className: 'wf-ds-filter-pills' });
+    var section = wfGenEl('div', { className: 'wf-ds-filter-pills', role: 'group', 'aria-label': 'Filter stories by status' });
 
     var statuses = [
       { key: 'all', label: 'All' },
@@ -677,7 +668,7 @@
         var cls = 'wf-ds-filter-pill';
         if (statusKey === 'all') cls += ' active';
 
-        var pill = el('button', {
+        var pill = wfGenEl('button', {
           className: cls,
           'data-filter': statusKey,
           onclick: function () {
@@ -730,14 +721,14 @@
    * @returns {HTMLElement}
    */
   function renderStoryCard(story, sectionPages) {
-    var card = el('div', {
+    var card = wfGenEl('div', {
       className: 'wf-ds-story-card wf-card',
       id: storyAnchor(story.id),
       'data-status': story.status || 'draft'
     });
 
     /* ── Header row: ID badge + title + status badge + version ── */
-    var headerRow = el('div', {
+    var headerRow = wfGenEl('div', {
       className: 'wf-card-header',
       style: {
         display: 'flex',
@@ -747,47 +738,47 @@
       }
     });
 
-    headerRow.appendChild(el('span', { className: 'wf-ds-story-id' }, story.id));
-    headerRow.appendChild(el('h3', { style: { flex: '1', margin: '0' } }, story.title || 'Untitled Story'));
+    headerRow.appendChild(wfGenEl('span', { className: 'wf-ds-story-id' }, story.id));
+    headerRow.appendChild(wfGenEl('h3', { style: { flex: '1', margin: '0' } }, story.title || 'Untitled Story'));
     headerRow.appendChild(statusBadge(story.status));
     if (story.version) {
-      headerRow.appendChild(el('span', { className: 'wf-ds-version' }, 'v' + story.version));
+      headerRow.appendChild(wfGenEl('span', { className: 'wf-ds-version' }, 'v' + story.version));
     }
 
     card.appendChild(headerRow);
 
     /* ── Card body: all story detail sections ── */
-    var body = el('div', { className: 'wf-card-body' });
+    var body = wfGenEl('div', { className: 'wf-card-body' });
 
     /* User story statement */
     if (story.userStory) {
-      var userStoryBlock = el('blockquote', { className: 'wf-ds-user-story' }, story.userStory);
+      var userStoryBlock = wfGenEl('blockquote', { className: 'wf-ds-user-story' }, story.userStory);
       body.appendChild(userStoryBlock);
     }
 
     /* Journey link */
     if (story.journeyId) {
-      var journeyLink = el('div', { className: 'wf-ds-journey-link' });
-      journeyLink.appendChild(el('span', { className: 'overline' }, 'Journey: '));
-      journeyLink.appendChild(el('a', { href: 'user-flows.html#journey-' + story.journeyId }, story.journeyId));
+      var journeyLink = wfGenEl('div', { className: 'wf-ds-journey-link' });
+      journeyLink.appendChild(wfGenEl('span', { className: 'overline' }, 'Journey: '));
+      journeyLink.appendChild(wfGenEl('a', { href: 'user-flows.html#journey-' + story.journeyId }, story.journeyId));
       body.appendChild(journeyLink);
     }
 
     /* Page links */
     var storyPages = story.pages || [];
     if (storyPages.length > 0) {
-      var pageLinksContainer = el('div', { className: 'wf-ds-page-links' });
-      pageLinksContainer.appendChild(el('span', { className: 'overline' }, 'Pages: '));
+      var pageLinksContainer = wfGenEl('div', { className: 'wf-ds-page-links' });
+      pageLinksContainer.appendChild(wfGenEl('span', { className: 'overline' }, 'Pages: '));
       for (var pl = 0; pl < storyPages.length; pl++) {
         var pageName = storyPages[pl];
         if (pl > 0) {
           pageLinksContainer.appendChild(document.createTextNode(', '));
         }
         if (sectionPages[pageName]) {
-          pageLinksContainer.appendChild(el('a', { href: pageName + '.html' }, pageName));
+          pageLinksContainer.appendChild(wfGenEl('a', { href: pageName + '.html' }, pageName));
         } else {
           /* Page not found in SECTIONS — render as plain text */
-          pageLinksContainer.appendChild(el('span', { className: 'text-muted' }, pageName));
+          pageLinksContainer.appendChild(wfGenEl('span', { className: 'text-muted' }, pageName));
         }
       }
       body.appendChild(pageLinksContainer);
@@ -796,11 +787,11 @@
     /* Acceptance criteria */
     var acceptance = story.acceptance || [];
     if (acceptance.length > 0) {
-      var acSection = el('div', { className: 'wf-ds-acceptance' });
-      acSection.appendChild(el('div', { className: 'overline', style: { marginBottom: '6px' } }, 'Acceptance Criteria'));
-      var acList = el('ul', { style: { margin: '0', paddingLeft: '18px' } });
+      var acSection = wfGenEl('div', { className: 'wf-ds-acceptance' });
+      acSection.appendChild(wfGenEl('div', { className: 'overline', style: { marginBottom: '6px' } }, 'Acceptance Criteria'));
+      var acList = wfGenEl('ul', { style: { margin: '0', paddingLeft: '18px' } });
       for (var ac = 0; ac < acceptance.length; ac++) {
-        acList.appendChild(el('li', {
+        acList.appendChild(wfGenEl('li', {
           style: { fontSize: '12px', color: 'var(--wf-text)', lineHeight: '1.6' }
         }, acceptance[ac]));
       }
@@ -811,37 +802,37 @@
     /* Per-story phased implementation table */
     var storyPhases = story.phases || [];
     if (storyPhases.length > 0) {
-      var phasesSection = el('div', { className: 'wf-ds-phases' });
-      phasesSection.appendChild(el('div', { className: 'overline', style: { marginBottom: '6px' } }, 'Phased Implementation'));
+      var phasesSection = wfGenEl('div', { className: 'wf-ds-phases' });
+      phasesSection.appendChild(wfGenEl('div', { className: 'overline', style: { marginBottom: '6px' } }, 'Phased Implementation'));
 
-      var phaseTable = el('table', { className: 'wf-table' });
+      var phaseTable = wfGenEl('table', { className: 'wf-table' });
 
       /* Thead */
-      var thead = el('thead');
-      var headRow = el('tr');
-      headRow.appendChild(el('th', null, 'Phase'));
-      headRow.appendChild(el('th', null, 'Scope'));
-      headRow.appendChild(el('th', null, 'Dependencies'));
-      headRow.appendChild(el('th', null, 'Approach'));
+      var thead = wfGenEl('thead');
+      var headRow = wfGenEl('tr');
+      headRow.appendChild(wfGenEl('th', null, 'Phase'));
+      headRow.appendChild(wfGenEl('th', null, 'Scope'));
+      headRow.appendChild(wfGenEl('th', null, 'Dependencies'));
+      headRow.appendChild(wfGenEl('th', null, 'Approach'));
       thead.appendChild(headRow);
       phaseTable.appendChild(thead);
 
       /* Tbody */
-      var tbody = el('tbody');
+      var tbody = wfGenEl('tbody');
       for (var ph = 0; ph < storyPhases.length; ph++) {
         var phaseData = storyPhases[ph];
-        var phaseRow = el('tr', { className: 'wf-ds-phase-row' });
+        var phaseRow = wfGenEl('tr', { className: 'wf-ds-phase-row' });
 
         /* Phase label */
-        phaseRow.appendChild(el('td', null, 'Phase ' + phaseData.phase + ': ' + (phaseData.label || '')));
+        phaseRow.appendChild(wfGenEl('td', null, 'Phase ' + phaseData.phase + ': ' + (phaseData.label || '')));
 
         /* Scope */
         var scopeItems = phaseData.scope || [];
-        var scopeCell = el('td', { className: 'wf-ds-phase-scope' });
+        var scopeCell = wfGenEl('td', { className: 'wf-ds-phase-scope' });
         if (scopeItems.length > 0) {
-          var scopeList = el('ul', { style: { margin: '0', paddingLeft: '14px', fontSize: '11px' } });
+          var scopeList = wfGenEl('ul', { style: { margin: '0', paddingLeft: '14px', fontSize: '11px' } });
           for (var sc = 0; sc < scopeItems.length; sc++) {
-            scopeList.appendChild(el('li', null, scopeItems[sc]));
+            scopeList.appendChild(wfGenEl('li', null, scopeItems[sc]));
           }
           scopeCell.appendChild(scopeList);
         }
@@ -849,20 +840,20 @@
 
         /* Dependencies */
         var deps = phaseData.dependencies || [];
-        var depsCell = el('td');
+        var depsCell = wfGenEl('td');
         if (deps.length > 0) {
-          var depsList = el('ul', { style: { margin: '0', paddingLeft: '14px', fontSize: '11px' } });
+          var depsList = wfGenEl('ul', { style: { margin: '0', paddingLeft: '14px', fontSize: '11px' } });
           for (var dp = 0; dp < deps.length; dp++) {
-            depsList.appendChild(el('li', null, deps[dp]));
+            depsList.appendChild(wfGenEl('li', null, deps[dp]));
           }
           depsCell.appendChild(depsList);
         } else {
-          depsCell.appendChild(el('span', { className: 'text-muted', style: { fontSize: '11px' } }, 'None'));
+          depsCell.appendChild(wfGenEl('span', { className: 'text-muted', style: { fontSize: '11px' } }, 'None'));
         }
         phaseRow.appendChild(depsCell);
 
         /* Approach badge */
-        var approachCell = el('td');
+        var approachCell = wfGenEl('td');
         approachCell.appendChild(approachBadge(phaseData.approach));
         phaseRow.appendChild(approachCell);
 
@@ -875,11 +866,11 @@
 
     /* SFDC implementation suggestions */
     if (story.sfdc && story.sfdc.suggestions && story.sfdc.suggestions.length > 0) {
-      var sfdcSection = el('div', { className: 'wf-ds-sfdc-suggestions' });
-      sfdcSection.appendChild(el('div', { className: 'overline', style: { marginBottom: '6px' } }, 'SFDC Implementation Suggestions'));
-      var sfdcList = el('ul', { style: { margin: '0', paddingLeft: '18px' } });
+      var sfdcSection = wfGenEl('div', { className: 'wf-ds-sfdc-suggestions' });
+      sfdcSection.appendChild(wfGenEl('div', { className: 'overline', style: { marginBottom: '6px' } }, 'SFDC Implementation Suggestions'));
+      var sfdcList = wfGenEl('ul', { style: { margin: '0', paddingLeft: '18px' } });
       for (var sf = 0; sf < story.sfdc.suggestions.length; sf++) {
-        sfdcList.appendChild(el('li', {
+        sfdcList.appendChild(wfGenEl('li', {
           style: { fontSize: '12px', color: 'var(--wf-text)', lineHeight: '1.6' }
         }, story.sfdc.suggestions[sf]));
       }
@@ -890,8 +881,8 @@
     /* Decision log — expandable accordion */
     var decisions = story.decisions || [];
     if (decisions.length > 0) {
-      var decisionsSection = el('div', { className: 'wf-ds-decisions' });
-      decisionsSection.appendChild(el('div', { className: 'overline', style: { marginBottom: '6px' } }, 'Decision Log'));
+      var decisionsSection = wfGenEl('div', { className: 'wf-ds-decisions' });
+      decisionsSection.appendChild(wfGenEl('div', { className: 'overline', style: { marginBottom: '6px' } }, 'Decision Log'));
 
       /* Sort decisions reverse-chronologically by date string */
       var sortedDecisions = decisions.slice().sort(function (a, b) {
@@ -903,10 +894,10 @@
 
       for (var d = 0; d < sortedDecisions.length; d++) {
         (function (decision) {
-          var entry = el('div', { className: 'wf-ds-decision-entry' });
+          var entry = wfGenEl('div', { className: 'wf-ds-decision-entry' });
 
           /* Toggle row — shows date + decision text, clickable */
-          var toggleRow = el('button', {
+          var toggleRow = wfGenEl('button', {
             className: 'wf-ds-accordion-toggle',
             onclick: function () {
               var bodyEl = entry.querySelector('.wf-ds-accordion-body');
@@ -920,14 +911,14 @@
             }
           });
 
-          toggleRow.appendChild(el('span', { className: 'wf-ds-accordion-indicator' }, '\u25B6'));
-          toggleRow.appendChild(el('span', { className: 'wf-ds-decision-date' }, decision.date || ''));
-          toggleRow.appendChild(el('span', { className: 'wf-ds-decision-text' }, decision.decision || ''));
+          toggleRow.appendChild(wfGenEl('span', { className: 'wf-ds-accordion-indicator' }, '\u25B6'));
+          toggleRow.appendChild(wfGenEl('span', { className: 'wf-ds-decision-date' }, decision.date || ''));
+          toggleRow.appendChild(wfGenEl('span', { className: 'wf-ds-decision-text' }, decision.decision || ''));
           entry.appendChild(toggleRow);
 
           /* Collapsible body — rationale (hidden by default) */
-          var rationaleBody = el('div', { className: 'wf-ds-accordion-body', style: { display: 'none' } });
-          rationaleBody.appendChild(el('div', { className: 'wf-ds-decision-rationale' }, decision.rationale || ''));
+          var rationaleBody = wfGenEl('div', { className: 'wf-ds-accordion-body', style: { display: 'none' } });
+          rationaleBody.appendChild(wfGenEl('div', { className: 'wf-ds-decision-rationale' }, decision.rationale || ''));
           entry.appendChild(rationaleBody);
 
           decisionsSection.appendChild(entry);
@@ -951,23 +942,23 @@
    * @returns {HTMLElement}
    */
   function renderEmptyState() {
-    var container = el('div', {
+    var container = wfGenEl('div', {
       style: {
         textAlign: 'center',
         padding: '48px 24px',
         color: 'var(--wf-muted)'
       }
     });
-    container.appendChild(el('div', { style: { fontSize: '36px', marginBottom: '12px' } }, '\uD83D\uDCCB'));
-    container.appendChild(el('h2', { style: { color: 'var(--wf-ink)', marginBottom: '8px' } }, 'No Design Stories Defined'));
-    container.appendChild(el('p', { style: { fontSize: '13px', maxWidth: '480px', margin: '0 auto 16px', lineHeight: '1.6' } },
+    container.appendChild(wfGenEl('div', { style: { fontSize: '36px', marginBottom: '12px' } }, '\uD83D\uDCCB'));
+    container.appendChild(wfGenEl('h2', { style: { color: 'var(--wf-ink)', marginBottom: '8px' } }, 'No Design Stories Defined'));
+    container.appendChild(wfGenEl('p', { style: { fontSize: '13px', maxWidth: '480px', margin: '0 auto 16px', lineHeight: '1.6' } },
       'Define DESIGN_STORIES in your project-data.js to populate this page. ' +
       'Each story includes a user story statement, acceptance criteria, phased implementation plan, ' +
       'decision log, and SFDC suggestions. See the starter template for the complete data structure.'
     ));
-    container.appendChild(el('p', { style: { fontSize: '12px', maxWidth: '480px', margin: '0 auto' } }, [
-      el('span', { className: 'text-muted' }, 'Reference: '),
-      el('code', { style: { fontSize: '11px', background: 'var(--wf-surface)', padding: '2px 6px', borderRadius: '3px' } }, 'starters/project-data.js')
+    container.appendChild(wfGenEl('p', { style: { fontSize: '12px', maxWidth: '480px', margin: '0 auto' } }, [
+      wfGenEl('span', { className: 'text-muted' }, 'Reference: '),
+      wfGenEl('code', { style: { fontSize: '11px', background: 'var(--wf-surface)', padding: '2px 6px', borderRadius: '3px' } }, 'starters/project-data.js')
     ]));
     return container;
   }
@@ -1019,7 +1010,7 @@
     root.appendChild(renderFilterPills());
 
     /* 5. Story cards */
-    var storiesContainer = el('div', {
+    var storiesContainer = wfGenEl('div', {
       style: { display: 'flex', flexDirection: 'column', gap: '16px' }
     });
     for (var i = 0; i < DESIGN_STORIES.length; i++) {
