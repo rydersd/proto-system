@@ -2,7 +2,9 @@
 
 **Plan the experience before you build it. Get alignment. Build it right the first time.**
 
-Nib is a wireframe prototyping framework designed to be read by AI agents. You define your project data — pages, personas, user flows, design stories — and agents generate a complete, navigable prototype with design notes, implementation tracking, and living documentation. The output is HTML that anyone on the team can open in a browser and understand.
+Nib is a wireframe prototyping framework designed to be read by AI agents — specifically [Claude Code](https://claude.ai/claude-code). You define your project data — pages, personas, user flows, design stories — and Claude reads the framework's reference docs to generate a complete, navigable prototype with design notes, implementation tracking, and living documentation. The output is HTML that anyone on the team can open in a browser and understand.
+
+**Nib is the instruction set. Claude Code is the engine.** The framework alone doesn't generate anything — it provides the design system, components, tokens, and conventions that an agent needs to produce consistent, self-documenting wireframes.
 
 Think of it as a functional Google Design Sprint that lives in a repo.
 
@@ -12,7 +14,7 @@ This isn't a new story. Healthcare.gov launched after $1.7 billion in developmen
 
 The wireframes that were supposed to prevent this either didn't get made (no time), got made but weren't detailed enough (lorem ipsum and gray boxes), or got made but nobody could follow them without the designer in the room to explain.
 
-Nib started because I was in a meeting trying to explain a partner portal ecosystem to a service designer helping with onboarding. I could talk through the big picture, but I couldn't get into the weeds on the personas, the flows, the implementation approach — not in any format someone could pick up and run with. An outside firm was coming in to make recommendations. I needed something they could riff on without me. Not a slide deck. Not a Figma file they'd need a license to open.
+Nib started because I was in a meeting trying to explain a partner portal ecosystem to a service designer helping with onboarding. I could talk through the big picture, but I couldn't get into the weeds on the personas, the flows, the implementation approach — not in any format someone could pick up and run with. An outside firm was coming in to make recommendations. I needed something they could riff on without me. Not a slide deck. Not a Figma file that requires everyone to have an account and navigate a tool they might not know.
 
 I needed a prototype that explained itself.
 
@@ -39,11 +41,11 @@ Every page has a design notes panel that explains *why* it exists, *who* it serv
 
 ## How It Works
 
-The framework provides three things:
+You need [Claude Code](https://claude.ai/claude-code) (or another frontier model agent) to generate pages. The framework provides three things the agent reads:
 
-1. **Reference docs** (`ref/`) — agent-readable documentation covering design tokens, components, layouts, navigation, and platform conventions. An agent reads these before generating any page.
+1. **Reference docs** (`ref/`) — agent-readable documentation covering design tokens, components, layouts, navigation, and platform conventions. Claude reads these before generating any page.
 2. **Core CSS + JS** (`core/`) — shared design system with a fidelity slider (napkin sketch → blueprint → polished), paper aesthetic, and interactive chrome (navigation drawer, design notes panel, guided walkthroughs).
-3. **Starters** (`starters/`) — copy-paste HTML templates for every page type. Define your project data, copy a starter, and the framework handles the rest.
+3. **Starters** (`starters/`) — copy-paste HTML templates for every page type. Define your project data, copy a starter, and Claude generates the rest.
 
 ### Project data drives everything
 
@@ -76,6 +78,12 @@ my-project/
 4. Open in a browser — navigation, design notes, and fidelity controls work immediately
 
 For the full bootstrap process, read `ref/new-project.md`.
+
+## Agent Compatibility
+
+Nib is built and tested with [Claude Code](https://claude.ai/claude-code). The reference docs, CLAUDE.md instructions, and prompting conventions are written for Claude's agent loop. Other frontier models can read the reference docs and generate pages, but you'll need to adapt the agent instructions and prompting patterns for your model of choice.
+
+If you get Nib working with another agent or model, please contribute your adapter instructions back. The goal is for this framework to work everywhere — PRs with agent-specific guidance (Cursor rules, Copilot instructions, etc.) are very welcome.
 
 ## Key Concepts
 
