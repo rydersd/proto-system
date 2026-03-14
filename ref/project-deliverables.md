@@ -65,7 +65,7 @@ Process chain visualizations showing how personas move through the prototype to 
 
 ---
 
-## Story Reference (`story-reference.html`)
+## Personas & Organizations (`story-reference.html`)
 
 Character cards and organizational context for the proto-personas used throughout the prototype.
 
@@ -81,6 +81,26 @@ Character cards and organizational context for the proto-personas used throughou
 **Starter:** `starters/story-reference.html`
 
 **How it connects:** Character names match persona references in design notes and JTBD items.
+
+---
+
+## Design Stories (`design-stories.html`)
+
+A living document tracking implementation scope, product decisions, phased delivery, and platform approach for each design story. Auto-generated from `DESIGN_STORIES` in `project-data.js`.
+
+**When to create:** When your project needs implementation tracking beyond simple STORY_MAP cross-references — phased delivery, SFDC approach decisions, or acceptance criteria management.
+
+**What goes in it:**
+- Auto-generated from `DESIGN_STORIES` array in `project-data.js`
+- Project metrics: story counts by status, approach mix (OOB/Config/Custom LWC), page coverage
+- Implementation roadmap: visual phase dependency map from `PROJECT_PHASES`
+- Status filter pills (Draft / In Progress / Accepted / Deferred)
+- Story cards with: user story statement, acceptance criteria, phased implementation table, SFDC suggestions, decision log
+- Auto-validation warnings for orphan references, dead links, missing journeys, uncovered pages
+
+**Starter:** `starters/design-stories.html`
+
+**How it connects:** Story IDs in `STORY_MAP` link to story cards on this page. AC badges in design notes become clickable links. Story `pages[]` link back to wireframe pages. Story `journeyId` links to user-flows.html.
 
 ---
 
@@ -103,7 +123,8 @@ All reference pages share a **view-control nav bar** at the top that links them 
     <a class="wf-view-btn active" href="index.html">Sitemap</a>
     <a class="wf-view-btn" href="jobs-to-be-done.html">Jobs to Be Done</a>
     <a class="wf-view-btn" href="user-flows.html">User Flows</a>
-    <a class="wf-view-btn" href="story-reference.html">Story Reference</a>
+    <a class="wf-view-btn" href="story-reference.html">Personas</a>
+    <a class="wf-view-btn" href="design-stories.html">Design Stories</a>
   </div>
 </nav>
 ```

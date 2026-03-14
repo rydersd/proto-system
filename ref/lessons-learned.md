@@ -61,3 +61,16 @@
 **Root cause:** No guidance that sitemaps should be generated from SECTIONS. The sitemap was hand-authored once and never updated.
 
 **Fix:** Rewrote sitemap as JS-generated from SECTIONS with journey filtering.
+
+## 8. User Stories vs Design Stories vs Personas Confusion
+
+**What happened:** The framework conflated three concepts under "stories": user stories (JTBD items in design notes), design/implementation stories (STORY_MAP + STORY_TITLES), and story reference (proto-personas page).
+
+**Root cause:** Incremental feature growth without clear naming. "Story Reference" page was actually about personas. "Story badges" were actually implementation tracking IDs. JTBD items in design notes were the actual user stories.
+
+**Fix:** Separated the three concepts:
+- **User stories (JTBD):** Persona goals in design notes, aggregated on the JTBD hub page
+- **Design stories:** Rich implementation tracking via `DESIGN_STORIES` array, rendered on a dedicated Design Stories page with phased delivery, decisions, and SFDC approach suggestions
+- **Personas:** Story Reference page renamed to "Personas & Organizations" to reflect actual content
+
+**Framework instruction:** Use JTBD for user goals, DESIGN_STORIES for implementation planning, and the Personas page for character context. STORY_MAP remains as the lightweight page-to-story cross-reference for badge injection.

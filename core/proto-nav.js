@@ -2,7 +2,8 @@
    Proto-System Navigation Engine (proto-nav.js)
 
    Reads data from window.SECTIONS, window.JOURNEYS, window.STORY_MAP,
-   window.STORY_TITLES, window.SCENARIOS (all set by project-data.js).
+   window.STORY_TITLES, window.SCENARIOS, window.DESIGN_STORIES,
+   window.PROJECT_PHASES (all set by project-data.js).
 
    Load project-data.js BEFORE this file.
    ======================================================================== */
@@ -17,6 +18,8 @@ var JOURNEYS = window.JOURNEYS || [];
 var STORY_MAP = window.STORY_MAP || {};
 var STORY_TITLES = window.STORY_TITLES || {};
 var SCENARIOS = window.SCENARIOS || [];
+var DESIGN_STORIES = window.DESIGN_STORIES || [];
+var PROJECT_PHASES = window.PROJECT_PHASES || [];
 
 /* ── WIREFRAME_CONFIG ── Project-level branding/defaults ──────────── */
 var WF_CONFIG = Object.assign({
@@ -471,7 +474,12 @@ function wfDnOpen() {
       for (var i = 0; i < stories.length; i++) {
         var sid = stories[i];
         var title = STORY_TITLES[sid] || '';
-        badgesHTML += '<span class="wf-dn-ac-badge" title="' + title + '">' + sid + '</span>';
+        if (DESIGN_STORIES.length) {
+          var anchor = sid.replace(/\./g, '-');
+          badgesHTML += '<a class="wf-dn-ac-badge" href="design-stories.html#story-' + anchor + '" title="' + title + '">' + sid + '</a>';
+        } else {
+          badgesHTML += '<span class="wf-dn-ac-badge" title="' + title + '">' + sid + '</span>';
+        }
       }
       badgesHTML += '</div>';
       contextTab.innerHTML = badgesHTML + contextTab.innerHTML;
@@ -936,7 +944,7 @@ function wfInitThreadPanel() {
   }
 }
 
-/* Jira Stories dropdown removed — AC badges now injected into Notes Context tab */
+/* Design Stories dropdown removed — AC badges now injected into Notes Context tab */
 
 /* ========================================================================
    FEEDBACK PANEL — Screenshot Paste, Page Context, Email
@@ -963,7 +971,7 @@ function wfFbPageContext() {
     var storyLines = stories.map(function(sid) {
       return sid + ' — ' + (STORY_TITLES[sid] || '');
     });
-    lines.push('Jira Stories: ' + storyLines.join(', '));
+    lines.push('Design Stories: ' + storyLines.join(', '));
   }
 
   lines.push('URL: ' + window.location.href);
