@@ -42,7 +42,7 @@ var SECTIONS = [
 
 `file` = HTML filename without `.html`. `type` = display hint (page, modal, channel, dm, canvas, sfdc, reference).
 
-## Optional: STORY_MAP + STORY_TITLES
+## Optional: STORY_MAP + STORY_TITLES (Lightweight Cross-Reference)
 
 Maps pages to Jira stories (or any story IDs). Shows story badges in context bar.
 
@@ -117,6 +117,59 @@ Steps can include an optional `friction` field for gap analysis:
 When present, an amber callout appears below the narrative in the scenario banner, highlighting UX gaps.
 
 Scenarios use sessionStorage to track current step. `wfScenarioStart(id)` begins, `wfScenarioNext()` advances.
+
+## Optional: DESIGN_STORIES + PROJECT_PHASES (Living Design Document)
+
+Rich story definitions that power the Design Stories page (`design-stories.html`). While `STORY_MAP` is a lightweight cross-reference (page → story IDs), `DESIGN_STORIES` is the full source of truth for implementation planning.
+
+When both `STORY_MAP` and `DESIGN_STORIES` are defined, AC badges in the Notes Context tab become clickable links to the Design Stories page.
+
+```javascript
+var DESIGN_STORIES = [
+  {
+    id: '1.1',                    // Must match STORY_MAP/STORY_TITLES IDs
+    title: 'Dashboard home layout',
+    userStory: 'As a pricing analyst, I want to see KPIs on login so I can prioritize my day',
+    status: 'in-progress',        // 'draft' | 'in-progress' | 'accepted' | 'deferred'
+    version: 2,                   // Increment when scope changes
+    journeyId: 'first-login',    // Optional: ties to a JOURNEY
+    pages: ['home', 'dashboard'], // Wireframe pages where this story is realized
+    acceptance: [                 // Acceptance criteria
+      'Page loads with KPI widgets populated',
+      'Dashboard shows data from last 30 days by default'
+    ],
+    phases: [                     // Per-story phased implementation
+      {
+        phase: 1,
+        label: 'Foundation',
+        scope: ['Basic record layout', 'Standard related lists'],
+        dependencies: [],
+        approach: 'oob'           // 'oob' | 'config' | 'custom-lwc'
+      }
+    ],
+    decisions: [                  // Reverse-chronological decision log
+      { date: '2026-03-14', decision: 'Defer custom chart to Phase 2', rationale: 'Dependent on data pipeline' }
+    ],
+    sfdc: {                       // Optional: SFDC-specific suggestions
+      suggestions: [
+        'Consider Report Chart component for KPI visualizations',
+        'Dynamic Forms can handle field-level visibility rules'
+      ]
+    }
+  }
+];
+```
+
+Optional project-level phase grouping:
+
+```javascript
+var PROJECT_PHASES = [
+  { phase: 1, label: 'Foundation', stories: ['1.1', '1.2'], systemDeps: [] },
+  { phase: 2, label: 'Enhancement', stories: ['1.3'], systemDeps: ['Data pipeline deployed'] }
+];
+```
+
+**Relationship:** `STORY_MAP` = lightweight cross-ref (always present for badge injection). `DESIGN_STORIES` = living document (present when implementation tracking is needed). Both use the same story IDs.
 
 ## Key Functions (from proto-nav.js)
 

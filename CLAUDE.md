@@ -39,7 +39,7 @@ The `examples/` directory contains reference implementations. When bootstrapping
 4. Do not link back to examples from your project — examples are for reference only
 
 ### For project deliverables:
-- Read `ref/project-deliverables.md` — sitemaps, JTBD pages, user flows, reference hubs
+- Read `ref/project-deliverables.md` — sitemaps, JTBD pages, user flows, personas, design stories
 - Read `ref/design-notes-guide.md` — writing effective design notes
 - Read `ref/lessons-learned.md` — patterns and pitfalls from real projects
 
@@ -118,3 +118,5 @@ Phase 1 (documentation + starters) and Phase 2 (core CSS/JS extraction + consoli
 - Fidelity slider (Napkin/Blueprint/Polished) controls `--wf-wobble-radius`, `--wf-grain-opacity`, `--wf-grid-opacity` — never hardcode these
 - Use `data-wf-confidence` attribute on uncertain features — the aesthetic communicates design certainty
 - Paper utilities (`.wf-tape`, `.wf-pin`, `.wf-torn-*`, `.wf-stacked`, `.wf-sketch`) use pseudo-elements — don't conflict
+- User stories (JTBD) live in design notes and the JTBD hub; design stories (implementation tracking) live in DESIGN_STORIES and the Design Stories page; personas live on the Personas page — don't conflate them
+- When a bug is reported, don't start by trying to fix it. Instead, write a test that reproduces the bug first. Then, have subagents try to fix the bug and prove it with a passing test.

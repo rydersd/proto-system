@@ -95,7 +95,7 @@ Which ACs this page addresses, with brief descriptions.
 </ul>
 ```
 
-> **Note:** AC badges are auto-injected into the Notes Context tab from `STORY_MAP` in project-data.js. You don't need to manually add them to your design notes HTML — they appear automatically when the Notes panel opens.
+> **Note:** AC badges are auto-injected into the Notes Context tab from `STORY_MAP` in project-data.js. You don't need to manually add them to your design notes HTML — they appear automatically when the Notes panel opens. When `DESIGN_STORIES` is also defined in project-data.js, these badges become clickable links to the Design Stories page.
 
 ### Friction Points (Optional)
 

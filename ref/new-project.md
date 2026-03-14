@@ -76,6 +76,15 @@ var STORY_TITLES = { '1.1': 'Home page layout', '1.2': 'KPI widgets', '1.3': 'Pi
 var SCENARIOS = [ { id: 'first-login', persona: 'Rep', label: 'Rep: First login', steps: [...] } ];
 ```
 
+For implementation tracking, add the rich story definitions:
+
+```javascript
+var DESIGN_STORIES = [ { id: '1.1', title: 'Home page layout', status: 'draft', ... } ];
+var PROJECT_PHASES = [ { phase: 1, label: 'Foundation', stories: ['1.1'], systemDeps: [] } ];
+```
+
+See `ref/navigation.md` for the full DESIGN_STORIES schema.
+
 ## File Loading Order
 
 In every HTML page, scripts load in this order:
@@ -97,6 +106,7 @@ A complete prototype includes structural pages that frame the wireframes with in
 | JTBD Hub | `jobs-to-be-done.html` | `starters/jtbd.html` | After 3+ pages have design notes with JTBD |
 | User Flows | `user-flows.html` | `starters/user-flows.html` | After defining JOURNEYS in project-data.js |
 | Story Reference | `story-reference.html` | `starters/story-reference.html` | When 2+ personas exist |
+| Design Stories | `design-stories.html` | `starters/design-stories.html` | When implementation tracking needed |
 
 All reference pages share a **view-control nav bar** at the top (see `ref/project-deliverables.md`).
 
@@ -119,6 +129,8 @@ See `ref/project-deliverables.md` for full details on each deliverable.
 - [ ] `STORY_MAP` linking pages to stories in `project-data.js`
 - [ ] `STORY_TITLES` defining story/AC labels
 - [ ] Scenarios defined for guided walkthroughs
+- [ ] `DESIGN_STORIES` with acceptance criteria and phased implementation (if tracking needed)
+- [ ] Design Stories page created with roadmap and story cards
 - [ ] View-control nav linking all reference pages
 - [ ] Design notes complete on every wireframe page (see `ref/design-notes-guide.md`)
 

@@ -12,6 +12,7 @@
 | Internal portal wireframe | + `surface-internal.md` + `components.md` |
 | Complex layout | + `layouts.md` |
 | New project from scratch | `new-project.md` (reads others for you) |
+| Understanding the system | `architecture.md` |
 | Adding navigation/drawer | `navigation.md` |
 | Paper/blueprint features | `components.md` | Paper utility classes, confidence attribute |
 | Declarative page from data | `page-blueprint.md` + surface ref |
@@ -20,6 +21,7 @@
 | Writing design notes | `design-notes-guide.md` |
 | JTBD, user flows, personas | `project-deliverables.md` |
 | Reference hub pages | `project-deliverables.md` |
+| Design stories, story tracking | `project-deliverables.md` + `navigation.md` |
 | Project completeness checklist | `new-project.md` (Step 7) |
 
 | Salesforce UX review | `agent-sfdc-ux.md` + `surface-salesforce-rules.md` |
