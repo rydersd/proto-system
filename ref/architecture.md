@@ -40,7 +40,7 @@ All set in `project-data.js` on `window` before proto-nav.js loads:
 |--------|-----------|---------|
 | `WIREFRAME_CONFIG` | Yes | Project branding — `title`, `subtitle`, `fallbackPage`, email config |
 | `SECTIONS` | Yes | Page registry — drives drawer navigation, breadcrumbs, page numbering. Each entry's `type` field (`'sfdc'`, `'slack'`, `'internal'`) triggers surface-specific behavior |
-| `STORY_MAP` | No | Object mapping page filenames to Jira story IDs — auto-injects story badges into Notes Context tab. When `DESIGN_STORIES` is also defined, badges render as links to `design-stories.html` |
+| `STORY_MAP` | No | Object mapping page filenames to story IDs — auto-injects story badges into Notes Context tab. When `DESIGN_STORIES` is also defined, badges render as links to `design-stories.html` |
 | `STORY_TITLES` | No | Object mapping story IDs to human-readable titles |
 | `JOURNEYS` | No | Array or object format (normalized at init by `normalizeJourneys()`). Drives `data-journey` attribute highlighting across pages |
 | `SCENARIOS` | No | Guided walkthroughs — array of `{ id, label, steps: [{ file, narrative, friction? }] }` |

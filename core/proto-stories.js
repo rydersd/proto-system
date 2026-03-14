@@ -13,10 +13,13 @@
    ======================================================================== */
 
 /* ========================================================================
-   DOMContentLoaded Wrapper
+   IIFE Wrapper
    ======================================================================== */
 
-document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+
+  function wfDesignStoriesInit() {
 
   /* ======================================================================
      Data Structure Initialization — Read from window
@@ -359,12 +362,11 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    var approachMix = { oob: 0, config: 0, customLwc: 0 };
-    if (totalApproaches > 0) {
-      approachMix.oob = Math.round((approachCounts.oob / totalApproaches) * 100);
-      approachMix.config = Math.round((approachCounts.config / totalApproaches) * 100);
-      approachMix.customLwc = Math.round((approachCounts['custom-lwc'] / totalApproaches) * 100);
-    }
+    var approachMix = {
+      oob: approachCounts.oob,
+      config: approachCounts.config,
+      customLwc: approachCounts['custom-lwc']
+    };
 
     /* Phase readiness — a phase is "ready" when all its story dependencies are met
        (all stories from previous phases are 'accepted') */
@@ -417,8 +419,10 @@ document.addEventListener('DOMContentLoaded', function () {
    * @returns {HTMLElement}
    */
   function renderMetrics(metrics) {
-    var section = el('div', { className: 'wf-section wf-ds-metrics' });
+    var section = el('div', { className: 'wf-section' });
     section.appendChild(el('div', { className: 'wf-section-title' }, 'Project Metrics'));
+
+    var metricsGrid = el('div', { className: 'wf-ds-metrics' });
 
     var grid = el('div', {
       style: {
@@ -444,14 +448,14 @@ document.addEventListener('DOMContentLoaded', function () {
       grid.appendChild(metric);
     }
 
-    /* Approach mix */
+    /* Approach mix — show counts to avoid rounding errors */
     var mixMetric = el('div', { className: 'wf-ds-metric' });
     mixMetric.appendChild(el('div', { className: 'wf-ds-metric-value' }, [
-      el('span', { className: 'wf-ds-approach wf-ds-approach--oob', style: { marginRight: '4px' } }, metrics.approachMix.oob + '%'),
-      el('span', { className: 'wf-ds-approach wf-ds-approach--config', style: { marginRight: '4px' } }, metrics.approachMix.config + '%'),
-      el('span', { className: 'wf-ds-approach wf-ds-approach--custom-lwc' }, metrics.approachMix.customLwc + '%')
+      el('span', { className: 'wf-ds-approach wf-ds-approach--oob', style: { marginRight: '4px' } }, metrics.approachMix.oob + ' OOB'),
+      el('span', { className: 'wf-ds-approach wf-ds-approach--config', style: { marginRight: '4px' } }, metrics.approachMix.config + ' Config'),
+      el('span', { className: 'wf-ds-approach wf-ds-approach--custom-lwc' }, metrics.approachMix.customLwc + ' Custom LWC')
     ]));
-    mixMetric.appendChild(el('div', { className: 'wf-ds-metric-label' }, 'Approach Mix (OOB / Config / Custom)'));
+    mixMetric.appendChild(el('div', { className: 'wf-ds-metric-label' }, 'Approach Mix'));
     grid.appendChild(mixMetric);
 
     /* Coverage */
@@ -477,7 +481,8 @@ document.addEventListener('DOMContentLoaded', function () {
       grid.appendChild(readinessMetric);
     }
 
-    section.appendChild(grid);
+    metricsGrid.appendChild(grid);
+    section.appendChild(metricsGrid);
     return section;
   }
 
@@ -495,8 +500,10 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderRoadmap(storyIndex) {
     if (!PROJECT_PHASES || PROJECT_PHASES.length === 0) return null;
 
-    var section = el('div', { className: 'wf-section wf-ds-roadmap' });
+    var section = el('div', { className: 'wf-section' });
     section.appendChild(el('div', { className: 'wf-section-title' }, 'Implementation Roadmap'));
+
+    var roadmapInner = el('div', { className: 'wf-ds-roadmap' });
 
     var container = el('div', {
       style: {
@@ -641,7 +648,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    section.appendChild(container);
+    roadmapInner.appendChild(container);
+    section.appendChild(roadmapInner);
     return section;
   }
 
@@ -1022,4 +1030,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── Run ── */
   wfStoriesInit();
-});
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wfDesignStoriesInit);
+  } else {
+    wfDesignStoriesInit();
+  }
+})();

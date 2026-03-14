@@ -9,7 +9,7 @@
 1. **Context bar** — top bar with hamburger, breadcrumbs, and action buttons
 2. **Drawer** — full-page nav panel triggered by hamburger, built from SECTIONS
 3. **Design notes panel** — side panel that shows content from `<div class="wf-design-notes">`
-4. **Story mode** — unified "Stories" button that opens a scenario selector. When a scenario is active, matching journey highlighting activates automatically. Jira AC badges from STORY_MAP appear in the Notes Context tab
+4. **Story mode** — unified "Stories" button that opens a scenario selector. When a scenario is active, matching journey highlighting activates automatically. AC badges from STORY_MAP appear in the Notes Context tab
 5. **Scenarios** — optional guided walkthroughs stored in sessionStorage
 
 ## Required: SECTIONS
@@ -44,7 +44,7 @@ var SECTIONS = [
 
 ## Optional: STORY_MAP + STORY_TITLES (Lightweight Cross-Reference)
 
-Maps pages to Jira stories (or any story IDs). Shows story badges in context bar.
+Maps pages to design stories (or any story IDs). Shows story badges in context bar.
 
 ```javascript
 var STORY_MAP = {

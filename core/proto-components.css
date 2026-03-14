@@ -1177,24 +1177,6 @@ html.wireframe[data-wf-fidelity="napkin"] .btn-ghost:hover {
   flex-shrink: 0;
 }
 
-.wf-ds-roadmap-phase-header {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--wf-ink);
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1.5px solid var(--wf-line);
-}
-
-.wf-ds-roadmap-story {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 0;
-  font-size: 12px;
-  color: var(--wf-text);
-}
-
 .wf-ds-roadmap-arrow {
   font-size: 20px;
   color: var(--wf-muted);
@@ -1336,13 +1318,10 @@ html.wireframe[data-wf-fidelity="napkin"] .btn-ghost:hover {
   color: var(--wf-accent);
 }
 
-.wf-ds-accordion-toggle::before {
-  content: '\25B8';
+.wf-ds-accordion-indicator {
+  display: inline-block;
   transition: transform 0.15s;
-}
-
-.wf-ds-accordion-toggle.open::before {
-  transform: rotate(90deg);
+  margin-right: 4px;
 }
 
 .wf-ds-accordion-body {

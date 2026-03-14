@@ -44,7 +44,7 @@ var SECTIONS = [
   // }
 ];
 
-/* ── STORY_MAP ── (Optional) Page → Jira story associations ──────────── */
+/* ── STORY_MAP ── (Optional) Page → design story associations ──────────── */
 
 // var STORY_MAP = {
 //   'home':      ['1.1', '1.2'],
