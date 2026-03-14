@@ -85,6 +85,43 @@ In every HTML page, scripts load in this order:
 <script src="core/proto-nav.js"></script>  <!-- 2. nav engine second -->
 ```
 
+---
+
+## Step 7 — Create Reference Hub Pages
+
+A complete prototype includes structural pages that frame the wireframes with information architecture, user context, and workflow logic. Create these after your first few wireframe pages are in place.
+
+| Page | File | Starter | When |
+|------|------|---------|------|
+| Sitemap | `index.html` | `starters/sitemap.html` | First — becomes landing page |
+| JTBD Hub | `jobs-to-be-done.html` | `starters/jtbd.html` | After 3+ pages have design notes with JTBD |
+| User Flows | `user-flows.html` | `starters/user-flows.html` | After defining JOURNEYS in project-data.js |
+| Story Reference | `story-reference.html` | `starters/story-reference.html` | When 2+ personas exist |
+
+All reference pages share a **view-control nav bar** at the top (see `ref/project-deliverables.md`).
+
+### Populate content from your wireframes
+- **Sitemap:** One node per page from `SECTIONS`, with key components listed per node
+- **JTBD:** Consolidate JTBD items from each page's `wf-design-notes` into persona blocks
+- **Flows:** One chain per journey from `JOURNEYS` in `project-data.js`
+- **Story Reference:** One character card per persona referenced in design notes
+
+See `ref/project-deliverables.md` for full details on each deliverable.
+
+---
+
+## Project Completeness Checklist
+
+- [ ] Sitemap page created with all pages listed
+- [ ] JTBD defined per persona and consolidated in hub page
+- [ ] Key user flows documented with linked steps
+- [ ] Story reference with character cards and org cards
+- [ ] `STORY_MAP` linking pages to stories in `project-data.js`
+- [ ] `STORY_TITLES` defining story/AC labels
+- [ ] Scenarios defined for guided walkthroughs
+- [ ] View-control nav linking all reference pages
+- [ ] Design notes complete on every wireframe page (see `ref/design-notes-guide.md`)
+
 ## Checklist
 
 - [ ] `core/` and `surfaces/` copied (not modified)

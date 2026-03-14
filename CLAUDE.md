@@ -13,7 +13,7 @@ Proto-system is an agent-consumable wireframe prototyping framework. It provides
 
 ### For a specific surface:
 - Slack wireframe → read `ref/surface-slack.md`
-- Salesforce wireframe → read `ref/surface-salesforce.md`
+- Salesforce wireframe → read `ref/surface-salesforce.md` + `ref/surface-salesforce-rules.md`
 - Internal portal wireframe → read `ref/surface-internal.md`
 
 ### For complex layouts:
@@ -21,7 +21,12 @@ Proto-system is an agent-consumable wireframe prototyping framework. It provides
 - Read `ref/components.md` — buttons, cards, tables, forms, badges, modals, toast
 
 ### For new projects:
-- Read `ref/new-project.md` — 6-step bootstrap from starters/
+- Read `ref/new-project.md` — bootstrap from starters/
+
+### For declarative pages (data-driven generation):
+- Read `ref/page-blueprint.md` — define PAGE_BLUEPRINT object, proto-gen.js renders the page
+- Starters: `starters/blueprint-record.html` (SFDC record) and `starters/blueprint-dashboard.html` (dashboard)
+- Script load order: `project-data.js` → `proto-nav.js` → blueprint data → `proto-gen.js`
 
 ### For navigation setup:
 - Read `ref/navigation.md` — how SECTIONS drives the drawer + breadcrumbs
@@ -33,14 +38,33 @@ The `examples/` directory contains reference implementations. When bootstrapping
 3. The navigation drawer automatically shows YOUR project's pages, not the examples
 4. Do not link back to examples from your project — examples are for reference only
 
+### For project deliverables:
+- Read `ref/project-deliverables.md` — sitemaps, JTBD pages, user flows, reference hubs
+- Read `ref/design-notes-guide.md` — writing effective design notes
+- Read `ref/lessons-learned.md` — patterns and pitfalls from real projects
+
+### For Salesforce projects:
+- Read `ref/surface-salesforce-rules.md` — SLDS compliance rules and OOB component guidance
+- Read `ref/agent-sfdc-ux.md` — UX review agent for Salesforce wireframes
+- Read `ref/agent-sfdc-dev.md` — Dev feasibility review agent for Salesforce wireframes
+- Read `ref/agent-install.md` — how to install review agents locally
+
 ## Directory Structure
 
 ```
 framework/
 ├── core/         # Shared CSS + JS (do not modify per-project)
-│   ├── proto-core.css      # Design tokens + base components
-│   ├── proto-nav.js        # Context bar, drawer, toast, modal
-│   └── proto-signals.js    # Optional state management
+│   ├── proto-core.css      # Design tokens + base components (legacy monolith)
+│   ├── proto-tokens.css    # Design tokens (colors, typography, spacing)
+│   ├── proto-components.css # Shared UI components (buttons, cards, tables, forms, badges)
+│   ├── proto-blueprint.css # Blueprint/wireframe aesthetic styles
+│   ├── proto-chrome.css    # Page chrome (headers, sidebars, context bar)
+│   ├── proto-feedback.css  # Toast, modals, notifications
+│   ├── proto-keyframes.css # Animations
+│   ├── proto-story.css     # Story/narrative layout styles
+│   ├── proto-nav.js        # Context bar, drawer, toast, modal, normalizeJourneys, detectSurface, buildSurfaceHeader
+│   ├── proto-gen.js        # Declarative Page Blueprint renderer (PAGE_BLUEPRINT → HTML)
+│   └── proto-scatter-gl.js # Scatter plot GL visualization
 ├── surfaces/     # Platform CSS overlays
 │   ├── slack.css           # Slack app shell, messages, threads
 │   ├── salesforce.css      # SFDC record pages, path bar, feed
@@ -52,7 +76,15 @@ framework/
 
 ## Current Phase
 
-Phase 1 (documentation + starters) is complete. Core CSS/JS extraction (Phases 2-4) is planned as a separate effort. Until extraction is done, the existing `wireframe.css` and `wf-nav.js` in the Slack MEDDPICC project serve as the living source of truth — the ref docs describe the patterns they contain.
+Phase 1 (documentation + starters) and Phase 2 (core CSS/JS extraction + consolidation) are complete. Core includes:
+- **Tabbed design notes** — 3-tab panel (Context / Design / Technical) with auto-split
+- **normalizeJourneys** — journey data normalization for consistent rendering
+- **detectSurface** — automatic surface detection from page markup
+- **buildSurfaceHeader** — surface-aware header construction
+- **Story mode consolidation** — unified story/narrative layout engine
+- **AC badge auto-injection** — automatic acceptance criteria badges on wireframe elements
+- **Reference hub components** — reusable patterns for documentation and reference pages
+- **Declarative Page Blueprint** — `proto-gen.js` renders pages from `PAGE_BLUEPRINT` data objects (6 layouts, 9 block types, 4 surface headers)
 
 ## Design Token Summary
 
@@ -82,7 +114,7 @@ Phase 1 (documentation + starters) is complete. Core CSS/JS extraction (Phases 2
 - Surface prefix (`slack-`, `sfdc-`, `ds-`) = platform-specific
 - Buttons use `.btn` / `.btn-primary` everywhere (no prefix)
 - Every page needs design notes (`wf-design-notes` div)
-- Script load order: `project-data.js` THEN `proto-nav.js`
+- Script load order: `project-data.js` THEN `proto-nav.js` (add `proto-gen.js` last for blueprint pages)
 - Fidelity slider (Napkin/Blueprint/Polished) controls `--wf-wobble-radius`, `--wf-grain-opacity`, `--wf-grid-opacity` — never hardcode these
 - Use `data-wf-confidence` attribute on uncertain features — the aesthetic communicates design certainty
 - Paper utilities (`.wf-tape`, `.wf-pin`, `.wf-torn-*`, `.wf-stacked`, `.wf-sketch`) use pseudo-elements — don't conflict

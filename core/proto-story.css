@@ -311,3 +311,86 @@ html.story-active [data-journey].story-hit::before {
 html.scenario-active .wf-ctx-bar {
   display: none;
 }
+
+/* --- Story Mode Selector Dropdown ---------------------------------------- */
+
+.wf-story-mode-dropdown {
+  position: absolute;
+  top: 34px;
+  right: 8px;
+  z-index: 1002;
+  background: var(--wf-canvas);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  box-shadow: var(--wf-paper-shadow);
+  min-width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.wf-story-mode-dropdown-title {
+  padding: 8px 14px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--wf-muted);
+}
+
+.wf-story-mode-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--wf-text);
+  transition: background 0.1s;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.wf-story-mode-item:hover {
+  background: var(--wf-surface);
+}
+
+.wf-story-mode-item-persona {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.wf-story-mode-item-steps {
+  font-size: 11px;
+  color: var(--wf-muted);
+  margin-left: 4px;
+}
+
+/* --- Scenario Friction Callout ------------------------------------------- */
+
+.wf-scenario-friction {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--wf-amber);
+  background: rgba(107, 90, 47, 0.08);
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.wf-scenario-friction-icon {
+  margin-right: 6px;
+  font-size: 14px;
+}

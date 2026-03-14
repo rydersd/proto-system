@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-fidelity="blueprint">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Flows — Project Name</title>
+  <link rel="stylesheet" href="../core/proto-core.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- View-control nav bar -->
+  <nav class="wf-view-control" aria-label="View selector">
+    <span class="wf-view-label">View</span>
+    <div class="wf-view-btns" role="navigation" aria-label="Select view">
+      <a class="wf-view-btn" href="index.html">Sitemap</a>
+      <a class="wf-view-btn" href="jobs-to-be-done.html">Jobs to Be Done</a>
+      <a class="wf-view-btn active" href="user-flows.html" aria-current="page">User Flows</a>
+      <a class="wf-view-btn" href="story-reference.html">Story Reference</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="wf-section" style="margin-top:16px;">
+    <h1>User Flows</h1>
+    <p class="text-muted">X flows · Mapped from JOURNEYS in project-data.js</p>
+  </div>
+
+  <!-- Flow 1 -->
+  <div class="wf-card" style="margin-bottom:24px;">
+    <div class="wf-card-header">
+      <h2 style="margin:0;font-size:1rem;">Flow 1: Journey Name</h2>
+      <span class="wf-badge wf-badge-green">Persona Name</span>
+    </div>
+    <div class="wf-card-body">
+      <p class="text-muted" style="margin-bottom:12px;">Description of what this journey accomplishes and when the persona would follow it.</p>
+
+      <div class="wf-flow-chain">
+        <div class="wf-flow-step">
+          <a href="page1.html">1. First Page</a>
+          <span class="wf-flow-step-detail">Search / filter</span>
+        </div>
+        <div class="wf-flow-arrow">→</div>
+        <div class="wf-flow-step">
+          <a href="page2.html">2. Second Page</a>
+          <span class="wf-flow-step-detail">Review results</span>
+        </div>
+        <div class="wf-flow-arrow">→</div>
+        <div class="wf-flow-step">
+          <a href="page3.html">3. Third Page</a>
+          <span class="wf-flow-step-detail">View details</span>
+        </div>
+        <div class="wf-flow-arrow">→</div>
+        <div class="wf-flow-step wf-flow-step-end">
+          <a href="page4.html">4. Final Page</a>
+          <span class="wf-flow-step-detail">Export / share</span>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <span class="text-muted" style="font-size:.75rem;">Key objects: Object1, Object2 · Integrations: System1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flow 2 (copy and customize) -->
+  <div class="wf-card" style="margin-bottom:24px;">
+    <div class="wf-card-header">
+      <h2 style="margin:0;font-size:1rem;">Flow 2: Another Journey</h2>
+      <span class="wf-badge wf-badge-purple">Another Persona</span>
+    </div>
+    <div class="wf-card-body">
+      <p class="text-muted" style="margin-bottom:12px;">Journey description here.</p>
+
+      <div class="wf-flow-chain">
+        <div class="wf-flow-step">
+          <a href="page1.html">1. Start</a>
+          <span class="wf-flow-step-detail">Action</span>
+        </div>
+        <div class="wf-flow-arrow">→</div>
+        <div class="wf-flow-step wf-flow-step-end">
+          <a href="page2.html">2. End</a>
+          <span class="wf-flow-step-detail">Result</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="wf-design-notes" hidden>
+  <h3>Summary</h3>
+  <p>The User Flows page visualizes how personas move through the prototype to accomplish tasks. Each flow maps to a JOURNEY defined in project-data.js, showing the sequence of pages visited with annotations.</p>
+
+  <h3>Design Specification</h3>
+  <h4>Primary Content</h4>
+  <p>Flow chain visualizations — one per journey. Each chain shows linked step boxes with arrows, page links, and action descriptions.</p>
+  <h4>Interactive Elements</h4>
+  <ul>
+    <li>Step links — navigate to wireframe pages</li>
+    <li>View-control nav — links to sibling reference pages</li>
+  </ul>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../core/proto-nav.js"></script>
+</body>
+</html>

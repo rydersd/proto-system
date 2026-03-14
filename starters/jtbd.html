@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-fidelity="blueprint">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs to Be Done — Project Name</title>
+  <link rel="stylesheet" href="../core/proto-core.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- View-control nav bar -->
+  <nav class="wf-view-control" aria-label="View selector">
+    <span class="wf-view-label">View</span>
+    <div class="wf-view-btns" role="navigation" aria-label="Select view">
+      <a class="wf-view-btn" href="index.html">Sitemap</a>
+      <a class="wf-view-btn active" href="jobs-to-be-done.html" aria-current="page">Jobs to Be Done</a>
+      <a class="wf-view-btn" href="user-flows.html">User Flows</a>
+      <a class="wf-view-btn" href="story-reference.html">Story Reference</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="wf-section" style="margin-top:16px;">
+    <h1>Jobs to Be Done</h1>
+    <p class="text-muted">X jobs across Y personas · Derived from wireframe design notes</p>
+  </div>
+
+  <!-- Proto-persona validation notice -->
+  <div class="wf-card" style="border-left:3px solid var(--wf-amber);margin-bottom:20px;">
+    <div class="wf-card-body">
+      <strong>⚠ Proto-Persona Notice</strong>
+      <p style="margin:4px 0 0;">These personas are proto-personas based on research assumptions and stakeholder interviews. They should be validated with actual user research before finalizing design decisions.</p>
+    </div>
+  </div>
+
+  <!-- Method box -->
+  <div class="wf-card" style="margin-bottom:24px;">
+    <div class="wf-card-body">
+      <strong>What is a Job to Be Done?</strong>
+      <p style="margin:4px 0 0;">A JTBD describes <em>what a person is trying to accomplish</em> in a given context, independent of the solution. Format: "When [situation], I want to [motivation] so I can [outcome]." Each job maps to one or more wireframe pages that address it.</p>
+    </div>
+  </div>
+
+  <!-- Persona summary table -->
+  <table class="wf-table" style="margin-bottom:24px;">
+    <thead>
+      <tr>
+        <th>Persona</th>
+        <th>Role</th>
+        <th>JTBD Count</th>
+        <th>Key Screens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Persona Name</strong></td>
+        <td>Role Title</td>
+        <td>X jobs</td>
+        <td>Page 1, Page 2, Page 3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- JTBD persona blocks -->
+  <div class="wf-jtbd-grid">
+
+    <!-- Persona Block 1 -->
+    <div class="wf-jtbd-persona-block">
+      <div class="wf-jtbd-persona-hd">
+        <div class="wf-jtbd-avatar">PN</div>
+        <div>
+          <div class="wf-jtbd-persona-name">Persona Name</div>
+          <div class="wf-jtbd-persona-role">Role Title</div>
+        </div>
+      </div>
+      <ul class="wf-jtbd-list">
+        <li class="wf-jtbd-item">
+          <div class="wf-jtbd-num">1</div>
+          <div>
+            <div class="wf-jtbd-text">When I need to [situation], I want to [action] so I can [outcome]</div>
+            <span class="wf-jtbd-screens">Appears on: <a href="page.html">Page Name</a></span>
+          </div>
+        </li>
+        <li class="wf-jtbd-item">
+          <div class="wf-jtbd-num">2</div>
+          <div>
+            <div class="wf-jtbd-text">Another job statement here</div>
+            <span class="wf-jtbd-screens">Appears on: <a href="page2.html">Page 2</a>, <a href="page3.html">Page 3</a></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Persona Block 2 (copy and customize) -->
+    <div class="wf-jtbd-persona-block">
+      <div class="wf-jtbd-persona-hd">
+        <div class="wf-jtbd-avatar" style="background:var(--wf-green);color:#fff;">AB</div>
+        <div>
+          <div class="wf-jtbd-persona-name">Another Persona</div>
+          <div class="wf-jtbd-persona-role">Another Role</div>
+        </div>
+      </div>
+      <ul class="wf-jtbd-list">
+        <li class="wf-jtbd-item">
+          <div class="wf-jtbd-num">1</div>
+          <div>
+            <div class="wf-jtbd-text">Job statement for this persona</div>
+            <span class="wf-jtbd-screens">Appears on: <a href="page.html">Page Name</a></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div><!-- /jtbd-grid -->
+
+</main>
+
+<div class="wf-design-notes" hidden>
+  <h3>Summary</h3>
+  <p>The JTBD Hub consolidates all persona-specific job statements from individual wireframe design notes into one browsable reference. Each job links back to the wireframe page(s) that address it.</p>
+
+  <h3>Design Specification</h3>
+  <h4>Primary Content</h4>
+  <p>Persona blocks with numbered JTBD items. Each item includes the job statement and links to relevant screens.</p>
+  <h4>Interactive Elements</h4>
+  <ul>
+    <li>View-control nav — links to sibling reference pages</li>
+    <li>Screen links — navigate to wireframe pages that address each job</li>
+    <li>Tab system — segment by audience (if multi-audience)</li>
+  </ul>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../core/proto-nav.js"></script>
+</body>
+</html>

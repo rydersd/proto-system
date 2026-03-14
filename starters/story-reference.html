@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-fidelity="blueprint">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Reference — Project Name</title>
+  <link rel="stylesheet" href="../core/proto-core.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- View-control nav bar -->
+  <nav class="wf-view-control" aria-label="View selector">
+    <span class="wf-view-label">View</span>
+    <div class="wf-view-btns" role="navigation" aria-label="Select view">
+      <a class="wf-view-btn" href="index.html">Sitemap</a>
+      <a class="wf-view-btn" href="jobs-to-be-done.html">Jobs to Be Done</a>
+      <a class="wf-view-btn" href="user-flows.html">User Flows</a>
+      <a class="wf-view-btn active" href="story-reference.html" aria-current="page">Story Reference</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="wf-section" style="margin-top:16px;">
+    <h1>Story Reference</h1>
+    <p class="text-muted">X characters · Y organizations · Proto-personas for guided walkthroughs</p>
+  </div>
+
+  <!-- Proto-persona validation notice -->
+  <div class="wf-card" style="border-left:3px solid var(--wf-amber);margin-bottom:20px;">
+    <div class="wf-card-body">
+      <strong>⚠ Proto-Persona Notice</strong>
+      <p style="margin:4px 0 0;">These are proto-personas created from stakeholder interviews and domain research. They have not yet been validated with primary user research. Names, details, and organizations are fictional composites designed to make walkthrough scenarios relatable.</p>
+    </div>
+  </div>
+
+  <!-- Characters section -->
+  <h2>Characters</h2>
+  <div class="wf-char-grid">
+
+    <!-- Character card 1 -->
+    <div class="wf-char-card">
+      <div class="wf-char-head">
+        <div class="wf-char-avatar">FN</div>
+        <div>
+          <p class="wf-char-name">First Name Last Name</p>
+          <p class="wf-char-title">Job Title</p>
+        </div>
+      </div>
+      <span class="wf-char-org-tag">Organization Name</span>
+      <p class="wf-char-desc">Brief description of who this person is, what they do, and why they use the system. Include enough context for a walkthrough scenario to feel realistic.</p>
+      <hr class="wf-char-divider">
+      <div class="wf-char-meta">
+        <div class="wf-char-meta-row">
+          <span class="wf-char-meta-label">Email</span>
+          <span class="wf-char-meta-val">first.last@org.com</span>
+        </div>
+        <div class="wf-char-meta-row">
+          <span class="wf-char-meta-label">Location</span>
+          <span class="wf-char-meta-val">City, Country</span>
+        </div>
+        <div class="wf-char-meta-row">
+          <span class="wf-char-meta-label">Tools</span>
+          <span class="wf-char-meta-val">Tool 1, Tool 2, Tool 3</span>
+        </div>
+      </div>
+      <hr class="wf-char-divider">
+      <p class="wf-char-goals-label">Core Goals</p>
+      <ul class="wf-char-goal-list">
+        <li>Primary goal related to the system</li>
+        <li>Secondary goal</li>
+        <li>Tertiary goal</li>
+      </ul>
+    </div>
+
+    <!-- Character card 2 (copy and customize) -->
+    <div class="wf-char-card">
+      <div class="wf-char-head">
+        <div class="wf-char-avatar" style="background:#ede8f5;color:#5c3d8f;">AB</div>
+        <div>
+          <p class="wf-char-name">Another Person</p>
+          <p class="wf-char-title">Different Role</p>
+        </div>
+      </div>
+      <span class="wf-char-org-tag">Org Name</span>
+      <p class="wf-char-desc">Description of this persona.</p>
+      <hr class="wf-char-divider">
+      <div class="wf-char-meta">
+        <div class="wf-char-meta-row">
+          <span class="wf-char-meta-label">Email</span>
+          <span class="wf-char-meta-val">another@org.com</span>
+        </div>
+      </div>
+      <hr class="wf-char-divider">
+      <p class="wf-char-goals-label">Core Goals</p>
+      <ul class="wf-char-goal-list">
+        <li>Goal 1</li>
+        <li>Goal 2</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Organizations section -->
+  <h2 style="margin-top:32px;">Organizations</h2>
+  <div class="wf-char-grid">
+    <div class="wf-org-card">
+      <div class="wf-org-head">
+        <div class="wf-org-logo">🏢</div>
+        <div>
+          <p class="wf-org-name">Organization Name</p>
+          <p class="wf-org-type">Organization Type</p>
+        </div>
+      </div>
+      <p class="wf-org-desc">Description of the organization and its role in the prototype's context.</p>
+      <div class="wf-org-attrs">
+        <div class="wf-org-attr-row">
+          <span class="wf-org-attr-label">Industry</span>
+          <span class="wf-org-attr-val">Industry Name</span>
+        </div>
+        <div class="wf-org-attr-row">
+          <span class="wf-org-attr-label">Size</span>
+          <span class="wf-org-attr-val">X employees</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Relationship diagram -->
+  <h2 style="margin-top:32px;">Relationships</h2>
+  <div class="wf-rel-box">
+    <div class="wf-rel-row">
+      <div class="wf-rel-node">
+        <div class="wf-rel-node-name">Person A</div>
+        <div class="wf-rel-node-role">Role — Org</div>
+      </div>
+      <div class="wf-rel-arrow">
+        <span class="wf-rel-arrow-line">→</span>
+        <span class="wf-rel-arrow-label">works with</span>
+      </div>
+      <div class="wf-rel-node">
+        <div class="wf-rel-node-name">Person B</div>
+        <div class="wf-rel-node-role">Role — Org</div>
+      </div>
+      <div class="wf-rel-arrow">
+        <span class="wf-rel-arrow-line">→</span>
+        <span class="wf-rel-arrow-label">reports to</span>
+      </div>
+      <div class="wf-rel-node">
+        <div class="wf-rel-node-name">Person C</div>
+        <div class="wf-rel-node-role">Role — Org</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="wf-design-notes" hidden>
+  <h3>Summary</h3>
+  <p>The Story Reference page introduces the proto-personas and organizations used in walkthrough scenarios. It provides character context that makes scenarios relatable and helps stakeholders understand who the prototype serves.</p>
+
+  <h3>Design Specification</h3>
+  <h4>Primary Content</h4>
+  <p>Character cards with avatar, name, title, org tag, description, metadata, and goals. Organization cards with logo, name, type, and attributes. Relationship diagrams showing persona interactions.</p>
+  <h4>Interactive Elements</h4>
+  <ul>
+    <li>View-control nav — links to sibling reference pages</li>
+  </ul>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../core/proto-nav.js"></script>
+</body>
+</html>

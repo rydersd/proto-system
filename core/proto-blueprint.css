@@ -160,7 +160,7 @@ html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
   align-items: center;
   gap: 6px;
   font-size: 10px;
-  color: var(--wf-tint);
+  color: var(--wf-muted);
   font-weight: 600;
 }
 

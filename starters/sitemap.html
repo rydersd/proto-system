@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-fidelity="blueprint">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitemap — Project Name</title>
+  <link rel="stylesheet" href="../core/proto-core.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- View-control nav bar -->
+  <nav class="wf-view-control" aria-label="View selector">
+    <span class="wf-view-label">View</span>
+    <div class="wf-view-btns" role="navigation" aria-label="Select view">
+      <a class="wf-view-btn active" href="index.html" aria-current="page">Sitemap</a>
+      <a class="wf-view-btn" href="jobs-to-be-done.html">Jobs to Be Done</a>
+      <a class="wf-view-btn" href="user-flows.html">User Flows</a>
+      <a class="wf-view-btn" href="story-reference.html">Story Reference</a>
+    </div>
+  </nav>
+
+  <!-- Sitemap header -->
+  <div class="wf-section" style="margin-top:16px;">
+    <h1>Project Name — Sitemap</h1>
+    <p class="text-muted">Version 1.0 · X pages · Blueprint phase · Updated YYYY-MM-DD</p>
+  </div>
+
+  <!-- Icon legend -->
+  <div class="wf-sitemap-legend" style="margin-bottom:16px;">
+    <span class="wf-sitemap-icon-item">🎛 Dashboard</span>
+    <span class="wf-sitemap-icon-item">📋 List / Table</span>
+    <span class="wf-sitemap-icon-item">📄 Detail</span>
+    <span class="wf-sitemap-icon-item">📝 Form / Wizard</span>
+    <span class="wf-sitemap-icon-item">⚙️ Settings</span>
+  </div>
+
+  <!-- Search/filter -->
+  <div style="margin-bottom:20px;">
+    <input type="search" class="wf-input" placeholder="Filter pages…" style="max-width:320px;">
+  </div>
+
+  <!-- Sitemap grid -->
+  <div class="wf-sitemap-grid">
+
+    <!-- Branch 1: Example Section -->
+    <div class="wf-sitemap-branch">
+      <div class="wf-sitemap-branch-header">
+        <span>📁</span> Section Name
+        <span class="wf-badge" style="margin-left:auto;">3 pages</span>
+      </div>
+      <div class="wf-sitemap-branch-body">
+        <!-- Page node -->
+        <div class="wf-sitemap-node">
+          <div class="wf-sitemap-node-header">
+            <span class="wf-sitemap-node-type">🎛</span>
+            <a href="page-name.html" class="wf-sitemap-node-label">Page Title</a>
+          </div>
+          <div class="wf-sitemap-node-desc">Brief description of what this page does</div>
+          <div class="wf-sitemap-node-children">
+            <span class="wf-sitemap-child">📊 KPI Grid</span>
+            <span class="wf-sitemap-child">📋 Data Table</span>
+            <span class="wf-sitemap-child">🔘 Action Buttons</span>
+          </div>
+        </div>
+
+        <!-- Another page node -->
+        <div class="wf-sitemap-node">
+          <div class="wf-sitemap-node-header">
+            <span class="wf-sitemap-node-type">📄</span>
+            <a href="another-page.html" class="wf-sitemap-node-label">Another Page</a>
+          </div>
+          <div class="wf-sitemap-node-desc">Description here</div>
+          <div class="wf-sitemap-node-children">
+            <span class="wf-sitemap-child">📝 Form</span>
+            <span class="wf-sitemap-child">🏷 Badges</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branch 2: Another Section -->
+    <div class="wf-sitemap-branch">
+      <div class="wf-sitemap-branch-header">
+        <span>📁</span> Another Section
+        <span class="wf-badge" style="margin-left:auto;">2 pages</span>
+      </div>
+      <div class="wf-sitemap-branch-body">
+        <div class="wf-sitemap-node">
+          <div class="wf-sitemap-node-header">
+            <span class="wf-sitemap-node-type">📋</span>
+            <a href="list-page.html" class="wf-sitemap-node-label">List Page</a>
+          </div>
+          <div class="wf-sitemap-node-desc">Description</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sitemap-grid -->
+
+</main>
+
+<!-- Design notes (shown in drawer) -->
+<div class="wf-design-notes" hidden>
+  <h3>Summary</h3>
+  <p>The Sitemap page provides a visual information architecture overview of the entire prototype. It serves as the landing page and navigation hub, showing all pages organized by section with their key components.</p>
+
+  <h3>Design Specification</h3>
+  <h4>Primary Content</h4>
+  <p>Branch containers grouped by SECTIONS from project-data.js. Each branch contains page nodes with type icons, labels (linked to pages), descriptions, and expandable component inventories.</p>
+
+  <h4>Interactive Elements</h4>
+  <ul>
+    <li>Search input — filters page nodes by name</li>
+    <li>View-control nav — links to JTBD, Flows, Story Reference pages</li>
+    <li>Page node links — navigate to wireframe pages</li>
+  </ul>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../core/proto-nav.js"></script>
+</body>
+</html>

@@ -9,7 +9,7 @@
 1. **Context bar** — top bar with hamburger, breadcrumbs, and action buttons
 2. **Drawer** — full-page nav panel triggered by hamburger, built from SECTIONS
 3. **Design notes panel** — side panel that shows content from `<div class="wf-design-notes">`
-4. **Story mode** — optional journey highlighting using `data-journey` attributes
+4. **Story mode** — unified "Stories" button that opens a scenario selector. When a scenario is active, matching journey highlighting activates automatically. Jira AC badges from STORY_MAP appear in the Notes Context tab
 5. **Scenarios** — optional guided walkthroughs stored in sessionStorage
 
 ## Required: SECTIONS
@@ -62,6 +62,8 @@ var STORY_TITLES = {
 };
 ```
 
+AC badges from STORY_MAP are automatically injected into the Notes panel's Context tab — authors don't need to manually reference them.
+
 ## Optional: JOURNEYS
 
 Defines user journeys that can be highlighted on pages using `data-journey` attributes:
@@ -74,6 +76,18 @@ var JOURNEYS = [
 ```
 
 On HTML elements, add `data-journey="onboard-new-partner"` to make them highlightable when that journey is selected.
+
+JOURNEYS also accepts an object format (useful for keyed data). proto-nav.js normalizes both to arrays at init:
+
+```javascript
+var JOURNEYS = {
+  'pricing-validation': {
+    label: 'Pricing Table Validation',
+    color: 'var(--wf-accent)',
+    steps: ['home', 'results', 'detail']
+  }
+};
+```
 
 ## Optional: SCENARIOS
 
@@ -93,6 +107,14 @@ var SCENARIOS = [
   }
 ];
 ```
+
+Steps can include an optional `friction` field for gap analysis:
+
+```javascript
+{ file: 'results', narrative: '...', friction: 'No visual indicator showing which SKUs changed since last review' }
+```
+
+When present, an amber callout appears below the narrative in the scenario banner, highlighting UX gaps.
 
 Scenarios use sessionStorage to track current step. `wfScenarioStart(id)` begins, `wfScenarioNext()` advances.
 
@@ -123,23 +145,23 @@ Optional global configuration object defined in `project-data.js` before SECTION
 
 ```javascript
 var WIREFRAME_CONFIG = {
-  projectTitle: 'My Project',       // Shown in context bar and drawer header
-  logoUrl: '',                       // Optional logo image URL for context bar
-  defaultFidelity: 'blueprint',     // Starting fidelity: 'napkin', 'blueprint', or 'polished'
-  feedbackMailto: 'team@example.com', // Email address for feedback panel submissions
-  hiddenFeatures: [],                // Array of feature IDs to disable (e.g. ['scenarios', 'journeys'])
-  theme: 'light'                     // Reserved for future theme support
+  title: 'My Project',              // Shown in drawer header
+  subtitle: '',                      // Shown below title in drawer
+  fallbackPage: 'index.html',       // Fallback for modal close navigation
+  emailPrefix: '[WF]',              // Subject line prefix for feedback emails
+  emailFooter: 'Sent from wireframe prototype',  // Footer text in feedback emails
+  emailRecipient: 'team@example.com' // Recipient for feedback panel submissions
 };
 ```
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `projectTitle` | string | `''` | Display name shown in the context bar title and drawer header |
-| `logoUrl` | string | `''` | URL to a logo image; rendered in the context bar next to the title |
-| `defaultFidelity` | string | `'blueprint'` | Initial fidelity level on first visit (`'napkin'`, `'blueprint'`, or `'polished'`) |
-| `feedbackMailto` | string | `''` | Recipient email for the feedback panel's mailto integration |
-| `hiddenFeatures` | array | `[]` | Feature IDs to suppress (e.g. `['scenarios', 'journeys']`) |
-| `theme` | string | `'light'` | Reserved for future theme switching support |
+| `title` | string | `'Wireframes'` | Display name in the drawer header |
+| `subtitle` | string | `''` | Subtitle text below the title |
+| `fallbackPage` | string | `'index.html'` | Navigation target when modal close has no referrer |
+| `emailPrefix` | string | `'[WF]'` | Subject line prefix for feedback emails |
+| `emailFooter` | string | `'Sent from wireframe prototype'` | Footer text appended to feedback emails |
+| `emailRecipient` | string | `''` | Recipient email for feedback panel |
 
 ## Fidelity Slider
 

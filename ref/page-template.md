@@ -75,5 +75,7 @@ if(sessionStorage.getItem('wf_auth')!=='ok'){
 - No embedded `<style>` blocks — put page-specific CSS in project.css or inline styles
 - Script load order matters: project-data.js THEN proto-nav.js
 - Define `WIREFRAME_CONFIG` in project-data.js (before SECTIONS) to set project title, default fidelity, feedback mailto, and other options — see `navigation.md` for all properties
+- Add `type: 'sfdc'` to SECTIONS items that should render a Salesforce global header — proto-nav.js auto-injects it via `buildSurfaceHeader()`
+- See `ref/lessons-learned.md` for common pitfalls when setting up a new project
 - Every page should have design notes — it's how reviewers understand intent
 - Title format: `[Page Name] — [Project Name]`

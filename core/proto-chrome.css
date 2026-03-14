@@ -271,10 +271,20 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
   display: none;
 }
 
+/* When notes panel is open, push page content left to prevent clipping */
+html.wf-dn-open body {
+  margin-right: 400px;
+  transition: margin-right 0.2s ease;
+}
+html:not(.wf-dn-open) body {
+  transition: margin-right 0.2s ease;
+}
+
 .wf-dn-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 42, 58, 0.4);
+  right: 400px; /* Don't cover the panel area */
+  background: rgba(30, 42, 58, 0.15);
   z-index: 3000;
   display: none;
 }
@@ -303,8 +313,8 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
 }
 
 .wf-dn-hd {
-  padding: 16px 20px;
-  border-bottom: 2px solid var(--wf-ink);
+  padding: 14px 20px;
+  border-bottom: 1.5px solid var(--wf-line);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -329,6 +339,60 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
 
 .wf-dn-close:hover {
   color: var(--wf-ink);
+}
+
+/* Notes panel tabs — styled to match wireframe fidelity */
+.wf-dn-tabs {
+  display: flex;
+  gap: 0;
+  flex-shrink: 0;
+  padding: 0 16px;
+  background: var(--wf-surface);
+  border-bottom: 1.5px solid var(--wf-line);
+}
+.wf-dn-tab {
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  background: none;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -1.5px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.wf-dn-tab:hover {
+  color: var(--wf-text);
+  border-bottom-color: var(--wf-line);
+}
+.wf-dn-tab.active {
+  color: var(--wf-ink);
+  font-weight: 700;
+  border-bottom-color: var(--wf-ink);
+  background: none;
+}
+
+/* Napkin fidelity — sketchy underline */
+html.wireframe[data-wf-fidelity="napkin"] .wf-dn-tab.active {
+  border-bottom-style: dashed;
+  border-bottom-width: 2px;
+}
+/* Blueprint — clean underline (default above) */
+/* Polished — subtle accent color */
+html.wireframe[data-wf-fidelity="polished"] .wf-dn-tab.active {
+  color: var(--wf-accent);
+  border-bottom-color: var(--wf-accent);
+}
+
+.wf-dn-tab-content { display: none; }
+.wf-dn-tab-content.active { display: block; }
+.wf-dn-placeholder {
+  font-size: 12px;
+  color: var(--wf-muted);
+  font-style: italic;
+  padding: 8px 0;
 }
 
 .wf-dn-body {
@@ -541,4 +605,36 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
 .wf-modal-footer {
   background: var(--wf-surface);
   border-top: 1.5px dashed var(--wf-line);
+}
+
+/* --- AC Badge Chips in Notes Context Tab --------------------------------- */
+
+.wf-dn-ac-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--wf-tint);
+}
+
+.wf-dn-ac-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  cursor: default;
+  letter-spacing: 0.02em;
+}
+
+/* --- Active state for Stories button when scenario is running ------------- */
+
+.wf-ctx-btn--active {
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  border-color: var(--wf-accent);
 }

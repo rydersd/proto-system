@@ -8,12 +8,23 @@
 |-----------|----------------|
 | Any page | `tokens.md` + `page-template.md` |
 | Slack wireframe | + `surface-slack.md` + `components.md` |
-| Salesforce wireframe | + `surface-salesforce.md` + `components.md` |
+| Salesforce wireframe | + `surface-salesforce.md` + `surface-salesforce-rules.md` + `components.md` |
 | Internal portal wireframe | + `surface-internal.md` + `components.md` |
 | Complex layout | + `layouts.md` |
 | New project from scratch | `new-project.md` (reads others for you) |
 | Adding navigation/drawer | `navigation.md` |
 | Paper/blueprint features | `components.md` | Paper utility classes, confidence attribute |
+| Declarative page from data | `page-blueprint.md` + surface ref |
+
+| Building a sitemap page | `project-deliverables.md` |
+| Writing design notes | `design-notes-guide.md` |
+| JTBD, user flows, personas | `project-deliverables.md` |
+| Reference hub pages | `project-deliverables.md` |
+| Project completeness checklist | `new-project.md` (Step 7) |
+
+| Salesforce UX review | `agent-sfdc-ux.md` + `surface-salesforce-rules.md` |
+| Salesforce dev feasibility | `agent-sfdc-dev.md` + `surface-salesforce-rules.md` |
+| Agent installation guide | `agent-install.md` |
 
 ## Rules
 

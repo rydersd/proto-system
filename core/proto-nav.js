@@ -28,6 +28,32 @@ var WF_CONFIG = Object.assign({
   emailRecipient: ''
 }, window.WIREFRAME_CONFIG || {});
 
+/* ── normalizeJourneys ── Accept both array and object formats ──────── */
+/**
+ * JOURNEYS can be defined as an array (original format) or an object
+ * with string keys (more natural for keyed data). This normalizes
+ * object format to array format so the rest of the code can use .length
+ * and array iteration consistently.
+ *
+ * Object format: { 'pricing-validation': { label: '...', steps: [...] } }
+ * → Array format: [{ id: 'pricing-validation', label: '...', steps: [...] }]
+ */
+function normalizeJourneys() {
+  if (!JOURNEYS) { JOURNEYS = []; return; }
+  // Already an array — nothing to do
+  if (Array.isArray(JOURNEYS)) return;
+  // Object format — convert to array
+  var arr = [];
+  var keys = Object.keys(JOURNEYS);
+  for (var i = 0; i < keys.length; i++) {
+    var entry = JOURNEYS[keys[i]];
+    entry.id = keys[i];
+    arr.push(entry);
+  }
+  JOURNEYS = arr;
+}
+normalizeJourneys();
+
 /* ========================================================================
    Utility Functions
    ======================================================================== */
@@ -106,6 +132,78 @@ function buildBreadcrumbs(file) {
 }
 
 /**
+ * Detect the surface type for the current page from SECTIONS
+ * Returns 'sfdc', 'slack', 'internal', or null
+ */
+function detectSurface() {
+  var file = currentFile();
+  var page = findPage(file);
+  if (page) return page.item.type || null;
+  // Page not in SECTIONS — check variant parent or fallback
+  for (var s = 0; s < SECTIONS.length; s++) {
+    if (SECTIONS[s].items.length && SECTIONS[s].items[0].type) {
+      return SECTIONS[s].items[0].type;
+    }
+  }
+  return null;
+}
+
+/**
+ * Build surface-specific app header (e.g., Salesforce global nav)
+ * Injected AFTER the context bar, BEFORE page content
+ */
+function buildSurfaceHeader() {
+  var surface = detectSurface();
+  if (surface !== 'sfdc') return;
+
+  var file = currentFile();
+  var page = findPage(file);
+  var appName = WF_CONFIG.title || 'App';
+
+  // Build tab items from SECTIONS (top-level only, no variants)
+  var tabsHTML = '';
+  for (var s = 0; s < SECTIONS.length; s++) {
+    var section = SECTIONS[s];
+    // Find the first non-variant item in this section for the link
+    var firstItem = null;
+    for (var i = 0; i < section.items.length; i++) {
+      if (!section.items[i].variant) { firstItem = section.items[i]; break; }
+    }
+    if (!firstItem) continue;
+
+    var isActive = page && page.section.id === section.id;
+    tabsHTML += '<a href="' + firstItem.file + '.html" class="sfdc-global-tab' +
+      (isActive ? ' sfdc-global-tab--active' : '') + '">' + section.label + '</a>';
+  }
+
+  var headerHTML =
+    '<header class="sfdc-global-header">' +
+      '<div class="sfdc-global-header-inner">' +
+        '<div class="sfdc-global-header-left">' +
+          '<button class="sfdc-app-launcher" title="App Launcher">⊞</button>' +
+          '<span class="sfdc-app-name">' + appName + '</span>' +
+        '</div>' +
+        '<nav class="sfdc-global-tabs">' + tabsHTML + '</nav>' +
+        '<div class="sfdc-global-header-right">' +
+          '<span class="sfdc-global-icon" title="Search">⌕</span>' +
+          '<span class="sfdc-global-icon" title="Notifications">🔔</span>' +
+          '<span class="sfdc-global-avatar" title="User">U</span>' +
+        '</div>' +
+      '</div>' +
+    '</header>';
+
+  var el = document.createElement('div');
+  el.innerHTML = headerHTML;
+  // Insert after context bar
+  var ctxBar = document.querySelector('.wf-ctx-bar');
+  if (ctxBar && ctxBar.nextSibling) {
+    ctxBar.parentNode.insertBefore(el.firstChild, ctxBar.nextSibling);
+  } else {
+    document.body.insertBefore(el.firstChild, document.body.firstChild);
+  }
+}
+
+/**
  * Build and insert context bar as first child of body
  */
 function buildContextBar() {
@@ -125,9 +223,8 @@ function buildContextBar() {
         '</div>' +
         '<div class="wf-ctx-right">' +
           '<span class="wf-ctx-timestamp">' + timestamp + '</span>' +
-          '<button class="wf-ctx-btn" id="wf-story-btn" onclick="wfStoryToggle()" title="Story mode — highlight a user journey">📖 Journeys</button>' +
-          '<button class="wf-ctx-btn" onclick="wfDnToggle()" title="Show design notes">📋 Design Notes</button>' +
-          '<button class="wf-ctx-btn" id="wf-stories-btn" onclick="wfStoriesToggle()" title="Jira stories for this page">🎫 Stories</button>' +
+          '<button class="wf-ctx-btn" id="wf-story-mode-btn" onclick="wfStoryModeToggle()" title="Story mode — guided scenario walkthroughs">📖 Stories</button>' +
+          '<button class="wf-ctx-btn" onclick="wfDnToggle()" title="Show notes">📋 Notes</button>' +
           '<button class="wf-ctx-btn wf-ctx-feedback-btn" onclick="wfFbOpen()" title="Send feedback on this page">💬 Feedback</button>' +
           '<div class="wf-ctx-fidelity">' +
             '<label>Fidelity</label>' +
@@ -256,28 +353,40 @@ function buildDrawer() {
 }
 
 /**
- * Build design notes panel overlay and sidebar
+ * Build design notes panel overlay and sidebar with 3 tabs:
+ * Context (summary, JTBD, personas), Design (spec), Technical (implementation)
  */
 function buildDesignNotesPanel() {
-  var panelHTML = (
-    '<div class="wf-dn-overlay" id="wf-dn-overlay" onclick="wfDnClose()"></div>' +
-    '<aside class="wf-dn-panel" id="wf-dn-panel">' +
-      '<div class="wf-dn-hd">' +
-        '<span class="wf-dn-hd-title">📋 Design Notes</span>' +
-        '<button class="wf-dn-close" onclick="wfDnClose()" title="Close design notes">✕</button>' +
-      '</div>' +
-      '<div class="wf-dn-body" id="wf-dn-body"></div>' +
-    '</aside>'
-  );
+  var overlay = document.createElement('div');
+  overlay.id = 'wf-dn-overlay';
+  overlay.className = 'wf-dn-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.setAttribute('onclick', 'wfDnClose()');
 
-  var panel = document.createElement('div');
-  panel.innerHTML = panelHTML;
+  var panel = document.createElement('aside');
+  panel.id = 'wf-dn-panel';
+  panel.className = 'wf-dn-panel';
+  panel.setAttribute('role', 'complementary');
+  panel.setAttribute('aria-label', 'Notes panel');
+  panel.setAttribute('aria-hidden', 'true');
+  panel.innerHTML =
+    '<div class="wf-dn-hd">' +
+      '<span class="wf-dn-hd-title">📋 Notes</span>' +
+      '<button class="wf-dn-close" onclick="wfDnClose()" aria-label="Close notes panel">✕</button>' +
+    '</div>' +
+    '<div class="wf-dn-tabs" role="tablist">' +
+      '<button class="wf-dn-tab active" role="tab" aria-selected="true" aria-controls="wf-dn-tab-context" id="wf-dn-tab-btn-context" onclick="wfDnSwitchTab(\'context\')">Context</button>' +
+      '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-design" id="wf-dn-tab-btn-design" onclick="wfDnSwitchTab(\'design\')">Design</button>' +
+      '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-impl" id="wf-dn-tab-btn-impl" onclick="wfDnSwitchTab(\'impl\')">Technical</button>' +
+    '</div>' +
+    '<div class="wf-dn-body" id="wf-dn-body">' +
+      '<div class="wf-dn-tab-content active" id="wf-dn-tab-context" role="tabpanel" aria-labelledby="wf-dn-tab-btn-context"></div>' +
+      '<div class="wf-dn-tab-content" id="wf-dn-tab-design" role="tabpanel" aria-labelledby="wf-dn-tab-btn-design"></div>' +
+      '<div class="wf-dn-tab-content" id="wf-dn-tab-impl" role="tabpanel" aria-labelledby="wf-dn-tab-btn-impl"></div>' +
+    '</div>';
 
-  var frag = document.createDocumentFragment();
-  while (panel.firstChild) {
-    frag.appendChild(panel.firstChild);
-  }
-  document.body.appendChild(frag);
+  document.body.appendChild(overlay);
+  document.body.appendChild(panel);
 }
 
 /* ========================================================================
@@ -319,40 +428,110 @@ function wfDnToggle() {
 }
 
 /**
- * Open design notes panel
+ * Open design notes panel with 3-tab auto-split
  * Pulls content from .wf-design-notes (preferred) or #spec-panel (legacy)
+ * Splits into Context / Design / Technical tabs by detecting h3 headings
  */
 function wfDnOpen() {
   var panel = document.getElementById('wf-dn-panel');
   var overlay = document.getElementById('wf-dn-overlay');
-  var body = document.getElementById('wf-dn-body');
+  if (!panel) return;
 
-  if (!body) return;
+  // Push main content left so it doesn't clip behind the panel
+  document.documentElement.classList.add('wf-dn-open');
 
-  // Try to find design notes content
-  var designNotes = document.querySelector('.wf-design-notes');
-  var specPanel = document.getElementById('spec-panel');
-  var source = designNotes || specPanel;
-
-  if (source) {
-    // Clone content into design notes body
-    body.innerHTML = '';
-    var clone = source.cloneNode(true);
-    while (clone.firstChild) {
-      body.appendChild(clone.firstChild);
+  // Populate Context tab (summary, JTBD, personas)
+  var contextTab = document.getElementById('wf-dn-tab-context');
+  if (contextTab) {
+    var ctxSrc = document.querySelector('.wf-context-notes');
+    if (ctxSrc) {
+      contextTab.innerHTML = ctxSrc.innerHTML;
+    } else {
+      var dnSrc = document.querySelector('.wf-design-notes');
+      var legacySrc = !dnSrc ? document.getElementById('spec-panel') : null;
+      var sourceEl = dnSrc || legacySrc;
+      if (sourceEl) {
+        var html = sourceEl.innerHTML;
+        var splitIdx = html.search(/<h3[^>]*>\s*(Design Spec|Design Notes|Design Specification)/i);
+        if (splitIdx > 0) {
+          contextTab.innerHTML = html.substring(0, splitIdx);
+        } else {
+          contextTab.innerHTML = html;
+        }
+      } else {
+        contextTab.innerHTML = '<p class="wf-dn-placeholder">No context notes have been added to this page yet.</p>';
+      }
     }
-  } else {
-    // Fallback if no design notes found
-    body.innerHTML = (
-      '<div style="padding: 16px; color: #666;">' +
-        '<p>No design notes found on this page.</p>' +
-        '<p style="font-size: 12px;">Add a <code>.wf-design-notes</code> div or <code>#spec-panel</code> to the page to populate this panel.</p>' +
-      '</div>'
-    );
+
+    // Inject AC badges from STORY_MAP into Context tab
+    var file = currentFile();
+    var stories = STORY_MAP[file];
+    if (stories && stories.length && contextTab) {
+      var badgesHTML = '<div class="wf-dn-ac-badges">';
+      for (var i = 0; i < stories.length; i++) {
+        var sid = stories[i];
+        var title = STORY_TITLES[sid] || '';
+        badgesHTML += '<span class="wf-dn-ac-badge" title="' + title + '">' + sid + '</span>';
+      }
+      badgesHTML += '</div>';
+      contextTab.innerHTML = badgesHTML + contextTab.innerHTML;
+    }
   }
 
-  if (panel) panel.classList.add('open');
-  if (overlay) overlay.classList.add('open');
+  // Populate Design tab (spec, components, interactions)
+  var designTab = document.getElementById('wf-dn-tab-design');
+  if (designTab) {
+    var desSrc = document.querySelector('.wf-design-notes-spec');
+    if (desSrc) {
+      designTab.innerHTML = desSrc.innerHTML;
+    } else {
+      var dnSrc2 = document.querySelector('.wf-design-notes');
+      var legacySrc2 = !dnSrc2 ? document.getElementById('spec-panel') : null;
+      var sourceEl2 = dnSrc2 || legacySrc2;
+      if (sourceEl2) {
+        var html2 = sourceEl2.innerHTML;
+        var designStart = html2.search(/<h3[^>]*>\s*(Design Spec|Design Notes|Design Specification)/i);
+        var techStart = html2.search(/<h3[^>]*>\s*Technical Details/i);
+        if (designStart > 0) {
+          designTab.innerHTML = html2.substring(designStart, techStart > designStart ? techStart : undefined);
+        } else {
+          designTab.innerHTML = '<p class="wf-dn-placeholder">No design specifications have been added to this page yet.</p>';
+        }
+      } else {
+        designTab.innerHTML = '<p class="wf-dn-placeholder">No design specifications have been added to this page yet.</p>';
+      }
+    }
+  }
+
+  // Populate Technical tab (implementation details, SF objects, validation)
+  var implTab = document.getElementById('wf-dn-tab-impl');
+  if (implTab) {
+    var implSrc = document.querySelector('.wf-impl-notes');
+    if (implSrc) {
+      implTab.innerHTML = implSrc.innerHTML;
+    } else {
+      var dnSrc3 = document.querySelector('.wf-design-notes');
+      var legacySrc3 = !dnSrc3 ? document.getElementById('spec-panel') : null;
+      var sourceEl3 = dnSrc3 || legacySrc3;
+      if (sourceEl3) {
+        var html3 = sourceEl3.innerHTML;
+        var techIdx = html3.search(/<h3[^>]*>\s*Technical Details/i);
+        if (techIdx > 0) {
+          implTab.innerHTML = html3.substring(techIdx);
+        } else {
+          implTab.innerHTML = '<p class="wf-dn-placeholder">No technical details have been added to this page yet.</p>';
+        }
+      } else {
+        implTab.innerHTML = '<p class="wf-dn-placeholder">No technical details have been added to this page yet.</p>';
+      }
+    }
+  }
+
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
+  if (overlay) { overlay.classList.add('open'); overlay.setAttribute('aria-hidden', 'false'); }
+  var closeBtn = panel.querySelector('.wf-dn-close');
+  if (closeBtn) closeBtn.focus();
 }
 
 /**
@@ -361,129 +540,129 @@ function wfDnOpen() {
 function wfDnClose() {
   var panel = document.getElementById('wf-dn-panel');
   var overlay = document.getElementById('wf-dn-overlay');
-  if (panel) panel.classList.remove('open');
-  if (overlay) overlay.classList.remove('open');
+  if (panel) { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); }
+  if (overlay) { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); }
+  document.documentElement.classList.remove('wf-dn-open');
+}
+
+/**
+ * Switch between Context / Design / Technical tabs
+ */
+function wfDnSwitchTab(tab) {
+  var tabs = document.querySelectorAll('.wf-dn-tab');
+  var panels = document.querySelectorAll('.wf-dn-tab-content');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+    tabs[i].setAttribute('aria-selected', 'false');
+  }
+  for (var j = 0; j < panels.length; j++) {
+    panels[j].classList.remove('active');
+  }
+  var activeBtn = document.getElementById('wf-dn-tab-btn-' + tab);
+  var activePanel = document.getElementById('wf-dn-tab-' + tab);
+  if (activeBtn) { activeBtn.classList.add('active'); activeBtn.setAttribute('aria-selected', 'true'); }
+  if (activePanel) { activePanel.classList.add('active'); }
 }
 
 /* ========================================================================
    Story Mode — User Journey Highlighting
    ======================================================================== */
 
-var _storyDropdownOpen = false;
+var _storyModeDropdownOpen = false;
 
 /**
- * Build the journey dropdown and story bar DOM elements
+ * Build the story mode selector dropdown from SCENARIOS.
+ * Lists each scenario with persona badge, label, and step count.
+ * If no SCENARIOS defined, the Stories button is hidden entirely.
  */
-function buildStoryMode() {
-  if (!JOURNEYS.length) return;
+function buildStoryModeSelector() {
+  var btn = document.getElementById('wf-story-mode-btn');
 
-  // Dropdown
+  if (!SCENARIOS.length) {
+    // No scenarios — hide the Stories button entirely
+    if (btn) btn.style.display = 'none';
+    return;
+  }
+
+  // Build dropdown
   var dd = document.createElement('div');
-  dd.className = 'wf-journey-dropdown';
-  dd.id = 'wf-journey-dropdown';
+  dd.className = 'wf-story-mode-dropdown';
+  dd.id = 'wf-story-mode-dropdown';
   dd.style.display = 'none';
-  dd.innerHTML =
-    '<div class="wf-journey-dropdown-title">User Journeys</div>';
+  dd.innerHTML = '<div class="wf-story-mode-dropdown-title">Scenarios</div>';
 
-  for (var i = 0; i < JOURNEYS.length; i++) {
-    var j = JOURNEYS[i];
-    // Check if any elements on this page have this journey
-    var hasElements = document.querySelectorAll('[data-journey~="' + j.id + '"]').length > 0;
+  for (var i = 0; i < SCENARIOS.length; i++) {
+    var s = SCENARIOS[i];
     dd.innerHTML +=
-      '<button class="wf-journey-item' + (hasElements ? '' : ' disabled') + '" ' +
-        'data-jid="' + j.id + '" onclick="wfStorySelect(\'' + j.id + '\')">' +
-        j.label +
-        (hasElements ? '' : '<span class="wf-journey-item-desc">Not on this page</span>') +
+      '<button class="wf-story-mode-item" onclick="wfScenarioStart(\'' + s.id + '\')">' +
+        '<span class="wf-story-mode-item-persona">' + s.persona + '</span>' +
+        s.label +
+        '<span class="wf-story-mode-item-steps">' + s.steps.length + ' steps</span>' +
       '</button>';
   }
 
   document.body.appendChild(dd);
 
-  // Story bar (hidden until a journey is selected)
+  // If a scenario is currently active, mark the button
+  var raw = sessionStorage.getItem('wf_scenario');
+  if (raw) {
+    if (btn) btn.classList.add('wf-ctx-btn--active');
+  }
+
+  // Also build the journey story bar (hidden until journey highlighting is active)
   var bar = document.createElement('div');
   bar.className = 'wf-story-bar';
   bar.id = 'wf-story-bar';
   bar.style.display = 'none';
   bar.innerHTML =
     '<span class="wf-story-bar-label" id="wf-story-bar-label"></span>' +
-    '<button class="wf-story-bar-close" onclick="wfStoryClear()" title="Exit story mode">✕ Exit</button>';
+    '<button class="wf-story-bar-close" onclick="wfStoryClear()" title="Exit story mode">\u2715 Exit</button>';
 
-  // Insert after context bar
   var ctxBar = document.querySelector('.wf-ctx-bar');
   if (ctxBar && ctxBar.nextSibling) {
     ctxBar.parentNode.insertBefore(bar, ctxBar.nextSibling);
   } else {
     document.body.appendChild(bar);
   }
-
-  // Restore from sessionStorage
-  var saved = sessionStorage.getItem('wf_story_journey');
-  if (saved) {
-    var hasAny = document.querySelectorAll('[data-journey~="' + saved + '"]').length > 0;
-    if (hasAny) {
-      wfStoryApply(saved);
-    } else {
-      // Journey persists but no elements on this page — show muted bar
-      var journey = null;
-      for (var j = 0; j < JOURNEYS.length; j++) {
-        if (JOURNEYS[j].id === saved) { journey = JOURNEYS[j]; break; }
-      }
-      if (journey) {
-        var bar = document.getElementById('wf-story-bar');
-        var barLabel = document.getElementById('wf-story-bar-label');
-        if (bar) { bar.style.display = 'flex'; bar.style.opacity = '0.5'; }
-        if (barLabel) barLabel.textContent = 'Journey: ' + journey.label + ' \u00b7 no elements on this page';
-      }
-    }
-  }
 }
 
 /**
- * Toggle the journey dropdown
+ * Toggle the story mode selector dropdown.
+ * If a scenario is active, exit it instead of opening the dropdown.
  */
-function wfStoryToggle() {
-  var dd = document.getElementById('wf-journey-dropdown');
+function wfStoryModeToggle() {
+  // If scenario is active, exit it
+  var raw = sessionStorage.getItem('wf_scenario');
+  if (raw) {
+    wfScenarioExit();
+    return;
+  }
+
+  var dd = document.getElementById('wf-story-mode-dropdown');
   if (!dd) return;
 
-  _storyDropdownOpen = !_storyDropdownOpen;
-  dd.style.display = _storyDropdownOpen ? 'block' : 'none';
+  _storyModeDropdownOpen = !_storyModeDropdownOpen;
+  dd.style.display = _storyModeDropdownOpen ? 'block' : 'none';
 
-  // Close on outside click
-  if (_storyDropdownOpen) {
+  if (_storyModeDropdownOpen) {
     setTimeout(function() {
-      document.addEventListener('click', _storyOutsideClick);
+      document.addEventListener('click', _storyModeOutsideClick);
     }, 10);
   }
 }
 
-function _storyOutsideClick(e) {
-  var dd = document.getElementById('wf-journey-dropdown');
-  var btn = document.getElementById('wf-story-btn');
+function _storyModeOutsideClick(e) {
+  var dd = document.getElementById('wf-story-mode-dropdown');
+  var btn = document.getElementById('wf-story-mode-btn');
   if (dd && !dd.contains(e.target) && btn && !btn.contains(e.target)) {
     dd.style.display = 'none';
-    _storyDropdownOpen = false;
-    document.removeEventListener('click', _storyOutsideClick);
+    _storyModeDropdownOpen = false;
+    document.removeEventListener('click', _storyModeOutsideClick);
   }
 }
 
-/**
- * Select a journey from the dropdown
- */
-function wfStorySelect(journeyId) {
-  var dd = document.getElementById('wf-journey-dropdown');
-  if (dd) { dd.style.display = 'none'; _storyDropdownOpen = false; }
-  document.removeEventListener('click', _storyOutsideClick);
-
-  // If same journey, toggle off
-  var current = sessionStorage.getItem('wf_story_journey');
-  if (current === journeyId) {
-    wfStoryClear();
-    return;
-  }
-
-  wfStoryApply(journeyId);
-  sessionStorage.setItem('wf_story_journey', journeyId);
-}
+/* Journey selection is now triggered automatically by scenario mode.
+   wfStoryApply/wfStoryClear/wfStoryCleanDOM are kept for journey highlighting. */
 
 /**
  * Apply story mode for a specific journey
@@ -531,15 +710,6 @@ function wfStoryApply(journeyId) {
   if (bar) bar.style.display = 'flex';
   if (barLabel) barLabel.textContent = '📖 Journey: ' + journey.label;
 
-  // Update dropdown active state
-  var items = document.querySelectorAll('.wf-journey-item');
-  for (var i = 0; i < items.length; i++) {
-    items[i].classList.toggle('active', items[i].getAttribute('data-jid') === journeyId);
-  }
-
-  // Update context bar button
-  var btn = document.getElementById('wf-story-btn');
-  if (btn) btn.style.background = 'rgba(61,109,170,0.3)';
 }
 
 /**
@@ -551,14 +721,6 @@ function wfStoryClear() {
 
   var bar = document.getElementById('wf-story-bar');
   if (bar) bar.style.display = 'none';
-
-  var btn = document.getElementById('wf-story-btn');
-  if (btn) btn.style.background = '';
-
-  var items = document.querySelectorAll('.wf-journey-item');
-  for (var i = 0; i < items.length; i++) {
-    items[i].classList.remove('active');
-  }
 }
 
 /**
@@ -774,81 +936,7 @@ function wfInitThreadPanel() {
   }
 }
 
-/* ========================================================================
-   Jira Stories Dropdown — Context Bar Integration
-   ======================================================================== */
-
-var _storiesDropdownOpen = false;
-
-/**
- * Build the stories dropdown from STORY_MAP and STORY_TITLES
- */
-function buildStoriesDropdown() {
-  if (!Object.keys(STORY_MAP).length) return;
-
-  var dd = document.createElement('div');
-  dd.className = 'wf-stories-dropdown';
-  dd.id = 'wf-stories-dropdown';
-  dd.style.display = 'none';
-
-  var file = currentFile();
-  var stories = STORY_MAP[file] || [];
-
-  var html = '<div class="wf-stories-dropdown-title">Jira Stories for This Page</div>';
-
-  if (stories.length === 0) {
-    html += '<div class="wf-stories-empty">No stories mapped to this screen.</div>';
-  } else {
-    for (var i = 0; i < stories.length; i++) {
-      var sid = stories[i];
-      var title = STORY_TITLES[sid] || '';
-      html += '<div class="wf-stories-item">' +
-        '<span class="wf-stories-id">Story ' + sid + '</span>' +
-        title +
-        '</div>';
-    }
-  }
-
-  dd.innerHTML = html;
-
-  var ctxBar = document.querySelector('.wf-ctx-bar');
-  if (ctxBar) ctxBar.appendChild(dd);
-}
-
-/**
- * Toggle the stories dropdown
- */
-function wfStoriesToggle() {
-  var dd = document.getElementById('wf-stories-dropdown');
-  if (!dd) return;
-  _storiesDropdownOpen = !_storiesDropdownOpen;
-  dd.style.display = _storiesDropdownOpen ? 'block' : 'none';
-
-  // Close journey dropdown if open
-  var jdd = document.getElementById('wf-journey-dropdown');
-  if (jdd && _storyDropdownOpen) {
-    _storyDropdownOpen = false;
-    jdd.style.display = 'none';
-  }
-
-  // Close on outside click
-  if (_storiesDropdownOpen) {
-    setTimeout(function() {
-      document.addEventListener('click', _wfStoriesOutsideClick, { once: true });
-    }, 0);
-  }
-}
-
-function _wfStoriesOutsideClick(e) {
-  var dd = document.getElementById('wf-stories-dropdown');
-  var btn = document.getElementById('wf-stories-btn');
-  if (dd && !dd.contains(e.target) && btn && !btn.contains(e.target)) {
-    _storiesDropdownOpen = false;
-    dd.style.display = 'none';
-  } else if (_storiesDropdownOpen) {
-    document.addEventListener('click', _wfStoriesOutsideClick, { once: true });
-  }
-}
+/* Jira Stories dropdown removed — AC badges now injected into Notes Context tab */
 
 /* ========================================================================
    FEEDBACK PANEL — Screenshot Paste, Page Context, Email
@@ -1176,6 +1264,15 @@ function buildScenarioBanner() {
   banner.id = 'wf-scenario-banner';
   banner.setAttribute('role', 'navigation');
   banner.setAttribute('aria-label', 'Scenario walkthrough');
+  // Build friction callout if present
+  var frictionHTML = '';
+  if (current.friction) {
+    frictionHTML = '<div class="wf-scenario-friction">' +
+      '<span class="wf-scenario-friction-icon">\u26a0</span>' +
+      current.friction +
+    '</div>';
+  }
+
   banner.innerHTML =
     '<div class="wf-scenario-controls">' +
       '<span class="wf-scenario-persona">' + scenario.persona + '</span>' +
@@ -1186,10 +1283,24 @@ function buildScenarioBanner() {
         '<button onclick="wfScenarioExit()" class="wf-scenario-exit" aria-label="Exit walkthrough">\u2715 Exit</button>' +
       '</div>' +
     '</div>' +
-    '<div class="wf-scenario-narrative">' + current.narrative + '</div>';
+    '<div class="wf-scenario-narrative">' + current.narrative + '</div>' +
+    frictionHTML;
 
   // Insert banner as first child of body (context bar is hidden via CSS)
   document.body.insertBefore(banner, document.body.firstChild);
+
+  // If scenario.id matches a JOURNEYS key, activate journey highlighting
+  if (JOURNEYS.length) {
+    for (var j = 0; j < JOURNEYS.length; j++) {
+      if (JOURNEYS[j].id === scenario.id) {
+        var hasElements = document.querySelectorAll('[data-journey~="' + scenario.id + '"]').length > 0;
+        if (hasElements) {
+          wfStoryApply(scenario.id);
+        }
+        break;
+      }
+    }
+  }
 }
 
 function wfScenarioStart(scenarioId) {
@@ -1816,12 +1927,12 @@ function wfNavInit() {
   injectSVGFilters();
   injectWobbleVariants();
   buildContextBar();
+  buildSurfaceHeader();
   wfFidelityRestore();
   buildDrawer();
   buildDesignNotesPanel();
   buildFeedbackPanel();
-  buildStoryMode();
-  buildStoriesDropdown();
+  buildStoryModeSelector();
   buildScenarioBanner();
   hideOldChrome();
   wfInitModals();
@@ -1868,19 +1979,12 @@ function wfNavInit() {
         wfNavClose();
         return;
       }
-      // Close journey dropdown
-      var jdd = document.getElementById('wf-journey-dropdown');
-      if (jdd && jdd.style.display !== 'none') {
-        jdd.style.display = 'none';
-        _storyDropdownOpen = false;
-        document.removeEventListener('click', _storyOutsideClick);
-        return;
-      }
-      // Close stories dropdown
-      var sdd = document.getElementById('wf-stories-dropdown');
-      if (sdd && sdd.style.display !== 'none') {
-        sdd.style.display = 'none';
-        _storiesDropdownOpen = false;
+      // Close story mode dropdown
+      var smdd = document.getElementById('wf-story-mode-dropdown');
+      if (smdd && smdd.style.display !== 'none') {
+        smdd.style.display = 'none';
+        _storyModeDropdownOpen = false;
+        document.removeEventListener('click', _storyModeOutsideClick);
         return;
       }
     }
