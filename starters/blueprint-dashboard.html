@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations Dashboard — Blueprint</title>
+  <!-- Core framework CSS (always required) -->
+  <link rel="stylesheet" href="core/proto-core.css">
+  <!-- Surface CSS: Internal DS (for dashboard/portal layouts) -->
+  <link rel="stylesheet" href="surfaces/internal-ds.css">
+  <!-- Project-specific overrides (create if needed) -->
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+  <!--
+    proto-gen.js automatically creates a <main> element and populates it
+    from PAGE_BLUEPRINT. No hand-written HTML is needed.
+  -->
+
+  <!-- Load project-data.js first — defines SECTIONS for navigation drawer -->
+  <script src="project-data.js"></script>
+  <!-- Load proto-nav.js — builds context bar, drawer, design notes panel -->
+  <script src="core/proto-nav.js"></script>
+
+  <!--
+    PAGE_BLUEPRINT — Dashboard layout example
+    Uses the 'dashboard' layout with Internal DS surface.
+    KPI row + chart placeholders + data table in a 2-column grid.
+    See ref/page-blueprint.md for the complete data structure reference.
+  -->
+  <script>
+  var PAGE_BLUEPRINT = {
+
+    /* ── Surface & Layout ───────────────────────────────────────── */
+    surface: 'internal',
+    layout: 'dashboard',
+
+    /* ── Page Header ────────────────────────────────────────────── */
+    header: {
+      icon: '📊',
+      type: 'Executive Overview',
+      name: 'Operations Dashboard',
+      actions: ['Export PDF', 'Share']
+    },
+
+    /* ── Content Columns ────────────────────────────────────────── */
+    /* For dashboard layout:                                        */
+    /*   center = full-width blocks (rendered above the grid)       */
+    /*   left + right = 2-column grid                               */
+    columns: {
+
+      /* Full-width KPI row (rendered above the 2-column grid) */
+      center: [
+        {
+          type: 'kpi-row',
+          items: [
+            { label: 'Active Projects', value: '24', trend: '+3 this month', color: 'green' },
+            { label: 'Total Revenue', value: '$2.8M', trend: '+12% vs Q3', color: 'green' },
+            { label: 'Open Issues', value: '17', trend: '+5 this week', color: 'red' },
+            { label: 'Team Utilization', value: '84%', trend: '-2% vs target', color: 'red' }
+          ]
+        }
+      ],
+
+      /* Left column: charts and data */
+      left: [
+        {
+          type: 'chart-placeholder',
+          title: 'Revenue by Quarter',
+          chartType: 'Bar Chart',
+          height: '220px'
+        },
+        {
+          type: 'table',
+          title: 'Top Projects by Revenue',
+          sortable: true,
+          columns: [
+            { label: 'Project', field: 'project' },
+            { label: 'Client', field: 'client' },
+            { label: 'Revenue', field: 'revenue' },
+            { label: 'Status', field: 'status' }
+          ],
+          rows: [
+            { project: 'Platform Migration', client: 'Acme Corp', revenue: '$420K', status: '<span class="wf-badge wf-badge-green">On Track</span>' },
+            { project: 'Data Integration', client: 'Globex Inc', revenue: '$380K', status: '<span class="wf-badge wf-badge-green">On Track</span>' },
+            { project: 'Mobile App v2', client: 'Initech', revenue: '$310K', status: '<span class="wf-badge wf-badge-amber">At Risk</span>' },
+            { project: 'API Gateway', client: 'Soylent Corp', revenue: '$275K', status: '<span class="wf-badge wf-badge-green">On Track</span>' },
+            { project: 'Security Audit', client: 'Umbrella Co', revenue: '$195K', status: '<span class="wf-badge wf-badge-red">Blocked</span>' }
+          ]
+        }
+      ],
+
+      /* Right column: activity and quick actions */
+      right: [
+        {
+          type: 'chart-placeholder',
+          title: 'Team Utilization Trend',
+          chartType: 'Line Chart',
+          height: '220px'
+        },
+        {
+          type: 'card',
+          title: 'Recent Activity',
+          content: '<div style="font-size:12px;color:var(--wf-text);line-height:1.8;">' +
+            '<div style="padding:6px 0;border-bottom:1px solid var(--wf-tint);"><strong>Sarah Chen</strong> closed deal with Acme Corp <span style="color:var(--wf-muted);font-size:11px;">2 hours ago</span></div>' +
+            '<div style="padding:6px 0;border-bottom:1px solid var(--wf-tint);"><strong>Mike Torres</strong> flagged Security Audit as blocked <span style="color:var(--wf-muted);font-size:11px;">5 hours ago</span></div>' +
+            '<div style="padding:6px 0;border-bottom:1px solid var(--wf-tint);"><strong>Lisa Park</strong> added 3 team members to Mobile App v2 <span style="color:var(--wf-muted);font-size:11px;">Yesterday</span></div>' +
+            '<div style="padding:6px 0;"><strong>System</strong> generated Q4 revenue forecast <span style="color:var(--wf-muted);font-size:11px;">2 days ago</span></div>' +
+            '</div>'
+        },
+        {
+          type: 'card',
+          title: 'Upcoming Deadlines',
+          content: '<div style="font-size:12px;color:var(--wf-text);line-height:1.8;">' +
+            '<div style="display:flex;justify-content:space-between;padding:4px 0;"><span>Platform Migration - Phase 2</span><span class="wf-badge wf-badge-amber">Mar 20</span></div>' +
+            '<div style="display:flex;justify-content:space-between;padding:4px 0;"><span>Quarterly Business Review</span><span class="wf-badge">Mar 25</span></div>' +
+            '<div style="display:flex;justify-content:space-between;padding:4px 0;"><span>Mobile App v2 Beta</span><span class="wf-badge wf-badge-red">Mar 28</span></div>' +
+            '</div>'
+        }
+      ]
+    },
+
+    /* ── Design Notes ───────────────────────────────────────────── */
+    notes: {
+      summary: 'Executive operations dashboard showing key metrics, project revenue breakdown, team utilization trends, and recent activity. Designed as an at-a-glance overview for leadership.',
+      jtbd: [
+        'When preparing for a leadership meeting, I want to see all key metrics on one page so I can quickly assess business health.',
+        'When monitoring project delivery, I want to see which projects are at risk so I can intervene early.',
+        'When tracking team capacity, I want to see utilization trends so I can plan upcoming staffing.'
+      ],
+      designSpec: 'Internal DS surface with ds-page-container. Full-width KPI row at top (4 cards). Below that, a 2-column grid: left has bar chart placeholder and sortable revenue table; right has line chart placeholder, activity card, and deadlines card. All cards use wf-card and ds-kpi-card classes.',
+      technical: 'KPI data sourced from aggregated project management API. Revenue table pulls from billing system. Activity feed combines CRM events, project management updates, and system notifications. Charts would be implemented with D3 or Chart.js in production.',
+      acceptance: [
+        'KPI row shows 4 metrics with trend indicators',
+        'Revenue table is sortable and shows status badges',
+        'Chart placeholders indicate intended chart type',
+        'Activity card shows timestamped entries',
+        'Deadlines card shows upcoming dates with urgency badges',
+        'Page renders correctly at all 3 fidelity levels'
+      ]
+    },
+
+    confidence: 'partial'
+  };
+  </script>
+
+  <!-- Load proto-gen.js LAST — reads PAGE_BLUEPRINT and generates the page -->
+  <script src="core/proto-gen.js"></script>
+
+</body>
+</html>

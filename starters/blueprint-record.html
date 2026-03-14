@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme Corp — Account</title>
+  <!-- Core framework CSS (always required) -->
+  <link rel="stylesheet" href="core/proto-core.css">
+  <!-- Surface CSS: Salesforce (swap for slack.css or internal-ds.css as needed) -->
+  <link rel="stylesheet" href="surfaces/salesforce.css">
+  <!-- Project-specific overrides (create if needed) -->
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+  <!--
+    proto-gen.js automatically creates a <main> element and populates it
+    from PAGE_BLUEPRINT. No hand-written HTML is needed for the page content.
+    If you want to target a specific container, add data-wf-blueprint-target
+    to any element, or include a <main> tag.
+  -->
+
+  <!-- Load project-data.js first — defines SECTIONS for navigation drawer -->
+  <script src="project-data.js"></script>
+  <!-- Load proto-nav.js — builds context bar, drawer, design notes panel -->
+  <script src="core/proto-nav.js"></script>
+
+  <!--
+    PAGE_BLUEPRINT — Declarative page definition
+    Customize the object below for your record page.
+    See ref/page-blueprint.md for the complete data structure reference.
+  -->
+  <script>
+  var PAGE_BLUEPRINT = {
+
+    /* ── Surface & Layout ───────────────────────────────────────── */
+    /* surface: which CSS overlay to use for headers and cards      */
+    /* layout: page structure (record-3col, dashboard, list, etc.)  */
+    surface: 'sfdc',
+    layout: 'record-3col',
+
+    /* ── Record Header ──────────────────────────────────────────── */
+    /* icon: emoji or text for the record icon badge                */
+    /* type: record type label (Account, Opportunity, etc.)         */
+    /* name: primary record name                                    */
+    /* status: optional badge with label + color                    */
+    /* actions: button labels (first = primary, rest = secondary)   */
+    header: {
+      icon: '🏢',
+      type: 'Account',
+      name: 'Acme Corp',
+      status: { label: 'Active', color: 'green' },
+      actions: ['Edit', 'Clone', 'Delete']
+    },
+
+    /* ── Highlights Panel (SFDC surface) ────────────────────────── */
+    /* Key field summary shown below the record header              */
+    highlights: [
+      { label: 'Owner', value: 'Sarah Chen' },
+      { label: 'Industry', value: 'Technology' },
+      { label: 'Annual Revenue', value: '$4.2M' },
+      { label: 'Employees', value: '1,200' }
+    ],
+
+    /* ── Path Bar (SFDC surface) ────────────────────────────────── */
+    /* Sales/service process path with current position             */
+    path: {
+      steps: ['Prospect', 'Qualified', 'Proposal', 'Negotiation', 'Closed Won'],
+      current: 'Proposal',
+      complete: ['Prospect', 'Qualified']
+    },
+
+    /* ── Content Columns ────────────────────────────────────────── */
+    /* For record-3col: left (related lists), center (details),     */
+    /* right (activity timeline). Each is an array of block objects. */
+    columns: {
+
+      /* LEFT: Related lists and sidebar cards */
+      left: [
+        {
+          type: 'related-list',
+          title: 'Contacts',
+          columns: [
+            { label: 'Name', field: 'name' },
+            { label: 'Title', field: 'title' },
+            { label: 'Phone', field: 'phone' }
+          ],
+          rows: [
+            { name: 'Sarah Chen', title: 'VP Sales', phone: '(555) 100-2000' },
+            { name: 'Mike Torres', title: 'CTO', phone: '(555) 100-3000' },
+            { name: 'Lisa Park', title: 'Procurement Lead', phone: '(555) 100-4000' }
+          ]
+        },
+        {
+          type: 'related-list',
+          title: 'Opportunities',
+          columns: [
+            { label: 'Name', field: 'name' },
+            { label: 'Amount', field: 'amount' },
+            { label: 'Stage', field: 'stage' }
+          ],
+          rows: [
+            { name: 'Acme Expansion Q2', amount: '$850K', stage: '<span class="wf-badge wf-badge-green">Proposal</span>' },
+            { name: 'Acme Renewal', amount: '$320K', stage: '<span class="wf-badge wf-badge-amber">Negotiation</span>' }
+          ]
+        }
+      ],
+
+      /* CENTER: Record detail fields */
+      center: [
+        {
+          type: 'detail-grid',
+          fields: [
+            { label: 'Account Name', value: 'Acme Corp' },
+            { label: 'Account Number', value: 'ACC-001234' },
+            { label: 'Website', value: '<a href="#">acme.com</a>' },
+            { label: 'Phone', value: '(555) 100-1000' },
+            { label: 'Type', value: 'Customer' },
+            { label: 'Rating', value: '<span class="wf-badge wf-badge-green">Hot</span>' },
+            { label: 'Billing Address', value: '100 Innovation Way, San Francisco, CA 94105', span: 2 },
+            { label: 'Description', value: 'Enterprise technology company specializing in cloud infrastructure and developer tools.', span: 2 }
+          ]
+        },
+        {
+          type: 'card',
+          title: 'Key Insights',
+          content: '<p style="font-size:13px;color:var(--wf-text);line-height:1.5;">This account has grown <strong>32%</strong> year over year. Champion engagement score is high at <strong>89/100</strong>. Next renewal date: <strong>Q4 2026</strong>.</p>'
+        }
+      ],
+
+      /* RIGHT: Activity timeline */
+      right: [
+        {
+          type: 'timeline',
+          items: [
+            { date: 'Mar 10, 2:30 PM', actor: 'Sarah Chen', action: 'updated stage', detail: 'Moved Acme Expansion to Proposal' },
+            { date: 'Mar 8, 11:00 AM', actor: 'AI Assistant', action: 'flagged risk', detail: 'Champion went silent for 14 days' },
+            { date: 'Mar 5, 4:15 PM', actor: 'Mike Torres', action: 'added note', detail: 'Technical review completed. Green light on integration.' },
+            { date: 'Mar 3, 9:00 AM', actor: 'Sarah Chen', action: 'logged call', detail: '45-min discovery call with procurement team' },
+            { date: 'Feb 28, 2:00 PM', actor: 'System', action: 'created record', detail: 'Account imported from D&B enrichment' }
+          ]
+        }
+      ]
+    },
+
+    /* ── Design Notes ───────────────────────────────────────────── */
+    /* Generates hidden markup that proto-nav.js reads for the      */
+    /* 3-tab notes panel (Context / Design / Technical).            */
+    notes: {
+      summary: 'Salesforce Account record page for Acme Corp showing key details, contacts, opportunities, and activity timeline in a 3-column layout.',
+      jtbd: [
+        'When reviewing an account, I want to see all key details at a glance so I can prepare for a customer meeting.',
+        'When managing a deal pipeline, I want to see related opportunities and their stages so I can prioritize my time.',
+        'When tracking customer engagement, I want to see the activity timeline so I can identify risks and follow up.'
+      ],
+      designSpec: '3-column SFDC record layout at standard widths (280px / flex / 320px). Highlights panel shows 4 key fields. Path bar shows sales process with current stage highlighted. Left column holds related list cards. Center has detail grid and insights card. Right column has chronological activity feed.',
+      technical: 'Data source: Salesforce REST API for Account, Contact, Opportunity, and Task objects. Activity timeline combines Tasks, Events, and Chatter feed items. AI risk flags come from engagement scoring model.',
+      acceptance: [
+        'Record header shows account name, type badge, and action buttons',
+        'Highlights panel displays 4 key account fields',
+        'Path bar shows 5 stages with correct current/complete states',
+        'Contact related list shows at least 3 contacts with phone numbers',
+        'Activity timeline is sorted newest-first',
+        'Design notes panel populates all 3 tabs when opened'
+      ]
+    },
+
+    /* ── Page Confidence ────────────────────────────────────────── */
+    /* Controls visual rendering of design certainty                */
+    confidence: 'confirmed'
+  };
+  </script>
+
+  <!-- Load proto-gen.js LAST — reads PAGE_BLUEPRINT and generates the page -->
+  <script src="core/proto-gen.js"></script>
+
+</body>
+</html>
