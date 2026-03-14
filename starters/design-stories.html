@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-fidelity="blueprint">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Stories — Project Name</title>
+  <link rel="stylesheet" href="../core/proto-core.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<main style="max-width:1200px;margin:0 auto;padding:24px;">
+
+  <!-- View-control nav bar (5 tabs) -->
+  <nav class="wf-view-control" aria-label="View selector">
+    <span class="wf-view-label">View</span>
+    <div class="wf-view-btns" role="navigation" aria-label="Select view">
+      <a class="wf-view-btn" href="index.html">Sitemap</a>
+      <a class="wf-view-btn" href="jobs-to-be-done.html">Jobs to Be Done</a>
+      <a class="wf-view-btn" href="user-flows.html">User Flows</a>
+      <a class="wf-view-btn" href="story-reference.html">Personas</a>
+      <a class="wf-view-btn active" href="design-stories.html" aria-current="page">Design Stories</a>
+    </div>
+  </nav>
+
+  <!-- proto-stories.js renders everything into this container -->
+  <div id="wf-ds-root"></div>
+
+</main>
+
+<!-- Design notes (shown in drawer) -->
+<div class="wf-design-notes" hidden>
+  <h3>Summary</h3>
+  <p>The Design Stories page is a living document that tracks implementation scope, product decisions, phased delivery, and platform approach for each design story. It auto-generates from DESIGN_STORIES defined in project-data.js.</p>
+
+  <h3>Design Specification</h3>
+  <h4>Primary Content</h4>
+  <p>Auto-validated story cards with user stories, acceptance criteria, phased implementation tables, decision logs, and SFDC implementation suggestions. Project roadmap shows how stories group into delivery phases.</p>
+
+  <h4>Interactive Elements</h4>
+  <ul>
+    <li>Status filter pills — filter stories by draft/in-progress/accepted/deferred</li>
+    <li>Decision log accordions — expand/collapse per story</li>
+    <li>Page links — navigate to wireframe pages where stories are realized</li>
+    <li>Journey links — navigate to user-flows.html for related journeys</li>
+    <li>View-control nav — links to sibling reference pages</li>
+  </ul>
+</div>
+
+<script src="project-data.js"></script>
+<script src="../core/proto-nav.js"></script>
+<script src="../core/proto-stories.js"></script>
+</body>
+</html>

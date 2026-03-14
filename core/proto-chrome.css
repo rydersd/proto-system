@@ -629,6 +629,18 @@ html.wireframe[data-wf-fidelity="polished"] .wf-dn-tab.active {
   color: var(--wf-accent);
   cursor: default;
   letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+a.wf-dn-ac-badge {
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+a.wf-dn-ac-badge:hover {
+  background: var(--wf-accent);
+  color: var(--wf-white, #fff);
+  text-decoration: none;
 }
 
 /* --- Active state for Stories button when scenario is running ------------- */

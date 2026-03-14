@@ -921,3 +921,435 @@ html.wireframe[data-wf-fidelity="napkin"] .btn-ghost:hover {
 .wf-rel-arrow{display:flex;flex-direction:column;align-items:center;gap:2px;}
 .wf-rel-arrow-line{font-size:1.25rem;color:var(--wf-muted);font-weight:700;}
 .wf-rel-arrow-label{font-size:.625rem;color:var(--wf-muted);font-style:italic;}
+
+/* ─────────────────────────────────────────
+   Design Stories Page Components
+   Story cards, phases, decisions, filters
+   ───────────────────────────────────────── */
+
+/* Story card container */
+.wf-ds-story-card {
+  background: var(--wf-white, #fff);
+  border: 1px solid var(--wf-line);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+/* Story ID badge in card header */
+.wf-ds-story-id {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  font-family: var(--wf-mono);
+  letter-spacing: 0.02em;
+}
+
+/* User story quote block */
+.wf-ds-user-story {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--wf-text);
+  line-height: 1.5;
+  padding: 10px 16px;
+  border-left: 3px solid var(--wf-accent);
+  background: var(--wf-accent-fill);
+  border-radius: 0 6px 6px 0;
+  margin: 12px 0;
+}
+
+/* Version indicator */
+.wf-ds-version {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  padding: 2px 6px;
+  background: var(--wf-surface);
+  border: 1px solid var(--wf-line);
+  border-radius: 3px;
+}
+
+/* Phases table */
+.wf-ds-phases {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+  margin: 12px 0;
+}
+
+.wf-ds-phases th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--wf-muted);
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--wf-line);
+  background: var(--wf-surface);
+}
+
+.wf-ds-phase-row td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--wf-tint);
+  vertical-align: top;
+}
+
+.wf-ds-phase-scope {
+  font-size: 11px;
+  color: var(--wf-text);
+  line-height: 1.5;
+}
+
+.wf-ds-phase-scope li {
+  margin-bottom: 2px;
+}
+
+/* Approach badges */
+.wf-ds-approach {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.wf-ds-approach--oob {
+  background: rgba(69, 120, 90, 0.1);
+  color: var(--wf-green);
+  border: 1px solid var(--wf-green);
+}
+
+.wf-ds-approach--config {
+  background: rgba(107, 90, 47, 0.1);
+  color: var(--wf-amber);
+  border: 1px solid var(--wf-amber);
+}
+
+.wf-ds-approach--custom-lwc {
+  background: rgba(139, 69, 83, 0.1);
+  color: var(--wf-red);
+  border: 1px solid var(--wf-red);
+}
+
+/* Decision log */
+.wf-ds-decisions {
+  margin: 12px 0;
+}
+
+.wf-ds-decision-entry {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--wf-tint);
+  font-size: 12px;
+}
+
+.wf-ds-decision-entry:last-child {
+  border-bottom: none;
+}
+
+.wf-ds-decision-date {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  font-family: var(--wf-mono);
+}
+
+.wf-ds-decision-text {
+  color: var(--wf-ink);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.wf-ds-decision-rationale {
+  color: var(--wf-text);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* SFDC suggestions */
+.wf-ds-sfdc-suggestions {
+  margin: 12px 0;
+  padding: 12px 16px;
+  background: var(--wf-surface);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px;
+}
+
+.wf-ds-sfdc-suggestions ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: var(--wf-text);
+  line-height: 1.6;
+}
+
+.wf-ds-sfdc-suggestions li {
+  margin-bottom: 4px;
+}
+
+/* Page and journey links */
+.wf-ds-page-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.wf-ds-page-links a {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--wf-tint);
+  border: 1px solid var(--wf-line);
+  border-radius: 3px;
+  color: var(--wf-accent);
+  text-decoration: none;
+}
+
+.wf-ds-page-links a:hover {
+  background: var(--wf-accent-fill);
+  border-color: var(--wf-accent);
+}
+
+.wf-ds-journey-link {
+  font-size: 11px;
+  color: var(--wf-accent);
+  text-decoration: none;
+}
+
+.wf-ds-journey-link:hover {
+  text-decoration: underline;
+}
+
+/* Filter pills */
+.wf-ds-filter-pills {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.wf-ds-filter-pill {
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid var(--wf-line);
+  border-radius: 20px;
+  background: var(--wf-white, #fff);
+  color: var(--wf-text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wf-ds-filter-pill:hover {
+  border-color: var(--wf-accent);
+  color: var(--wf-accent);
+}
+
+.wf-ds-filter-pill.active {
+  background: var(--wf-accent);
+  color: var(--wf-white, #fff);
+  border-color: var(--wf-accent);
+}
+
+/* Roadmap visualization */
+.wf-ds-roadmap {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding: 16px 0;
+  margin-bottom: 24px;
+}
+
+.wf-ds-roadmap-phase {
+  background: var(--wf-white, #fff);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 220px;
+  flex-shrink: 0;
+}
+
+.wf-ds-roadmap-phase-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-ink);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--wf-line);
+}
+
+.wf-ds-roadmap-story {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--wf-text);
+}
+
+.wf-ds-roadmap-arrow {
+  font-size: 20px;
+  color: var(--wf-muted);
+  font-weight: 700;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.wf-ds-roadmap-deps {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--wf-line);
+  font-size: 11px;
+  color: var(--wf-muted);
+  font-style: italic;
+}
+
+/* Acceptance criteria checklist */
+.wf-ds-acceptance {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.wf-ds-acceptance li {
+  padding: 4px 0 4px 22px;
+  font-size: 12px;
+  color: var(--wf-text);
+  position: relative;
+  line-height: 1.5;
+}
+
+.wf-ds-acceptance li::before {
+  content: '\2610';
+  position: absolute;
+  left: 0;
+  color: var(--wf-muted);
+}
+
+/* Status badges */
+.wf-ds-status {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.wf-ds-status--draft {
+  background: var(--wf-surface);
+  color: var(--wf-muted);
+  border: 1px solid var(--wf-line);
+}
+
+.wf-ds-status--in-progress {
+  background: rgba(61, 109, 170, 0.1);
+  color: var(--wf-accent);
+  border: 1px solid var(--wf-accent);
+}
+
+.wf-ds-status--accepted {
+  background: rgba(69, 120, 90, 0.1);
+  color: var(--wf-green);
+  border: 1px solid var(--wf-green);
+}
+
+.wf-ds-status--deferred {
+  background: rgba(107, 90, 47, 0.1);
+  color: var(--wf-amber);
+  border: 1px solid var(--wf-amber);
+}
+
+/* Metrics summary */
+.wf-ds-metrics {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.wf-ds-metric {
+  background: var(--wf-white, #fff);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px;
+  padding: 10px 16px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.wf-ds-metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-ds-metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Validation warnings */
+.wf-ds-warnings {
+  margin-bottom: 20px;
+}
+
+.wf-ds-warning {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--wf-amber);
+  background: rgba(107, 90, 47, 0.08);
+  border: 1px solid var(--wf-amber);
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+/* Accordion for decision logs */
+.wf-ds-accordion-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wf-ink);
+  cursor: pointer;
+  padding: 8px 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.wf-ds-accordion-toggle:hover {
+  color: var(--wf-accent);
+}
+
+.wf-ds-accordion-toggle::before {
+  content: '\25B8';
+  transition: transform 0.15s;
+}
+
+.wf-ds-accordion-toggle.open::before {
+  transform: rotate(90deg);
+}
+
+.wf-ds-accordion-body {
+  display: none;
+  padding: 0 0 8px 16px;
+}
+
+.wf-ds-accordion-body.open {
+  display: block;
+}
