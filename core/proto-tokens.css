@@ -47,7 +47,7 @@ html.wireframe {
 }
 
 html.wireframe[data-wf-fidelity="napkin"] {
-  --wf-wobble-radius: 2px 1px 3px 1px / 1px 2px 1px 3px;
+  --wf-wobble-radius: 14px 5px 18px 4px / 5px 12px 4px 10px;
   --wf-wobble-filter: none;
   --wf-grain-opacity: 0.4;
   --wf-grid-opacity: 0.06;
@@ -157,14 +157,20 @@ html.wireframe body {
   position: relative;
 }
 
-/* Napkin mode — full grayscale strips all remaining hardcoded color
-   (surface CSS, inline styles, avatar backgrounds, etc.) */
-html.wireframe[data-wf-fidelity="napkin"] body {
+/* Napkin mode — full grayscale on html (root), NOT body.
+   Per CSS spec, filter on a non-root element creates a containing block
+   for fixed descendants, breaking position:fixed on drawers/panels.
+   The root element does NOT create this containing block. */
+html.wireframe[data-wf-fidelity="napkin"] {
   filter: grayscale(1);
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(0, 0, 0, var(--wf-grid-opacity)) 20px),
-    repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0, 0, 0, var(--wf-grid-opacity)) 20px),
-    var(--wf-canvas);
+}
+
+html.wireframe[data-wf-fidelity="napkin"] body {
+  /* Stacking context so coffee ring stencils at z-index:-1 sit
+     behind content but above the body background. */
+  z-index: 0;
+  /* Plain paper — no grid lines in napkin mode */
+  background: var(--wf-canvas);
 }
 
 /* Watermark — rotated, full page, very faint */
@@ -208,10 +214,10 @@ html.wireframe[data-wf-fidelity="napkin"] body::after {
   position: fixed;
   inset: 0;
   background: url(textures/natural-paper.png) repeat;
-  mix-blend-mode: overlay;
-  opacity: 0.6;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 800; /* Above page content, below framework chrome (context bar ≥1000) */
 }
 
 /* Per-element paper texture — napkin mode only.
@@ -278,63 +284,28 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-stencil-layer {
   pointer-events: none;
 }
 
-/* Coffee ring — top right area */
-.wf-stencil--coffee-1 {
-  top: 8%;
-  right: 6%;
-  width: 160px;
-  height: 160px;
-  opacity: 0.35;
+/* Coffee ring — background accent, lives OUTSIDE the stencil layer
+   as a direct body child so it can use z-index:-1 to sit behind content.
+   Hidden by default, shown only in napkin mode. Position/rotation/size
+   set inline by JS with Math.random() so every refresh is different. */
+.wf-coffee-ring {
+  display: none;
+}
+html.wireframe[data-wf-fidelity="napkin"] .wf-coffee-ring {
+  display: block;
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  /* SVG uses light tan fill + dark contour-following inner shadow.
+     CSS opacity controls overall ring visibility. */
+  opacity: 0.22;
 }
 
-/* Coffee double ring — lower left */
-.wf-stencil--coffee-2 {
-  bottom: 15%;
-  left: 3%;
-  width: 200px;
-  height: 180px;
-  opacity: 0.25;
-  transform: rotate(12deg);
-}
-
-/* Coffee spill — mid-right edge */
-.wf-stencil--spill {
-  top: 45%;
-  right: -20px;
-  width: 150px;
-  height: 130px;
-  opacity: 0.3;
-  transform: rotate(-15deg);
-}
-
-/* Scribble — illegible handwriting, upper left */
-.wf-stencil--scribble-1 {
-  top: 22%;
-  left: 8%;
-  width: 130px;
-  height: 65px;
-  opacity: 0.5;
-  transform: rotate(-3deg);
-}
-
-/* Sketch doodle — small flowchart, lower right */
-.wf-stencil--scribble-2 {
-  bottom: 25%;
-  right: 10%;
-  width: 100px;
-  height: 85px;
-  opacity: 0.4;
-  transform: rotate(5deg);
-}
-
-/* Wavy lines — hurried note, center left */
+/* Scribble stencils — position/rotation/size set by JS per page load */
+.wf-stencil--scribble-1,
+.wf-stencil--scribble-2,
 .wf-stencil--scribble-3 {
-  top: 65%;
-  left: 5%;
-  width: 115px;
-  height: 50px;
-  opacity: 0.35;
-  transform: rotate(-1deg);
+  opacity: 0.4;
 }
 
 * {

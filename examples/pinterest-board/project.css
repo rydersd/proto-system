@@ -18,13 +18,12 @@
   .masonry-grid { column-count: 2; }
 }
 
-/* Sketchy image treatment — SVG edge-detection pencil sketch */
+/* Pin image — sketch filter applied globally by proto-components.css */
 .pin-img {
   width: 100%;
   display: block;
   border-radius: var(--wf-wobble-radius);
   object-fit: cover;
-  filter: url(#wf-pencil-sketch);
 }
 
 /* --- Paper Scrap Cards -------------------------------------------------- */

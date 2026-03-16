@@ -271,14 +271,7 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
   display: none;
 }
 
-/* When notes panel is open, push page content left to prevent clipping */
-html.wf-dn-open body {
-  margin-right: 400px;
-  transition: margin-right 0.2s ease;
-}
-html:not(.wf-dn-open) body {
-  transition: margin-right 0.2s ease;
-}
+/* Notes panel is a fixed overlay — no content push needed */
 
 .wf-dn-overlay {
   position: fixed;

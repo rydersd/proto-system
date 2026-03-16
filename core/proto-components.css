@@ -434,10 +434,19 @@ html.wireframe .wf-table tbody tr {
 
 /* No wobble filter on tables — text must stay crisp */
 
-/* --- Sketch Image Utility ------------------------------------------------ */
+/* --- Sketch Image Filter ------------------------------------------------- */
 
-/* Apply to any <img> to render it as a pencil sketch.
-   Requires proto-nav.js to inject the SVG filter into the DOM. */
+/* All content images get the copic marker sketch treatment in wireframe mode.
+   Excludes framework stencils and decorative elements.
+   Polished fidelity removes the filter for clean rendering. */
+html.wireframe img:not(.wf-stencil):not(.wf-coffee-ring) {
+  filter: url(#wf-pencil-sketch);
+}
+html.wireframe[data-wf-fidelity="polished"] img {
+  filter: none;
+}
+
+/* Explicit opt-in class (still works, now redundant with global rule) */
 .wf-sketch-img {
   filter: url(#wf-pencil-sketch);
 }

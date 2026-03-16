@@ -154,7 +154,7 @@ html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
   border-radius: var(--wf-radius) !important;
 }
 
-/* --- Fidelity Slider (Context Bar) --- */
+/* --- Fidelity Dropdown (Context Bar) --- */
 .wf-ctx-fidelity {
   display: flex;
   align-items: center;
@@ -168,50 +168,45 @@ html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
   opacity: 0.7;
 }
 
-.wf-ctx-fidelity input[type="range"] {
-  width: 60px;
-  height: 4px;
+.wf-ctx-fidelity select {
   -webkit-appearance: none;
   appearance: none;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  padding: 3px 22px 3px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
   outline: none;
-  cursor: pointer;
+  line-height: 1.4;
+  /* Dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
 }
 
-.wf-ctx-fidelity input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--wf-white);
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+.wf-ctx-fidelity select:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-.wf-ctx-fidelity input[type="range"]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--wf-white);
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+.wf-ctx-fidelity select:focus {
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
-#wf-fidelity-text {
-  min-width: 50px;
-  font-size: 9px;
-  opacity: 0.6;
+.wf-ctx-fidelity select option {
+  background: #1e2a3a;
+  color: #ffffff;
 }
 
-/* --- Napkin Fidelity Overrides — slider legibility ---------------------- */
+/* --- Napkin Fidelity Overrides — dropdown legibility -------------------- */
 html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-fidelity {
   color: var(--wf-muted);
 }
 html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-fidelity label { opacity: 1; }
-html.wireframe[data-wf-fidelity="napkin"] #wf-fidelity-text { opacity: 0.9; }
 
 /* --- Napkin: Corner Notch — paper dog-ear effect on cards --------------- */
 html.wireframe[data-wf-fidelity="napkin"] .wf-card,
