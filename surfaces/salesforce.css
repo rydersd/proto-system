@@ -763,6 +763,110 @@
 .sfdc-detail-value a { color: var(--wf-accent); text-decoration: none; }
 
 /* ============================================================================
+   POLISHED FIDELITY: Real SLDS 2 Cosmos token values
+   When fidelity = polished AND surface = sfdc, override wireframe-muted tokens
+   with production SLDS 2 color/typography values.
+   ============================================================================ */
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] {
+  /* Override --wf-* tokens with real SLDS 2 Cosmos values */
+  --wf-accent:      #0070D2;  /* SCIENCE_BLUE / --slds-g-color-accent-1 */
+  --wf-accent-lt:   #EEF4FF;  /* Blue-90 */
+  --wf-accent-fill: rgba(0,112,210,0.07);
+  --wf-red:         #C23934;  /* FLUSH_MAHOGANY / --slds-g-color-error-1 */
+  --wf-amber:       #844800;  /* CINNAMON / --slds-g-color-warning-1 */
+  --wf-green:       #04844B;  /* SALEM / --slds-g-color-success-1 */
+  --wf-purple:      #5A1BA9;  /* SLDS purple / --slds-g-color-brand-1 */
+  --wf-muted:       #7E8C99;  /* REGENT_GREY */
+  --wf-ink:         #181818;  /* SLDS on-surface */
+  --wf-text:        #444444;  /* SLDS body text */
+  --wf-line:        #C9C9C9;  /* SLDS border */
+  --wf-tint:        #E5E5E5;  /* SLDS subtle dividers */
+  --wf-surface:     #F3F3F3;  /* SLDS surface */
+  --wf-canvas:      #F3F3F3;  /* SLDS page background */
+  --wf-white:       #FFFFFF;
+  --wf-radius:      4px;      /* BORDER_RADIUS_MEDIUM */
+  --wf-font:        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* SFDC components get crisper styling at polished fidelity */
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-card {
+  border-radius: 8px;  /* BORDER_RADIUS_LARGE for Cosmos */
+  border: 1px solid var(--wf-line);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-card-header {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-chart-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-btn {
+  border-radius: 6px;  /* Cosmos button radius */
+  font-weight: 600;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-btn-primary {
+  border-radius: 6px;
+  background: #0070D2;
+  border-color: #0070D2;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-btn-primary:hover {
+  background: #005FB2;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-step {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-step:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-step:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-complete-btn {
+  border-radius: 6px;
+  background: #0070D2;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-table th {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  background: #F3F3F3;
+  border-bottom: 2px solid #C9C9C9;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-record-icon {
+  border-radius: 8px;
+  background: #0070D2;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-tabs {
+  border-bottom-color: #C9C9C9;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-tab.active {
+  color: #0070D2;
+  border-bottom-color: #0070D2;
+}
+
+html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-global-header {
+  background: #061C3F;  /* DEEP_COVE — real SFDC header color */
+}
+
+/* ============================================================================
    BLUEPRINT PAPER ADAPTATIONS
    ============================================================================ */
 

@@ -74,3 +74,39 @@
 - **Personas:** Story Reference page renamed to "Personas & Organizations" to reflect actual content
 
 **Framework instruction:** Use JTBD for user goals, DESIGN_STORIES for implementation planning, and the Personas page for character context. STORY_MAP remains as the lightweight page-to-story cross-reference for badge injection.
+
+## 9. CSS `filter` on `body` Breaks Fixed Positioning
+
+**What happened:** In napkin fidelity mode, `filter: grayscale(1)` was applied to `body`. The nav drawer (hamburger menu) used `position: fixed` — but CSS spec says `filter` on a non-root element creates a containing block for fixed descendants. Links in the drawer became unclickable because the drawer was positioned relative to body, not viewport.
+
+**Root cause:** The filter was originally on `body` because that's where the background texture lives. But CSS containing block rules mean any `filter`, `transform`, or `will-change` on a non-root element traps fixed descendants.
+
+**Fix:** Moved `filter: grayscale(1)` from `body` to `html` (the root element). Per CSS spec, the root element does NOT create a containing block for fixed descendants even with filter applied.
+
+**Framework instruction:** Never apply `filter`, `transform`, `perspective`, `will-change`, or `contain: paint` to `body` or any ancestor of `position: fixed` elements. Apply to `html` (root) instead, or use an intermediate wrapper that doesn't contain fixed elements.
+
+**File:** `proto-system/core/proto-tokens.css`
+
+## 10. Inline CSS Custom Properties Override Declarations
+
+**What happened:** In polished fidelity mode, hand-drawn edge wobble persisted despite CSS declaring `--wf-wobble-filter: none` on `html[data-wf-fidelity="polished"]`. Elements still showed wobble effects.
+
+**Root cause:** `randomizeWobble()` runs at page load and sets `element.style.setProperty('--wf-wobble-filter', 'url(#wf-wobble-N)')` on every wobble-eligible element. Inline styles have higher specificity than any CSS declaration. So polished mode's CSS rule was overridden by every element's inline style.
+
+**Fix:** (a) `randomizeWobble()` now checks fidelity and skips polished mode entirely. (b) Added `clearWobbleOverrides()` that removes inline `--wf-wobble-filter` from all elements. (c) `wfFidelityChange()` calls the appropriate function based on fidelity level.
+
+**Framework instruction:** Avoid setting CSS custom properties via `element.style.setProperty()` when those properties need to be overridden by CSS declarations (e.g., fidelity changes). If you must set inline custom properties, provide a cleanup function and call it when the override condition changes.
+
+**File:** `proto-system/core/proto-nav.js`
+
+## 11. Paper Texture Z-Index Was Above All Content
+
+**What happened:** The paper grain texture overlay (napkin mode `body::after`) had `z-index: 9998`, placing it above nearly everything including interactive elements. Combined with `pointer-events: none`, clicks passed through — but it created visual layering confusion and could interfere with screen readers.
+
+**Root cause:** The original value was likely chosen to "always be on top" without considering the framework's z-index architecture. The framework has a clear layering system: page content → context bar (1000) → nav drawer (2001) → notes panel (3001) → modals (4000). A background texture at 9998 violates this.
+
+**Fix:** Lowered to `z-index: 800` — above page content but below all framework chrome.
+
+**Framework instruction:** Follow the z-index architecture: page < 1000 ≤ context bar < 2001 ≤ nav drawer < 3001 ≤ notes panel < 4000 ≤ modals. Never assign arbitrary high z-index values.
+
+**File:** `proto-system/core/proto-tokens.css`

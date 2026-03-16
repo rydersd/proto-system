@@ -1,0 +1,13 @@
+{
+  "name": "storybook-scraper",
+  "version": "1.0.0",
+  "description": "Generic Storybook component scraper for design system references",
+  "type": "module",
+  "scripts": {
+    "scrape": "node extract.mjs",
+    "install-browser": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.58.0"
+  }
+}

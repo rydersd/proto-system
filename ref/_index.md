@@ -24,6 +24,9 @@
 | Design stories, story tracking | `project-deliverables.md` + `navigation.md` |
 | Project completeness checklist | `new-project.md` (Step 7) |
 
+| Using icons in wireframes | `icons.md` (generic) or `sfdc/icons.md` (SLDS) |
+| Running page diagnostics | `doctor.md` |
+| Global compliance concerns | `compliance-global.md` |
 | Salesforce UX review | `agent-sfdc-ux.md` + `surface-salesforce-rules.md` |
 | Salesforce dev feasibility | `agent-sfdc-dev.md` + `surface-salesforce-rules.md` |
 | Agent installation guide | `agent-install.md` |

@@ -33,20 +33,24 @@ All official hooks use the `--slds` namespace:
 
 Nib uses `--wf-*` tokens instead of `--slds-g-*` hooks. The Salesforce surface CSS (`surfaces/salesforce.css`) maps framework tokens to SLDS-equivalent visual roles:
 
-| SLDS 2 Hook | Nib Token | Purpose |
-|-------------|-------------------|---------|
-| `--slds-g-color-surface-1` | `var(--wf-white)` | Primary background |
-| `--slds-g-color-surface-container-1` | `var(--wf-surface)` | Card/container background |
-| `--slds-g-color-on-surface-1` | `var(--wf-ink)` | Primary text |
-| `--slds-g-color-on-surface-2` | `var(--wf-text)` | Body text |
-| `--slds-g-color-on-surface-3` | `var(--wf-muted)` | Secondary/label text |
-| `--slds-g-color-border-1` | `var(--wf-line)` | Primary borders |
-| `--slds-g-color-border-2` | `var(--wf-tint)` | Subtle dividers |
-| `--slds-g-color-accent-1` | `var(--wf-accent)` | Brand/action color |
-| `--slds-g-color-error-1` | `var(--wf-red)` | Error/destructive |
-| `--slds-g-color-warning-1` | `var(--wf-amber)` | Warning/caution |
-| `--slds-g-color-success-1` | `var(--wf-green)` | Success/positive |
-| `--slds-g-color-info-1` | `var(--wf-purple)` | Informational/AI |
+| SLDS 2 Hook | Nib Token | SLDS Hex (Cosmos) | Purpose |
+|-------------|-------------------|-------------------|---------|
+| `--slds-g-color-surface-1` | `var(--wf-white)` | `#FFFFFF` | Primary background |
+| `--slds-g-color-surface-container-1` | `var(--wf-surface)` | `#F3F3F3` | Card/container background |
+| `--slds-g-color-on-surface-1` | `var(--wf-ink)` | `#181818` | Primary text |
+| `--slds-g-color-on-surface-2` | `var(--wf-text)` | `#444444` | Body text |
+| `--slds-g-color-on-surface-3` | `var(--wf-muted)` | `#7E8C99` | Secondary/label text |
+| `--slds-g-color-border-1` | `var(--wf-line)` | `#C9C9C9` | Primary borders |
+| `--slds-g-color-border-2` | `var(--wf-tint)` | `#E5E5E5` | Subtle dividers |
+| `--slds-g-color-accent-1` | `var(--wf-accent)` | `#0070D2` | Brand/action (SCIENCE_BLUE) |
+| `--slds-g-color-error-1` | `var(--wf-red)` | `#C23934` | Error/destructive (FLUSH_MAHOGANY) |
+| `--slds-g-color-warning-1` | `var(--wf-amber)` | `#844800` | Warning/caution (CINNAMON) |
+| `--slds-g-color-success-1` | `var(--wf-green)` | `#04844B` | Success/positive (SALEM) |
+| `--slds-g-color-info-1` | `var(--wf-purple)` | `#5A1BA9` | Informational/AI |
+| (header) | (surface CSS) | `#061C3F` | SFDC global header bg (DEEP_COVE) |
+| (warning bg) | (surface CSS) | `#FF9A3C` | Warning background (TANGERINE) |
+
+> **Polished fidelity:** When `data-wf-fidelity="polished"` and `data-wf-surface="sfdc"`, `surfaces/salesforce.css` overrides the wireframe-muted `--wf-*` values with the real SLDS hex values above. This gives pages production-accurate colors without changing any HTML.
 
 ---
 
