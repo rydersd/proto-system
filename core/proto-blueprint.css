@@ -160,20 +160,20 @@ html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
   align-items: baseline;
   gap: 10px;
   font-size: 10px;
-  color: var(--wf-muted);
+  color: var(--wf-text);
   font-weight: 600;
 }
 
 .wf-ctx-fidelity label {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .wf-ctx-fidelity select {
   -webkit-appearance: none;
   appearance: none;
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: var(--wf-white, #fff);
+  color: var(--wf-ink);
+  border: 1px solid var(--wf-line);
   border-radius: 3px;
   padding: 3px 22px 3px 8px;
   font-size: 10px;
@@ -183,23 +183,23 @@ html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
   outline: none;
   line-height: 1.4;
   /* Dropdown arrow */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%231e2a3a'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 6px center;
 }
 
 .wf-ctx-fidelity select:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
+  background-color: var(--wf-tint);
+  border-color: var(--wf-ink);
 }
 
 .wf-ctx-fidelity select:focus {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: var(--wf-accent);
 }
 
 .wf-ctx-fidelity select option {
-  background: #1e2a3a;
-  color: #ffffff;
+  background: var(--wf-white, #fff);
+  color: var(--wf-ink);
 }
 
 /* --- Napkin Fidelity Overrides — dropdown legibility -------------------- */

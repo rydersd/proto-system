@@ -28,7 +28,9 @@ var WF_CONFIG = Object.assign({
   fallbackPage: 'index.html',
   emailPrefix: '[WF]',
   emailFooter: 'Sent from wireframe prototype',
-  emailRecipient: ''
+  emailRecipient: '',
+  defaultTheme: 'nib',
+  themes: {}
 }, window.WIREFRAME_CONFIG || {});
 
 /* ── normalizeJourneys ── Accept both array and object formats ──────── */
@@ -80,15 +82,32 @@ function findPage(file) {
   var pageNum = 1;
   for (var s = 0; s < SECTIONS.length; s++) {
     var section = SECTIONS[s];
+    if (!section.items) continue;
     for (var i = 0; i < section.items.length; i++) {
       var item = section.items[i];
       if (item.file === file) {
         return {
           section: section,
+          sectionIndex: s,
           item: item,
           index: i,
           pageNum: pageNum
         };
+      }
+      // Search children
+      if (item.children) {
+        for (var c = 0; c < item.children.length; c++) {
+          if (item.children[c].file === file) {
+            return {
+              section: section,
+              sectionIndex: s,
+              item: item.children[c],
+              parentItem: item,
+              index: i,
+              pageNum: pageNum
+            };
+          }
+        }
       }
       pageNum++;
     }
@@ -169,6 +188,7 @@ function buildSurfaceHeader() {
   var tabsHTML = '';
   for (var s = 0; s < SECTIONS.length; s++) {
     var section = SECTIONS[s];
+    if (!section.items) continue;
     // Find the first non-variant item in this section for the link
     var firstItem = null;
     for (var i = 0; i < section.items.length; i++) {
@@ -232,6 +252,7 @@ function buildContextBar() {
           '<button class="wf-ctx-btn" onclick="wfDnToggle()" title="Show notes">📋 Notes</button>' +
           '<button class="wf-ctx-btn wf-ctx-feedback-btn" onclick="wfFbOpen()" title="Send feedback on this page">💬 Feedback</button>' +
           '<button class="wf-ctx-btn" id="wf-review-mode-btn" onclick="wfReviewToggle()" title="Toggle review mode — annotate elements with feedback">🔍 Review</button>' +
+          '<span class="wf-ctx-theme-badge" id="wf-theme-badge" onclick="wfSettingsOpen()" title="Current theme — click to change">Nib</span>' +
           '<div class="wf-ctx-fidelity">' +
             '<label>Fidelity</label>' +
             '<select id="wf-fidelity-select" onchange="wfFidelityChange(this.value)" title="Wireframe fidelity level">' +
@@ -297,6 +318,9 @@ function buildDrawer() {
       '</div>'
     );
 
+    // Group headers have no items
+    if (!section.items) continue;
+
     // Items in section
     for (var i = 0; i < section.items.length; i++) {
       var item = section.items[i];
@@ -344,6 +368,9 @@ function buildDrawer() {
       }
     }
   }
+
+  // Settings link at bottom of drawer
+  drawerHTML += '<a class="wf-nav-settings-link" onclick="wfNavClose();wfSettingsOpen()">&#9881; Settings</a>';
 
   drawerHTML += (
     '      </div>' +
@@ -1682,6 +1709,480 @@ function clearWobbleOverrides() {
   }
 }
 
+/* ========================================================================
+   Design System Theming
+   ======================================================================== */
+
+var _builtInThemes = {
+  'nib': {
+    label: 'Nib (Default)',
+    font: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    tokens: {}
+  },
+  'slds': {
+    label: 'Salesforce Lightning',
+    font: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    tokens: {
+      '--wf-accent': '#0176d3',
+      '--wf-ink': '#181818',
+      '--wf-text': '#3e3e3c',
+      '--wf-muted': '#706e6b',
+      '--wf-line': '#c9c9c9',
+      '--wf-tint': '#f3f3f3',
+      '--wf-surface': '#f3f3f3',
+      '--wf-canvas': '#ffffff'
+    }
+  },
+  'material': {
+    label: 'Material Design',
+    font: "'Roboto', -apple-system, sans-serif",
+    fontUrl: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap',
+    tokens: {
+      '--wf-accent': '#1a73e8',
+      '--wf-surface': '#f5f5f5',
+      '--wf-canvas': '#fafafa',
+      '--wf-radius': '4px'
+    }
+  },
+  'high-contrast': {
+    label: 'High Contrast (A11y)',
+    font: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    tokens: {
+      '--wf-ink': '#000000',
+      '--wf-text': '#000000',
+      '--wf-muted': '#333333',
+      '--wf-accent': '#0000ee',
+      '--wf-surface': '#ffffff',
+      '--wf-canvas': '#ffffff',
+      '--wf-line': '#000000'
+    }
+  }
+};
+
+/** Snapshot of nib default token values — captured on first load for reset */
+var _nibDefaultTokens = null;
+
+/** Track injected font <link> URLs to avoid duplicates */
+var _injectedFontUrls = {};
+
+/**
+ * Capture default token values from :root on first load.
+ * Called once during init so we can restore defaults when switching themes.
+ */
+function _wfCaptureDefaults() {
+  if (_nibDefaultTokens) return;
+  var style = getComputedStyle(document.documentElement);
+  _nibDefaultTokens = {};
+  var tokenNames = [
+    '--wf-ink', '--wf-text', '--wf-muted', '--wf-line', '--wf-tint',
+    '--wf-surface', '--wf-canvas', '--wf-accent', '--wf-red', '--wf-amber',
+    '--wf-green', '--wf-purple', '--wf-radius'
+  ];
+  for (var i = 0; i < tokenNames.length; i++) {
+    var val = style.getPropertyValue(tokenNames[i]).trim();
+    if (val) _nibDefaultTokens[tokenNames[i]] = val;
+  }
+  // Also capture the default font
+  _nibDefaultTokens['--wf-font'] = style.getPropertyValue('--wf-font').trim() ||
+    "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+}
+
+/**
+ * Get merged themes: built-in + project-defined.
+ * Project themes override built-ins with the same ID.
+ */
+function _wfMergedThemes() {
+  var merged = {};
+  var k;
+  for (k in _builtInThemes) {
+    if (_builtInThemes.hasOwnProperty(k)) merged[k] = _builtInThemes[k];
+  }
+  var projectThemes = WF_CONFIG.themes || {};
+  for (k in projectThemes) {
+    if (projectThemes.hasOwnProperty(k)) merged[k] = projectThemes[k];
+  }
+  // Include session-saved custom themes
+  try {
+    var custom = sessionStorage.getItem('wf_custom_themes');
+    if (custom) {
+      var customObj = JSON.parse(custom);
+      for (k in customObj) {
+        if (customObj.hasOwnProperty(k)) merged[k] = customObj[k];
+      }
+    }
+  } catch (e) { /* ignore */ }
+  return merged;
+}
+
+/**
+ * Reset all tokens to nib defaults before applying a new theme.
+ */
+function wfThemeReset() {
+  if (!_nibDefaultTokens) return;
+  var root = document.documentElement;
+  for (var token in _nibDefaultTokens) {
+    if (_nibDefaultTokens.hasOwnProperty(token)) {
+      root.style.setProperty(token, _nibDefaultTokens[token]);
+    }
+  }
+}
+
+/**
+ * Apply a theme by ID.
+ * Resets all tokens to defaults, then applies the theme's overrides.
+ */
+function wfThemeApply(themeId) {
+  _wfCaptureDefaults();
+  var themes = _wfMergedThemes();
+  var theme = themes[themeId];
+  if (!theme) {
+    themeId = 'nib';
+    theme = themes['nib'];
+  }
+
+  // Reset tokens to nib defaults
+  wfThemeReset();
+
+  var root = document.documentElement;
+
+  // Inject font if needed
+  if (theme.fontUrl && !_injectedFontUrls[theme.fontUrl]) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = theme.fontUrl;
+    document.head.appendChild(link);
+    _injectedFontUrls[theme.fontUrl] = true;
+  }
+
+  // Apply font
+  if (theme.font) {
+    root.style.setProperty('--wf-font', theme.font);
+  }
+
+  // Apply token overrides
+  if (theme.tokens) {
+    for (var token in theme.tokens) {
+      if (theme.tokens.hasOwnProperty(token)) {
+        root.style.setProperty(token, theme.tokens[token]);
+      }
+    }
+  }
+
+  // Set data attribute for CSS hooks
+  root.setAttribute('data-wf-theme', themeId);
+
+  // Update theme badge
+  var badge = document.getElementById('wf-theme-badge');
+  if (badge) {
+    badge.textContent = theme.label || themeId;
+  }
+
+  // Store active theme
+  sessionStorage.setItem('wf_theme', themeId);
+}
+
+/**
+ * Detect the appropriate theme for the current page.
+ * Resolution order: item.theme → section.theme → group walk-back → defaultTheme → 'nib'
+ * Session override trumps everything.
+ */
+function wfThemeDetect() {
+  _wfCaptureDefaults();
+
+  // Check session override first
+  var override = sessionStorage.getItem('wf_theme_override');
+  if (override) {
+    wfThemeApply(override);
+    return;
+  }
+
+  var file = currentFile();
+  var page = findPage(file);
+  var resolvedTheme = WF_CONFIG.defaultTheme || 'nib';
+
+  if (page) {
+    // 1. Item-level theme
+    var item = page.parentItem || page.item;
+    if (item && item.theme) {
+      resolvedTheme = item.theme;
+    }
+    // 2. Section-level theme
+    else if (page.section && page.section.theme) {
+      resolvedTheme = page.section.theme;
+    }
+    // 3. Walk backwards to find nearest isGroup with theme
+    else if (page.sectionIndex !== undefined) {
+      for (var g = page.sectionIndex - 1; g >= 0; g--) {
+        if (SECTIONS[g].isGroup && SECTIONS[g].theme) {
+          resolvedTheme = SECTIONS[g].theme;
+          break;
+        }
+      }
+    }
+  }
+
+  // Check per-section sessionStorage overrides
+  var assignments = sessionStorage.getItem('wf_theme_assignments');
+  if (assignments && page) {
+    try {
+      var map = JSON.parse(assignments);
+      // Check section override
+      if (page.section && map[page.section.id]) {
+        resolvedTheme = map[page.section.id];
+      }
+      // Check group override
+      if (page.sectionIndex !== undefined) {
+        for (var g2 = page.sectionIndex; g2 >= 0; g2--) {
+          if (SECTIONS[g2].isGroup && map[SECTIONS[g2].id]) {
+            resolvedTheme = map[SECTIONS[g2].id];
+            break;
+          }
+        }
+        // Section-level assignment overrides group
+        if (page.section && map[page.section.id]) {
+          resolvedTheme = map[page.section.id];
+        }
+      }
+    } catch (e) { /* ignore parse errors */ }
+  }
+
+  wfThemeApply(resolvedTheme);
+}
+
+/* ========================================================================
+   Settings Panel — Theme Configuration UI
+   ======================================================================== */
+
+function buildSettingsPanel() {
+  var overlay = document.createElement('div');
+  overlay.id = 'wf-settings-overlay';
+  overlay.className = 'wf-settings-overlay';
+  overlay.setAttribute('onclick', 'wfSettingsClose()');
+
+  var panel = document.createElement('aside');
+  panel.id = 'wf-settings-panel';
+  panel.className = 'wf-settings-panel';
+  panel.innerHTML =
+    '<div class="wf-settings-hd">' +
+      '<span class="wf-settings-hd-title">Settings</span>' +
+      '<button class="wf-settings-close" onclick="wfSettingsClose()">&#10005;</button>' +
+    '</div>' +
+    '<div class="wf-settings-body" id="wf-settings-body"></div>';
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(panel);
+}
+
+function wfSettingsOpen() {
+  var panel = document.getElementById('wf-settings-panel');
+  var overlay = document.getElementById('wf-settings-overlay');
+  if (!panel) return;
+
+  // Populate settings body
+  var body = document.getElementById('wf-settings-body');
+  if (body) _wfPopulateSettings(body);
+
+  panel.classList.add('open');
+  if (overlay) overlay.classList.add('open');
+}
+
+function wfSettingsClose() {
+  var panel = document.getElementById('wf-settings-panel');
+  var overlay = document.getElementById('wf-settings-overlay');
+  if (panel) panel.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function _wfPopulateSettings(body) {
+  var themes = _wfMergedThemes();
+  var currentTheme = sessionStorage.getItem('wf_theme') || WF_CONFIG.defaultTheme || 'nib';
+  var themeObj = themes[currentTheme];
+  var html = '';
+
+  // Active theme section
+  html += '<div class="wf-settings-section">' +
+    '<div class="wf-settings-section-title">Active Theme</div>' +
+    '<div class="wf-settings-active-theme">' + (themeObj ? themeObj.label : currentTheme) + '</div>' +
+    '<p>Auto-detected from current page</p>' +
+  '</div>';
+
+  // Theme assignments table
+  if (SECTIONS.length) {
+    html += '<div class="wf-settings-section">' +
+      '<div class="wf-settings-section-title">Theme Assignments</div>' +
+      '<table class="wf-settings-table">' +
+      '<tr><th>Group / Section</th><th>Theme</th></tr>';
+
+    var themeOptions = _wfBuildThemeOptions(themes);
+    var currentGroup = null;
+    var assignments = {};
+    try {
+      var stored = sessionStorage.getItem('wf_theme_assignments');
+      if (stored) assignments = JSON.parse(stored);
+    } catch (e) { /* ignore */ }
+
+    for (var s = 0; s < SECTIONS.length; s++) {
+      var sec = SECTIONS[s];
+      if (sec.isGroup) {
+        currentGroup = sec;
+        var groupTheme = assignments[sec.id] || sec.theme || '';
+        html += '<tr class="wf-settings-group-row">' +
+          '<td>' + sec.label + '</td>' +
+          '<td><select onchange="wfSettingsAssign(\'' + sec.id + '\',this.value)">' +
+            _wfBuildThemeOptions(themes, groupTheme) +
+          '</select></td></tr>';
+      } else if (sec.items) {
+        var secTheme = assignments[sec.id] || sec.theme || '';
+        var inheriting = !secTheme;
+        html += '<tr class="wf-settings-section-row">' +
+          '<td>' + sec.label + '</td>' +
+          '<td>';
+        if (inheriting) {
+          html += '<span class="wf-settings-inherit" onclick="wfSettingsPromoteSection(\'' + sec.id + '\',this)" title="Click to override">(group)</span>';
+        } else {
+          html += '<select onchange="wfSettingsAssign(\'' + sec.id + '\',this.value)">' +
+            _wfBuildThemeOptions(themes, secTheme) +
+          '</select>';
+        }
+        html += '</td></tr>';
+      }
+    }
+
+    html += '</table>' +
+      '<p>Sections show "(group)" when inheriting. Click to override.</p>' +
+    '</div>';
+  }
+
+  // Session override section
+  html += '<div class="wf-settings-section">' +
+    '<div class="wf-settings-section-title">Session Override</div>' +
+    '<div class="wf-settings-override">' +
+      '<input type="checkbox" id="wf-override-check"' +
+        (sessionStorage.getItem('wf_theme_override') ? ' checked' : '') +
+        ' onchange="wfSettingsToggleOverride(this.checked)">' +
+      '<label for="wf-override-check">Force all pages to:</label>' +
+      '<select id="wf-override-select" onchange="wfSettingsSetOverride(this.value)"' +
+        (!sessionStorage.getItem('wf_theme_override') ? ' disabled' : '') + '>' +
+        _wfBuildThemeOptions(themes, sessionStorage.getItem('wf_theme_override') || '') +
+      '</select>' +
+    '</div>' +
+    '<p>Overrides everything for this session — useful for comparing.</p>' +
+  '</div>';
+
+  // Custom theme builder
+  html += '<div class="wf-settings-section">' +
+    '<div class="wf-settings-section-title">Custom Theme</div>' +
+    '<div class="wf-settings-custom-field"><label>Name</label><input type="text" id="wf-custom-name" placeholder="my-brand"></div>' +
+    '<div class="wf-settings-custom-field"><label>Font</label><input type="text" id="wf-custom-font" placeholder="\'Font Name\', sans-serif"></div>' +
+    '<div class="wf-settings-custom-field"><label>Font URL</label><input type="text" id="wf-custom-fonturl" placeholder="https://fonts.googleapis.com/..."></div>' +
+    '<div style="display:flex;gap:12px;">' +
+      '<div class="wf-settings-custom-field" style="flex:1"><label>Accent</label><input type="color" id="wf-custom-accent" value="#3d6daa"></div>' +
+      '<div class="wf-settings-custom-field" style="flex:1"><label>Surface</label><input type="color" id="wf-custom-surface" value="#edf1f7"></div>' +
+    '</div>' +
+    '<button class="btn btn-primary" style="font-size:11px;padding:5px 12px;" onclick="wfSettingsSaveCustom()">Save as Theme</button>' +
+  '</div>';
+
+  body.innerHTML = html;
+}
+
+function _wfBuildThemeOptions(themes, selected) {
+  var html = '<option value="">— default —</option>';
+  for (var id in themes) {
+    if (themes.hasOwnProperty(id)) {
+      html += '<option value="' + id + '"' + (id === selected ? ' selected' : '') + '>' +
+        themes[id].label + '</option>';
+    }
+  }
+  return html;
+}
+
+function wfSettingsAssign(sectionId, themeId) {
+  var assignments = {};
+  try {
+    var stored = sessionStorage.getItem('wf_theme_assignments');
+    if (stored) assignments = JSON.parse(stored);
+  } catch (e) { /* ignore */ }
+
+  if (themeId) {
+    assignments[sectionId] = themeId;
+  } else {
+    delete assignments[sectionId];
+  }
+
+  sessionStorage.setItem('wf_theme_assignments', JSON.stringify(assignments));
+  wfThemeDetect();
+}
+
+function wfSettingsPromoteSection(sectionId, el) {
+  // Replace "(group)" text with a select dropdown
+  var themes = _wfMergedThemes();
+  var select = document.createElement('select');
+  select.setAttribute('onchange', "wfSettingsAssign('" + sectionId + "',this.value)");
+  select.innerHTML = _wfBuildThemeOptions(themes, '');
+  el.parentNode.replaceChild(select, el);
+}
+
+function wfSettingsToggleOverride(checked) {
+  var select = document.getElementById('wf-override-select');
+  if (checked) {
+    if (select) {
+      select.disabled = false;
+      var val = select.value;
+      if (val) {
+        sessionStorage.setItem('wf_theme_override', val);
+        wfThemeApply(val);
+      }
+    }
+  } else {
+    sessionStorage.removeItem('wf_theme_override');
+    if (select) select.disabled = true;
+    wfThemeDetect();
+  }
+}
+
+function wfSettingsSetOverride(themeId) {
+  var check = document.getElementById('wf-override-check');
+  if (check && check.checked && themeId) {
+    sessionStorage.setItem('wf_theme_override', themeId);
+    wfThemeApply(themeId);
+  }
+}
+
+function wfSettingsSaveCustom() {
+  var name = (document.getElementById('wf-custom-name') || {}).value;
+  if (!name) { alert('Please enter a theme name'); return; }
+
+  var font = (document.getElementById('wf-custom-font') || {}).value;
+  var fontUrl = (document.getElementById('wf-custom-fonturl') || {}).value;
+  var accent = (document.getElementById('wf-custom-accent') || {}).value;
+  var surface = (document.getElementById('wf-custom-surface') || {}).value;
+
+  var theme = {
+    label: name,
+    tokens: {}
+  };
+  if (font) theme.font = font;
+  if (fontUrl) theme.fontUrl = fontUrl;
+  if (accent && accent !== '#3d6daa') theme.tokens['--wf-accent'] = accent;
+  if (surface && surface !== '#edf1f7') theme.tokens['--wf-surface'] = surface;
+
+  // Store in sessionStorage for this session
+  var customThemes = {};
+  try {
+    var stored = sessionStorage.getItem('wf_custom_themes');
+    if (stored) customThemes = JSON.parse(stored);
+  } catch (e) { /* ignore */ }
+  customThemes[name.toLowerCase().replace(/\s+/g, '-')] = theme;
+  sessionStorage.setItem('wf_custom_themes', JSON.stringify(customThemes));
+
+  // Merge into WF_CONFIG so it's available immediately
+  WF_CONFIG.themes[name.toLowerCase().replace(/\s+/g, '-')] = theme;
+
+  // Refresh settings
+  var body = document.getElementById('wf-settings-body');
+  if (body) _wfPopulateSettings(body);
+}
+
 /**
  * Fidelity dropdown handler — sets data attribute on html element
  * and persists to sessionStorage.
@@ -2504,6 +3005,8 @@ function wfNavInit() {
   buildDrawer();
   buildDesignNotesPanel();
   buildFeedbackPanel();
+  buildSettingsPanel();
+  wfThemeDetect();
 
   // Defensive: ensure .wf-design-notes source div stays hidden (NE-002)
   var dnSource = document.querySelector('.wf-design-notes');

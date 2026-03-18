@@ -14,6 +14,7 @@
 | New project from scratch | `new-project.md` (reads others for you) |
 | Understanding the system | `architecture.md` |
 | Adding navigation/drawer | `navigation.md` |
+| Multi-system theming | `design-system-theme.md` + `navigation.md` |
 | Paper/blueprint features | `components.md` | Paper utility classes, confidence attribute |
 | Declarative page from data | `page-blueprint.md` + surface ref |
 
