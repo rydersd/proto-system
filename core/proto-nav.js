@@ -2090,8 +2090,11 @@ function wfReviewToggle() {
   }
 }
 
+// Selector for reviewable elements — confidence-annotated OR common wireframe components
+var _reviewSelector = '[data-wf-confidence], .wf-card, .sfdc-card, .ds-card, .ds-kpi-card, .sfdc-detail-grid, .sfdc-highlights-bar, .sfdc-path-bar, .sfdc-feed-item, .wf-table, [data-journey], .wf-form-group, section, .sfdc-record-header, .ds-kpi-grid';
+
 function _reviewMouseOver(e) {
-  var el = e.target.closest('[data-wf-confidence]');
+  var el = e.target.closest(_reviewSelector);
   if (!el) return;
   if (_reviewCurrentEl === el) return;
 
@@ -2101,7 +2104,7 @@ function _reviewMouseOver(e) {
 }
 
 function _reviewMouseOut(e) {
-  var el = e.target.closest('[data-wf-confidence]');
+  var el = e.target.closest(_reviewSelector);
   var toolbar = document.getElementById('wf-review-toolbar');
 
   // Small delay to prevent flicker when moving between element and toolbar

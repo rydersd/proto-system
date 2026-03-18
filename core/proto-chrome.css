@@ -646,14 +646,40 @@ a.wf-dn-ac-badge:hover {
 
 /* --- Review Mode --------------------------------------------------------- */
 
-html.wf-review-active [data-wf-confidence] {
+html.wf-review-active [data-wf-confidence],
+html.wf-review-active .wf-card,
+html.wf-review-active .sfdc-card,
+html.wf-review-active .ds-card,
+html.wf-review-active .ds-kpi-card,
+html.wf-review-active .sfdc-detail-grid,
+html.wf-review-active .sfdc-highlights-bar,
+html.wf-review-active .sfdc-path-bar,
+html.wf-review-active .sfdc-feed-item,
+html.wf-review-active .wf-table,
+html.wf-review-active [data-journey],
+html.wf-review-active .wf-form-group,
+html.wf-review-active .sfdc-record-header,
+html.wf-review-active .ds-kpi-grid {
   outline: 2px dashed var(--wf-accent);
   outline-offset: 2px;
   cursor: crosshair;
   transition: outline-color 0.15s;
 }
 
-html.wf-review-active [data-wf-confidence]:hover {
+html.wf-review-active [data-wf-confidence]:hover,
+html.wf-review-active .wf-card:hover,
+html.wf-review-active .sfdc-card:hover,
+html.wf-review-active .ds-card:hover,
+html.wf-review-active .ds-kpi-card:hover,
+html.wf-review-active .sfdc-detail-grid:hover,
+html.wf-review-active .sfdc-highlights-bar:hover,
+html.wf-review-active .sfdc-path-bar:hover,
+html.wf-review-active .sfdc-feed-item:hover,
+html.wf-review-active .wf-table:hover,
+html.wf-review-active [data-journey]:hover,
+html.wf-review-active .wf-form-group:hover,
+html.wf-review-active .sfdc-record-header:hover,
+html.wf-review-active .ds-kpi-grid:hover {
   outline-color: var(--wf-ink);
   outline-style: solid;
 }
