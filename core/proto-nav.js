@@ -156,6 +156,8 @@ function detectSurface() {
  * Injected AFTER the context bar, BEFORE page content
  */
 function buildSurfaceHeader() {
+  if (WF_CONFIG.noSurfaceHeader) return;
+  if (document.querySelector('.sfdc-global-header')) return; // hand-built header exists
   var surface = detectSurface();
   if (surface !== 'sfdc') return;
 
@@ -229,6 +231,7 @@ function buildContextBar() {
           '<button class="wf-ctx-btn" id="wf-story-mode-btn" onclick="wfStoryModeToggle()" title="Story mode — guided scenario walkthroughs">📖 Stories</button>' +
           '<button class="wf-ctx-btn" onclick="wfDnToggle()" title="Show notes">📋 Notes</button>' +
           '<button class="wf-ctx-btn wf-ctx-feedback-btn" onclick="wfFbOpen()" title="Send feedback on this page">💬 Feedback</button>' +
+          '<button class="wf-ctx-btn" id="wf-review-mode-btn" onclick="wfReviewToggle()" title="Toggle review mode — annotate elements with feedback">🔍 Review</button>' +
           '<div class="wf-ctx-fidelity">' +
             '<label>Fidelity</label>' +
             '<select id="wf-fidelity-select" onchange="wfFidelityChange(this.value)" title="Wireframe fidelity level">' +
@@ -384,11 +387,13 @@ function buildDesignNotesPanel() {
       '<button class="wf-dn-tab active" role="tab" aria-selected="true" aria-controls="wf-dn-tab-context" id="wf-dn-tab-btn-context" onclick="wfDnSwitchTab(\'context\')">Context</button>' +
       '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-design" id="wf-dn-tab-btn-design" onclick="wfDnSwitchTab(\'design\')">Design</button>' +
       '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-impl" id="wf-dn-tab-btn-impl" onclick="wfDnSwitchTab(\'impl\')">Technical</button>' +
+      '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-reviews" id="wf-dn-tab-btn-reviews" onclick="wfDnSwitchTab(\'reviews\')">Reviews</button>' +
     '</div>' +
     '<div class="wf-dn-body" id="wf-dn-body">' +
       '<div class="wf-dn-tab-content active" id="wf-dn-tab-context" role="tabpanel" aria-labelledby="wf-dn-tab-btn-context"></div>' +
       '<div class="wf-dn-tab-content" id="wf-dn-tab-design" role="tabpanel" aria-labelledby="wf-dn-tab-btn-design"></div>' +
       '<div class="wf-dn-tab-content" id="wf-dn-tab-impl" role="tabpanel" aria-labelledby="wf-dn-tab-btn-impl"></div>' +
+      '<div class="wf-dn-tab-content" id="wf-dn-tab-reviews" role="tabpanel" aria-labelledby="wf-dn-tab-btn-reviews"></div>' +
     '</div>';
 
   document.body.appendChild(overlay);
@@ -536,6 +541,12 @@ function wfDnOpen() {
         implTab.innerHTML = '<p class="wf-dn-placeholder">No technical details have been added to this page yet.</p>';
       }
     }
+  }
+
+  // Populate Reviews tab
+  var reviewsTab = document.getElementById('wf-dn-tab-reviews');
+  if (reviewsTab) {
+    wfReviewPopulateTab(reviewsTab);
   }
 
   panel.classList.add('open');
@@ -2039,6 +2050,448 @@ function buildCoffeeRings(texPath) {
 /**
  * Initialize all wireframe navigation chrome on page load
  */
+/* ========================================================================
+   REVIEW MODE — Confidence Negotiation Protocol
+   ======================================================================== */
+
+var _reviewMode = false;
+var REVIEW_ANNOTATIONS = [];
+var _reviewToolbarTimer = null;
+var _reviewCurrentEl = null;
+
+/**
+ * Toggle review mode on/off
+ */
+function wfReviewToggle() {
+  _reviewMode = !_reviewMode;
+  var btn = document.getElementById('wf-review-mode-btn');
+
+  if (_reviewMode) {
+    document.documentElement.classList.add('wf-review-active');
+    if (btn) btn.classList.add('wf-ctx-btn--active');
+
+    // Set up event delegation for hover on confidence elements
+    document.body.addEventListener('mouseover', _reviewMouseOver);
+    document.body.addEventListener('mouseout', _reviewMouseOut);
+
+    wfToast('Review mode ON — hover elements to annotate');
+  } else {
+    document.documentElement.classList.remove('wf-review-active');
+    if (btn) btn.classList.remove('wf-ctx-btn--active');
+
+    // Remove event delegation
+    document.body.removeEventListener('mouseover', _reviewMouseOver);
+    document.body.removeEventListener('mouseout', _reviewMouseOut);
+
+    // Remove any open toolbar
+    _reviewRemoveToolbar();
+
+    wfToast('Review mode OFF');
+  }
+}
+
+function _reviewMouseOver(e) {
+  var el = e.target.closest('[data-wf-confidence]');
+  if (!el) return;
+  if (_reviewCurrentEl === el) return;
+
+  clearTimeout(_reviewToolbarTimer);
+  _reviewCurrentEl = el;
+  wfReviewShowToolbar(el);
+}
+
+function _reviewMouseOut(e) {
+  var el = e.target.closest('[data-wf-confidence]');
+  var toolbar = document.getElementById('wf-review-toolbar');
+
+  // Small delay to prevent flicker when moving between element and toolbar
+  _reviewToolbarTimer = setTimeout(function() {
+    // Check if mouse is over toolbar or the element
+    var hovered = document.querySelectorAll(':hover');
+    for (var i = 0; i < hovered.length; i++) {
+      if (hovered[i] === _reviewCurrentEl) return;
+      if (hovered[i].id === 'wf-review-toolbar' || (toolbar && toolbar.contains(hovered[i]))) return;
+    }
+    _reviewRemoveToolbar();
+    _reviewCurrentEl = null;
+  }, 150);
+}
+
+function _reviewRemoveToolbar() {
+  var existing = document.getElementById('wf-review-toolbar');
+  if (existing) existing.parentNode.removeChild(existing);
+}
+
+/**
+ * Show floating reaction toolbar near the given element
+ */
+function wfReviewShowToolbar(el) {
+  _reviewRemoveToolbar();
+
+  var rect = el.getBoundingClientRect();
+  var toolbar = document.createElement('div');
+  toolbar.className = 'wf-review-toolbar';
+  toolbar.id = 'wf-review-toolbar';
+
+  toolbar.innerHTML =
+    '<button class="wf-review-confirm" onclick="wfReviewReact(_reviewCurrentEl,\'confirm\')" title="Confirm — this works">✓</button>' +
+    '<button class="wf-review-question" onclick="wfReviewReact(_reviewCurrentEl,\'question\')" title="Question — needs discussion">?</button>' +
+    '<button class="wf-review-reject" onclick="wfReviewReact(_reviewCurrentEl,\'reject\')" title="Reject — doesn\'t work">✗</button>';
+
+  // Prevent toolbar mouseout from dismissing itself
+  toolbar.addEventListener('mouseover', function() {
+    clearTimeout(_reviewToolbarTimer);
+  });
+  toolbar.addEventListener('mouseout', function() {
+    _reviewToolbarTimer = setTimeout(function() {
+      var hovered = document.querySelectorAll(':hover');
+      for (var i = 0; i < hovered.length; i++) {
+        if (hovered[i] === _reviewCurrentEl) return;
+        if (hovered[i].id === 'wf-review-toolbar') return;
+      }
+      _reviewRemoveToolbar();
+      _reviewCurrentEl = null;
+    }, 150);
+  });
+
+  document.body.appendChild(toolbar);
+
+  // Position above the element, centered
+  var tbRect = toolbar.getBoundingClientRect();
+  var left = rect.left + (rect.width / 2) - (tbRect.width / 2);
+  var top = rect.top - tbRect.height - 8;
+
+  // If toolbar would go off-screen top, position below
+  if (top < 4) {
+    top = rect.bottom + 8;
+  }
+  // Keep within viewport horizontally
+  if (left < 4) left = 4;
+  if (left + tbRect.width > window.innerWidth - 4) {
+    left = window.innerWidth - tbRect.width - 4;
+  }
+
+  toolbar.style.left = left + 'px';
+  toolbar.style.top = top + 'px';
+}
+
+/**
+ * Build a reasonable CSS selector for an element
+ */
+function buildSelector(el) {
+  var parts = [];
+  parts.push(el.tagName.toLowerCase());
+  if (el.id) {
+    parts.push('#' + el.id);
+    return parts.join('');
+  }
+  if (el.className && typeof el.className === 'string') {
+    var classes = el.className.split(/\s+/);
+    for (var i = 0; i < classes.length; i++) {
+      if (classes[i] && classes[i].indexOf('wf-review') === -1) {
+        parts.push('.' + classes[i]);
+      }
+    }
+  }
+  var journey = el.getAttribute('data-journey');
+  if (journey) {
+    parts.push('[data-journey="' + journey + '"]');
+  }
+  var confidence = el.getAttribute('data-wf-confidence');
+  if (confidence) {
+    parts.push('[data-wf-confidence="' + confidence + '"]');
+  }
+  return parts.join('');
+}
+
+/**
+ * Capture a review reaction on an element
+ */
+function wfReviewReact(el, reaction) {
+  if (!el) return;
+
+  var noteText = '';
+  if (reaction === 'question' || reaction === 'reject') {
+    noteText = prompt(reaction === 'question' ? 'What needs discussion?' : 'What doesn\'t work?') || '';
+  }
+
+  var annotation = {
+    elementSelector: buildSelector(el),
+    elementText: el.textContent.substring(0, 80).trim(),
+    previousConfidence: el.getAttribute('data-wf-confidence'),
+    reaction: reaction,
+    note: noteText,
+    reviewer: sessionStorage.getItem('wf_reviewer') || 'anonymous',
+    timestamp: new Date().toISOString(),
+    page: currentFile()
+  };
+
+  REVIEW_ANNOTATIONS.push(annotation);
+
+  // Merge with existing sessionStorage annotations
+  var existing = [];
+  try {
+    var raw = sessionStorage.getItem('wf_review_annotations');
+    if (raw) existing = JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+  existing.push(annotation);
+  sessionStorage.setItem('wf_review_annotations', JSON.stringify(existing));
+
+  // Apply visual indicator
+  el.setAttribute('data-wf-review', reaction);
+
+  // Remove toolbar
+  _reviewRemoveToolbar();
+  _reviewCurrentEl = null;
+
+  // Try POST to API
+  fetch('/api/reviews', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(annotation)
+  }).catch(function() { /* silent — offline fallback is sessionStorage */ });
+
+  var icons = { confirm: '✓', question: '?', reject: '✗' };
+  wfToast('Review: ' + (icons[reaction] || reaction) + ' ' + annotation.elementText.substring(0, 40));
+}
+
+/**
+ * Export review annotations as a downloadable JSON file
+ */
+function wfReviewExport() {
+  var annotations = [];
+  try {
+    var raw = sessionStorage.getItem('wf_review_annotations');
+    if (raw) annotations = JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+
+  // Filter to current page
+  var file = currentFile();
+  var pageAnnotations = [];
+  for (var i = 0; i < annotations.length; i++) {
+    if (annotations[i].page === file) {
+      pageAnnotations.push(annotations[i]);
+    }
+  }
+
+  var blob = new Blob([JSON.stringify(pageAnnotations, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var date = new Date().toISOString().split('T')[0];
+  a.href = url;
+  a.download = 'review-' + file + '-' + date + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  wfToast('Exported ' + pageAnnotations.length + ' review annotations');
+}
+
+/**
+ * Toggle heat map mode for review annotations
+ */
+function wfReviewHeatMap() {
+  document.documentElement.classList.toggle('wf-review-heatmap');
+}
+
+/**
+ * Load existing annotations from sessionStorage on page load
+ */
+function wfReviewLoadAnnotations() {
+  var file = currentFile();
+
+  // Load from sessionStorage
+  var annotations = [];
+  try {
+    var raw = sessionStorage.getItem('wf_review_annotations');
+    if (raw) annotations = JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+
+  // Re-apply data-wf-review attributes for current page
+  for (var i = 0; i < annotations.length; i++) {
+    var ann = annotations[i];
+    if (ann.page !== file) continue;
+
+    // Push to in-memory array
+    REVIEW_ANNOTATIONS.push(ann);
+
+    // Try to find the element
+    try {
+      var els = document.querySelectorAll(ann.elementSelector);
+      for (var j = 0; j < els.length; j++) {
+        els[j].setAttribute('data-wf-review', ann.reaction);
+      }
+    } catch (e) { /* selector might be invalid */ }
+  }
+
+  // Also try to fetch from API and merge
+  fetch('/api/reviews?page=' + encodeURIComponent(file))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!Array.isArray(data)) return;
+      for (var i = 0; i < data.length; i++) {
+        var ann = data[i];
+        // Check if already in local annotations
+        var isDupe = false;
+        for (var j = 0; j < REVIEW_ANNOTATIONS.length; j++) {
+          if (REVIEW_ANNOTATIONS[j].timestamp === ann.timestamp &&
+              REVIEW_ANNOTATIONS[j].elementSelector === ann.elementSelector) {
+            isDupe = true;
+            break;
+          }
+        }
+        if (!isDupe) {
+          REVIEW_ANNOTATIONS.push(ann);
+          try {
+            var els = document.querySelectorAll(ann.elementSelector);
+            for (var k = 0; k < els.length; k++) {
+              els[k].setAttribute('data-wf-review', ann.reaction);
+            }
+          } catch (e) { /* ignore */ }
+        }
+      }
+    })
+    .catch(function() { /* silent — no API available */ });
+}
+
+/**
+ * Populate the Reviews tab in the design notes panel
+ */
+function wfReviewPopulateTab(container) {
+  var file = currentFile();
+  var annotations = [];
+  try {
+    var raw = sessionStorage.getItem('wf_review_annotations');
+    if (raw) annotations = JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+
+  // Filter to current page
+  var pageAnnotations = [];
+  for (var i = 0; i < annotations.length; i++) {
+    if (annotations[i].page === file) {
+      pageAnnotations.push(annotations[i]);
+    }
+  }
+
+  // Count by reaction
+  var counts = { confirm: 0, question: 0, reject: 0 };
+  for (var i = 0; i < pageAnnotations.length; i++) {
+    var r = pageAnnotations[i].reaction;
+    if (counts[r] !== undefined) counts[r]++;
+  }
+
+  var html = '';
+
+  // Reviewer name input
+  var savedReviewer = sessionStorage.getItem('wf_reviewer') || '';
+  html +=
+    '<div class="wf-review-reviewer">' +
+      '<label for="wf-review-reviewer-input">Reviewer Name</label>' +
+      '<input type="text" id="wf-review-reviewer-input" value="' + savedReviewer + '" ' +
+        'placeholder="Your name" onchange="sessionStorage.setItem(\'wf_reviewer\',this.value)">' +
+    '</div>';
+
+  // Summary counts
+  html +=
+    '<div class="wf-review-summary">' +
+      '<div class="wf-review-stat">' +
+        '<div class="wf-review-stat-count" style="color:var(--wf-green)">' + counts.confirm + '</div>' +
+        '<div class="wf-review-stat-label">Confirmed</div>' +
+      '</div>' +
+      '<div class="wf-review-stat">' +
+        '<div class="wf-review-stat-count" style="color:var(--wf-amber)">' + counts.question + '</div>' +
+        '<div class="wf-review-stat-label">Questioned</div>' +
+      '</div>' +
+      '<div class="wf-review-stat">' +
+        '<div class="wf-review-stat-count" style="color:var(--wf-red)">' + counts.reject + '</div>' +
+        '<div class="wf-review-stat-label">Rejected</div>' +
+      '</div>' +
+    '</div>';
+
+  // Heat map toggle
+  var heatmapChecked = document.documentElement.classList.contains('wf-review-heatmap') ? ' checked' : '';
+  html +=
+    '<label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--wf-text);margin-bottom:12px;cursor:pointer;">' +
+      '<input type="checkbox" onchange="wfReviewHeatMap()"' + heatmapChecked + '>' +
+      'Heat Map mode' +
+    '</label>';
+
+  // Annotation list
+  if (pageAnnotations.length === 0) {
+    html += '<p class="wf-dn-placeholder">No review annotations yet. Enable Review mode from the context bar to start annotating elements.</p>';
+  } else {
+    var icons = { confirm: '✓', question: '?', reject: '✗' };
+    for (var i = 0; i < pageAnnotations.length; i++) {
+      var ann = pageAnnotations[i];
+      var icon = icons[ann.reaction] || ann.reaction;
+      var time = '';
+      try {
+        var d = new Date(ann.timestamp);
+        time = d.toLocaleString();
+      } catch (e) {
+        time = ann.timestamp;
+      }
+
+      html +=
+        '<div class="wf-review-item">' +
+          '<div class="wf-review-item-header">' +
+            '<span class="wf-review-item-reaction">' + icon + '</span>' +
+            '<span class="wf-review-item-text">' + (ann.elementText || '').substring(0, 60) + '</span>' +
+          '</div>' +
+          (ann.note ? '<div class="wf-review-item-note">' + ann.note + '</div>' : '') +
+          '<div class="wf-review-item-meta">' + ann.reviewer + ' · ' + time + '</div>' +
+        '</div>';
+    }
+  }
+
+  // Action buttons
+  html +=
+    '<div class="wf-review-actions">' +
+      '<button class="btn" onclick="wfReviewExport()">Export JSON</button>' +
+      '<button class="btn" onclick="wfReviewClearPage()">Clear Page Reviews</button>' +
+    '</div>';
+
+  container.innerHTML = html;
+}
+
+/**
+ * Clear review annotations for the current page
+ */
+function wfReviewClearPage() {
+  var file = currentFile();
+
+  // Remove from sessionStorage
+  var annotations = [];
+  try {
+    var raw = sessionStorage.getItem('wf_review_annotations');
+    if (raw) annotations = JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+
+  var remaining = [];
+  for (var i = 0; i < annotations.length; i++) {
+    if (annotations[i].page !== file) {
+      remaining.push(annotations[i]);
+    }
+  }
+  sessionStorage.setItem('wf_review_annotations', JSON.stringify(remaining));
+
+  // Clear in-memory
+  REVIEW_ANNOTATIONS = [];
+
+  // Remove data-wf-review attributes from DOM
+  var reviewed = document.querySelectorAll('[data-wf-review]');
+  for (var i = 0; i < reviewed.length; i++) {
+    reviewed[i].removeAttribute('data-wf-review');
+  }
+
+  // Refresh the tab content
+  var reviewsTab = document.getElementById('wf-dn-tab-reviews');
+  if (reviewsTab) wfReviewPopulateTab(reviewsTab);
+
+  wfToast('Cleared review annotations for this page');
+}
+
 function wfNavInit() {
   injectSVGFilters();
   injectWobbleVariants();
@@ -2048,6 +2501,12 @@ function wfNavInit() {
   buildDrawer();
   buildDesignNotesPanel();
   buildFeedbackPanel();
+
+  // Defensive: ensure .wf-design-notes source div stays hidden (NE-002)
+  var dnSource = document.querySelector('.wf-design-notes');
+  if (dnSource) dnSource.style.display = 'none';
+
+  wfReviewLoadAnnotations();
   buildStoryModeSelector();
   buildScenarioBanner();
   hideOldChrome();

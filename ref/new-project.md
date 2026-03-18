@@ -4,17 +4,59 @@
 
 ## Step 1: Create Project Directory
 
+### Option A: Git submodule (recommended)
+
+```bash
+mkdir my-project && cd my-project && git init
+git submodule add https://github.com/rybooth/nib.git nib
+mkdir pages
+```
+
 ```
 my-project/
-├── core/          → copy from framework/core/
-├── surfaces/      → copy from framework/surfaces/
+├── nib/               ← submodule (don't modify — updates from upstream)
+│   ├── core/
+│   ├── surfaces/
+│   ├── starters/
+│   └── ref/
+├── pages/
+│   ├── project-data.js
+│   ├── project.css    → project-specific styles (optional, start empty)
+│   ├── login.html     → auth gate page (optional)
+│   └── [pages].html
+└── reviews/           ← review annotations (auto-generated)
+```
+
+Pages reference nib via relative paths: `../nib/core/proto-core.css`, `../nib/core/proto-nav.js`, `../nib/surfaces/salesforce.css`, etc.
+
+**Updating nib:** When new framework features ship, pull them in:
+
+```bash
+git submodule update --remote nib
+git add nib
+git commit -m "Update nib framework"
+```
+
+**Cloning a project that uses the submodule:**
+
+```bash
+git clone --recurse-submodules <project-url>
+# or if already cloned:
+git submodule init && git submodule update
+```
+
+### Option B: Copy (simple projects or no-git environments)
+
+```
+my-project/
+├── core/          → copy from nib/core/
+├── surfaces/      → copy from nib/surfaces/
 ├── project-data.js
-├── project.css    → project-specific styles (optional, start empty)
-├── login.html     → auth gate page (optional)
+├── project.css
 └── [pages].html
 ```
 
-Copy `core/` and `surfaces/` from the framework. Don't modify them — they're shared.
+Copy `core/` and `surfaces/` from the framework. Don't modify them — they're shared. Pages reference `core/` and `surfaces/` directly (no `nib/` prefix). You'll need to manually re-copy when nib updates.
 
 ## Step 2: Create project-data.js
 
@@ -90,6 +132,11 @@ See `ref/navigation.md` for the full DESIGN_STORIES schema.
 In every HTML page, scripts load in this order:
 
 ```html
+<!-- Submodule layout (pages/ directory) -->
+<script src="project-data.js"></script>           <!-- 1. data first -->
+<script src="../nib/core/proto-nav.js"></script>  <!-- 2. nav engine second -->
+
+<!-- Copy layout (flat directory) -->
 <script src="project-data.js"></script>    <!-- 1. data first -->
 <script src="core/proto-nav.js"></script>  <!-- 2. nav engine second -->
 ```

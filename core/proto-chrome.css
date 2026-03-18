@@ -268,7 +268,7 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
    displays it in the .wf-dn-panel overlay. The wf-spec-* classes inside
    are semantic structure only (no styling needed). */
 .wf-design-notes {
-  display: none;
+  display: none !important;
 }
 
 /* Notes panel is a fixed overlay — no content push needed */
@@ -642,4 +642,195 @@ a.wf-dn-ac-badge:hover {
   background: var(--wf-accent-fill);
   color: var(--wf-accent);
   border-color: var(--wf-accent);
+}
+
+/* --- Review Mode --------------------------------------------------------- */
+
+html.wf-review-active [data-wf-confidence] {
+  outline: 2px dashed var(--wf-accent);
+  outline-offset: 2px;
+  cursor: crosshair;
+  transition: outline-color 0.15s;
+}
+
+html.wf-review-active [data-wf-confidence]:hover {
+  outline-color: var(--wf-ink);
+  outline-style: solid;
+}
+
+/* Floating reaction toolbar */
+.wf-review-toolbar {
+  position: fixed;
+  z-index: 5000;
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--wf-canvas);
+  border: 1.5px solid var(--wf-line);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+}
+
+.wf-review-toolbar button {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--wf-line);
+  border-radius: 4px;
+  background: var(--wf-surface);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.wf-review-toolbar button:hover {
+  transform: scale(1.1);
+}
+
+.wf-review-toolbar .wf-review-confirm:hover {
+  background: rgba(69, 120, 90, 0.15);
+  border-color: var(--wf-green);
+}
+
+.wf-review-toolbar .wf-review-question:hover {
+  background: rgba(107, 90, 47, 0.15);
+  border-color: var(--wf-amber);
+}
+
+.wf-review-toolbar .wf-review-reject:hover {
+  background: rgba(139, 69, 83, 0.15);
+  border-color: var(--wf-red);
+}
+
+/* Review annotations on elements */
+[data-wf-review="confirm"] {
+  outline: 2px solid var(--wf-green) !important;
+  outline-offset: 2px;
+}
+
+[data-wf-review="question"] {
+  outline: 2px solid var(--wf-amber) !important;
+  outline-offset: 2px;
+}
+
+[data-wf-review="reject"] {
+  outline: 2px solid var(--wf-red) !important;
+  outline-offset: 2px;
+}
+
+/* Heat map mode — stronger visual treatment */
+html.wf-review-heatmap [data-wf-review="confirm"] {
+  outline-width: 3px;
+  box-shadow: 0 0 8px rgba(69, 120, 90, 0.3);
+}
+
+html.wf-review-heatmap [data-wf-review="question"] {
+  outline-width: 3px;
+  box-shadow: 0 0 8px rgba(107, 90, 47, 0.3);
+}
+
+html.wf-review-heatmap [data-wf-review="reject"] {
+  outline-width: 3px;
+  box-shadow: 0 0 8px rgba(139, 69, 83, 0.3);
+}
+
+/* Review summary in notes panel */
+.wf-review-summary {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 10px;
+  background: var(--wf-surface);
+  border-radius: var(--wf-radius);
+  border: 1px solid var(--wf-tint);
+}
+
+.wf-review-stat {
+  text-align: center;
+  flex: 1;
+}
+
+.wf-review-stat-count {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-review-stat-label {
+  font-size: 10px;
+  color: var(--wf-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wf-review-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--wf-tint);
+  font-size: 12px;
+}
+
+.wf-review-item:last-child {
+  border-bottom: none;
+}
+
+.wf-review-item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.wf-review-item-reaction {
+  font-size: 14px;
+}
+
+.wf-review-item-text {
+  color: var(--wf-text);
+  font-weight: 600;
+}
+
+.wf-review-item-note {
+  color: var(--wf-muted);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.wf-review-item-meta {
+  font-size: 10px;
+  color: var(--wf-muted);
+  margin-top: 2px;
+}
+
+.wf-review-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.wf-review-reviewer {
+  margin-bottom: 12px;
+}
+
+.wf-review-reviewer label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.wf-review-reviewer input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid var(--wf-line);
+  border-radius: 3px;
+  background: var(--wf-surface);
+  color: var(--wf-ink);
+  font-family: inherit;
 }

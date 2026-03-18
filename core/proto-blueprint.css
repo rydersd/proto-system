@@ -157,8 +157,8 @@ html.wireframe[data-wf-fidelity="polished"] [data-wf-confidence="uncertain"] {
 /* --- Fidelity Dropdown (Context Bar) --- */
 .wf-ctx-fidelity {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  align-items: baseline;
+  gap: 10px;
   font-size: 10px;
   color: var(--wf-muted);
   font-weight: 600;

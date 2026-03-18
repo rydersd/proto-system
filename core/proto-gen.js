@@ -140,6 +140,36 @@
   }
 
   /* ======================================================================
+     Block Registry — extensible block type system
+     ====================================================================== */
+
+  var _blockRegistry = {};
+
+  /**
+   * Register a custom block renderer.
+   * @param {string} type - Block type name (e.g., 'accordion', 'stepper')
+   * @param {function} renderer - Function(block, surface) => HTMLElement
+   */
+  function wfRegisterBlock(type, renderer) {
+    _blockRegistry[type] = renderer;
+  }
+
+  /* ======================================================================
+     Surface Plugin Registry
+     ====================================================================== */
+
+  var _surfaceRegistry = {};
+
+  /**
+   * Register a surface plugin for header generation.
+   * @param {string} id - Surface identifier (e.g., 'sfdc', 'slack')
+   * @param {Object} plugin - { header: function(bp) => HTMLElement }
+   */
+  function wfRegisterSurface(id, plugin) {
+    _surfaceRegistry[id] = plugin;
+  }
+
+  /* ======================================================================
      Section Renderers — Individual content block types
      ====================================================================== */
 
@@ -546,6 +576,11 @@
    */
   function wfGenBlock(block, surface) {
     if (!block || !block.type) return null;
+    /* Check custom registry first */
+    if (_blockRegistry[block.type]) {
+      return _blockRegistry[block.type](block, surface);
+    }
+    /* Built-in types */
     switch (block.type) {
       case 'detail-grid':       return wfGenDetailGrid(block, surface);
       case 'related-list':      return wfGenRelatedList(block, surface);
@@ -762,6 +797,11 @@
   function wfGenHeader(bp) {
     if (!bp.header) return wfGenEl('div');
     var surface = bp.surface || 'generic';
+    /* Check surface plugin registry first */
+    if (_surfaceRegistry[surface] && _surfaceRegistry[surface].header) {
+      return _surfaceRegistry[surface].header(bp);
+    }
+    /* Built-in fallback */
     switch (surface) {
       case 'sfdc':     return wfGenSfdcHeader(bp);
       case 'slack':    return wfGenSlackHeader(bp);
@@ -1152,6 +1192,369 @@
       document.title = headerName + (headerType ? ' \u2014 ' + headerType : '');
     }
   }
+
+  /* ======================================================================
+     New Built-in Block Types (registered via block registry)
+     ====================================================================== */
+
+  /**
+   * Render an accordion with collapsible sections.
+   * @param {Object} block - { items: [{title, content}] }
+   * @param {string} surface
+   * @returns {HTMLElement}
+   */
+  function wfGenAccordion(block, surface) {
+    var items = block.items || [];
+    var cardClass = surface === 'sfdc' ? 'sfdc-card' : 'wf-card';
+    var card = wfGenEl('div', { className: cardClass });
+    if (block.title) {
+      var headerClass = surface === 'sfdc' ? 'sfdc-card-header' : 'wf-card-header';
+      var header = wfGenEl('div', { className: headerClass });
+      header.appendChild(wfGenEl('h3', null, block.title));
+      card.appendChild(header);
+    }
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var details = wfGenEl('details', {
+        style: {
+          borderBottom: '1px solid var(--wf-line)',
+          padding: '0'
+        }
+      });
+      if (i === 0) {
+        details.setAttribute('open', '');
+      }
+      var summary = wfGenEl('summary', {
+        style: {
+          padding: '12px 16px',
+          cursor: 'pointer',
+          fontSize: '13px',
+          fontWeight: '600',
+          color: 'var(--wf-ink)',
+          listStyle: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          userSelect: 'none'
+        }
+      }, item.title || 'Section ' + (i + 1));
+      details.appendChild(summary);
+      var contentDiv = wfGenEl('div', {
+        style: {
+          padding: '8px 16px 16px',
+          fontSize: '13px',
+          color: 'var(--wf-text)',
+          lineHeight: '1.5'
+        }
+      });
+      if (item.content) {
+        contentDiv.innerHTML = item.content;
+      }
+      details.appendChild(contentDiv);
+      card.appendChild(details);
+    }
+    return card;
+  }
+
+  /**
+   * Render a horizontal step indicator.
+   * @param {Object} block - { steps: [{label, description, status}], current: number }
+   * @param {string} surface
+   * @returns {HTMLElement}
+   */
+  function wfGenStepper(block, surface) {
+    var steps = block.steps || [];
+    var currentIdx = block.current !== undefined ? block.current : 0;
+    var container = wfGenEl('div', {
+      style: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        padding: '16px 0',
+        position: 'relative'
+      }
+    });
+    for (var i = 0; i < steps.length; i++) {
+      var step = steps[i];
+      var status = step.status || (i < currentIdx ? 'complete' : (i === currentIdx ? 'current' : 'upcoming'));
+      var stepWrap = wfGenEl('div', {
+        style: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          flex: '1',
+          position: 'relative',
+          zIndex: '1'
+        }
+      });
+
+      /* Circle */
+      var circleColor = status === 'complete' ? 'var(--wf-green)' : (status === 'current' ? 'var(--wf-accent)' : 'var(--wf-line)');
+      var circleBg = status === 'complete' ? 'var(--wf-green)' : (status === 'current' ? 'var(--wf-accent)' : 'var(--wf-surface)');
+      var circleTextColor = (status === 'complete' || status === 'current') ? '#fff' : 'var(--wf-muted)';
+      var circle = wfGenEl('div', {
+        style: {
+          width: '32px',
+          height: '32px',
+          borderRadius: '50%',
+          background: circleBg,
+          border: '2px solid ' + circleColor,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '12px',
+          fontWeight: '700',
+          color: circleTextColor,
+          marginBottom: '8px'
+        }
+      }, status === 'complete' ? '\u2713' : String(i + 1));
+      stepWrap.appendChild(circle);
+
+      /* Label */
+      var labelColor = status === 'upcoming' ? 'var(--wf-muted)' : 'var(--wf-ink)';
+      stepWrap.appendChild(wfGenEl('div', {
+        style: {
+          fontSize: '12px',
+          fontWeight: '600',
+          color: labelColor,
+          textAlign: 'center'
+        }
+      }, step.label || 'Step ' + (i + 1)));
+
+      /* Description */
+      if (step.description) {
+        stepWrap.appendChild(wfGenEl('div', {
+          style: {
+            fontSize: '11px',
+            color: 'var(--wf-muted)',
+            textAlign: 'center',
+            marginTop: '2px',
+            maxWidth: '120px'
+          }
+        }, step.description));
+      }
+
+      container.appendChild(stepWrap);
+
+      /* Connecting line (between steps, not after last) */
+      if (i < steps.length - 1) {
+        var lineColor = status === 'complete' ? 'var(--wf-green)' : 'var(--wf-line)';
+        var line = wfGenEl('div', {
+          style: {
+            flex: '1',
+            height: '2px',
+            background: lineColor,
+            alignSelf: 'flex-start',
+            marginTop: '16px',
+            position: 'relative',
+            zIndex: '0'
+          }
+        });
+        container.appendChild(line);
+      }
+    }
+    return container;
+  }
+
+  /**
+   * Render a metric grid with configurable columns.
+   * @param {Object} block - { columns: number, items: [{label, value, trend?, color?}] }
+   * @param {string} surface
+   * @returns {HTMLElement}
+   */
+  function wfGenMetricGrid(block, surface) {
+    var items = block.items || [];
+    var cols = block.columns || 3;
+    var grid = wfGenEl('div', {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(' + cols + ', 1fr)',
+        gap: '12px'
+      }
+    });
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var cardClass = surface === 'sfdc' ? 'sfdc-card' : 'wf-card';
+      var metricCard = wfGenEl('div', {
+        className: cardClass,
+        style: { padding: '16px', textAlign: 'center' }
+      });
+      metricCard.appendChild(wfGenEl('div', {
+        style: {
+          fontSize: '24px',
+          fontWeight: '700',
+          color: 'var(--wf-ink)',
+          marginBottom: '4px'
+        }
+      }, item.value || '—'));
+      metricCard.appendChild(wfGenEl('div', {
+        style: {
+          fontSize: '11px',
+          color: 'var(--wf-muted)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px'
+        }
+      }, item.label || ''));
+      if (item.trend) {
+        var trendColor = 'var(--wf-muted)';
+        if (item.color === 'green') trendColor = 'var(--wf-green)';
+        else if (item.color === 'red') trendColor = 'var(--wf-red)';
+        else if (item.color === 'amber') trendColor = 'var(--wf-amber)';
+        metricCard.appendChild(wfGenEl('div', {
+          style: {
+            fontSize: '12px',
+            fontWeight: '600',
+            color: trendColor,
+            marginTop: '4px'
+          }
+        }, item.trend));
+      }
+      grid.appendChild(metricCard);
+    }
+    return grid;
+  }
+
+  /**
+   * Render a two-column split panel with configurable ratio.
+   * @param {Object} block - { left: {content}, right: {content}, ratio: '1:2' }
+   * @param {string} surface
+   * @returns {HTMLElement}
+   */
+  function wfGenSplitPanel(block, surface) {
+    var ratio = block.ratio || '1:1';
+    var parts = ratio.split(':');
+    var leftFr = parseInt(parts[0], 10) || 1;
+    var rightFr = parseInt(parts[1], 10) || 1;
+    var container = wfGenEl('div', {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: leftFr + 'fr ' + rightFr + 'fr',
+        gap: '16px',
+        alignItems: 'start'
+      }
+    });
+    var leftDiv = wfGenEl('div');
+    if (block.left && block.left.content) {
+      leftDiv.innerHTML = block.left.content;
+    }
+    container.appendChild(leftDiv);
+    var rightDiv = wfGenEl('div');
+    if (block.right && block.right.content) {
+      rightDiv.innerHTML = block.right.content;
+    }
+    container.appendChild(rightDiv);
+    return container;
+  }
+
+  /**
+   * Render a horizontal timeline for project phases.
+   * @param {Object} block - { items: [{label, date, status}] }
+   * @param {string} surface
+   * @returns {HTMLElement}
+   */
+  function wfGenTimelineHorizontal(block, surface) {
+    var items = block.items || [];
+    var container = wfGenEl('div', {
+      style: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        padding: '24px 0',
+        position: 'relative'
+      }
+    });
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var status = item.status || 'upcoming';
+      var itemWrap = wfGenEl('div', {
+        style: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          flex: '1',
+          position: 'relative',
+          zIndex: '1'
+        }
+      });
+
+      /* Dot */
+      var dotColor = status === 'complete' ? 'var(--wf-green)' : (status === 'current' ? 'var(--wf-accent)' : 'var(--wf-line)');
+      var dot = wfGenEl('div', {
+        style: {
+          width: '14px',
+          height: '14px',
+          borderRadius: '50%',
+          background: dotColor,
+          border: '3px solid ' + (status === 'current' ? 'var(--wf-accent)' : dotColor),
+          boxShadow: status === 'current' ? '0 0 0 3px rgba(61,109,170,0.2)' : 'none',
+          marginBottom: '10px'
+        }
+      });
+      itemWrap.appendChild(dot);
+
+      /* Label */
+      itemWrap.appendChild(wfGenEl('div', {
+        style: {
+          fontSize: '12px',
+          fontWeight: '600',
+          color: status === 'upcoming' ? 'var(--wf-muted)' : 'var(--wf-ink)',
+          textAlign: 'center'
+        }
+      }, item.label || ''));
+
+      /* Date */
+      if (item.date) {
+        itemWrap.appendChild(wfGenEl('div', {
+          style: {
+            fontSize: '11px',
+            color: 'var(--wf-muted)',
+            textAlign: 'center',
+            marginTop: '2px'
+          }
+        }, item.date));
+      }
+
+      container.appendChild(itemWrap);
+
+      /* Connecting line (between items, not after last) */
+      if (i < items.length - 1) {
+        var lineColor = status === 'complete' ? 'var(--wf-green)' : 'var(--wf-line)';
+        var line = wfGenEl('div', {
+          style: {
+            flex: '1',
+            height: '2px',
+            background: lineColor,
+            alignSelf: 'flex-start',
+            marginTop: '7px',
+            position: 'relative',
+            zIndex: '0'
+          }
+        });
+        container.appendChild(line);
+      }
+    }
+    return container;
+  }
+
+  /* ======================================================================
+     Register Built-in Block Types & Surface Plugins
+     ====================================================================== */
+
+  /* New block types */
+  wfRegisterBlock('accordion', wfGenAccordion);
+  wfRegisterBlock('stepper', wfGenStepper);
+  wfRegisterBlock('metric-grid', wfGenMetricGrid);
+  wfRegisterBlock('split-panel', wfGenSplitPanel);
+  wfRegisterBlock('timeline-horizontal', wfGenTimelineHorizontal);
+
+  /* Built-in surface plugins */
+  wfRegisterSurface('sfdc', { header: wfGenSfdcHeader });
+  wfRegisterSurface('slack', { header: wfGenSlackHeader });
+  wfRegisterSurface('internal', { header: wfGenInternalHeader });
+
+  /* Expose registration APIs globally */
+  window.wfRegisterBlock = wfRegisterBlock;
+  window.wfRegisterSurface = wfRegisterSurface;
 
   /* ======================================================================
      Bootstrap — Listen for DOMContentLoaded

@@ -4,6 +4,53 @@
 
 ## Required Boilerplate
 
+Paths depend on whether nib is a submodule or copied into the project. Both layouts are shown below.
+
+### Submodule layout (pages live in `pages/`, nib is at project root)
+
+```html
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Page Title] — [Project Name]</title>
+  <link rel="stylesheet" href="../nib/core/proto-core.css">
+  <link rel="stylesheet" href="../nib/surfaces/[surface].css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+  <!-- PAGE CONTENT HERE -->
+
+  <!-- Design Notes (optional but recommended) -->
+  <div class="wf-design-notes">
+    <div class="wf-spec-panel">
+      <div class="wf-spec-header">[Page Name]</div>
+      <div class="wf-spec-section">
+        <div class="wf-spec-section-title">Summary</div>
+        <div class="wf-spec-body">[What this page shows and why]</div>
+      </div>
+      <div class="wf-spec-section">
+        <div class="wf-spec-section-title">JTBD</div>
+        <div class="wf-spec-body">[User job this page serves]</div>
+      </div>
+      <div class="wf-spec-section">
+        <div class="wf-spec-section-title">Design Spec</div>
+        <div class="wf-spec-body">[Layout, components, interactions]</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="project-data.js"></script>
+  <script src="../nib/core/proto-nav.js"></script>
+  <script src="../nib/core/proto-scatter-gl.js"></script>
+</body>
+</html>
+```
+
+### Copy layout (flat directory, nib files copied in)
+
 ```html
 <!DOCTYPE html>
 <html lang="en" class="wireframe">
@@ -13,7 +60,6 @@
   <title>[Page Title] — [Project Name]</title>
   <link rel="stylesheet" href="../core/proto-core.css">
   <link rel="stylesheet" href="../surfaces/[surface].css">
-  <!-- project-specific CSS (if any) -->
   <link rel="stylesheet" href="project.css">
 </head>
 <body>
@@ -41,7 +87,6 @@
 
   <script src="project-data.js"></script>
   <script src="../core/proto-nav.js"></script>
-  <!-- Optional: WebGL paper curl for napkin mode (CSS fallback if omitted) -->
   <script src="../core/proto-scatter-gl.js"></script>
 </body>
 </html>
@@ -76,6 +121,7 @@ if(sessionStorage.getItem('wf_auth')!=='ok'){
 - Script load order matters: project-data.js THEN proto-nav.js
 - Define `WIREFRAME_CONFIG` in project-data.js (before SECTIONS) to set project title, default fidelity, feedback mailto, and other options — see `navigation.md` for all properties
 - Add `type: 'sfdc'` to SECTIONS items that should render a Salesforce global header — proto-nav.js auto-injects it via `buildSurfaceHeader()`
+- To suppress the auto-generated SFDC header, either set `WIREFRAME_CONFIG.noSurfaceHeader = true` in project-data.js, or build your own `<header class="sfdc-global-header">` in HTML (auto-detected, no config needed)
 - See `ref/lessons-learned.md` for common pitfalls when setting up a new project
 - Every page should have design notes — it's how reviewers understand intent
 - Title format: `[Page Name] — [Project Name]`

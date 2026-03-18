@@ -1,0 +1,12 @@
+# Nib Wireframes — Cloudflare Pages configuration
+#
+# To create the KV namespace, run:
+#   wrangler kv:namespace create REVIEW_KV
+# Then replace the placeholder id below with the real ID from the output.
+
+name = "nib-wireframes"
+compatibility_date = "2024-12-01"
+
+[[kv_namespaces]]
+binding = "REVIEW_KV"
+id = "placeholder-replace-with-real-id"

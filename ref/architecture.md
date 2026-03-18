@@ -135,6 +135,8 @@ proto-nav.js  (wfNavInit on DOMContentLoaded)
 | `wf_story_journey` | Active story/journey ID | Story mode selector |
 | `wf_action` | Pending modal action key | Modal save → consumed on next page load |
 | `wf_scatter_angle` | Scatter transition angle | Scatter GL init |
+| `wf_review_annotations` | JSON array of review annotations across all pages | Review mode reactions |
+| `wf_reviewer` | Reviewer display name | Review mode reviewer input |
 
 **CSS class/attribute state on `<html>`:**
 
@@ -145,6 +147,9 @@ proto-nav.js  (wfNavInit on DOMContentLoaded)
 | `.wf-dn-open` | Added/removed | Design notes panel toggle |
 | `.story-active` | Added/removed | Story mode activation |
 | `.scenario-active` | Added/removed | Scenario walkthrough activation |
+| `.wf-review-active` | Added/removed | Review mode toggle |
+| `.wf-review-heatmap` | Added/removed | Review heat map toggle |
+| `[data-wf-review]` | Per-element: `"confirm"`, `"question"`, `"reject"` | Review mode reactions |
 
 ## 8. Key Interaction Flows
 
@@ -159,3 +164,39 @@ Drag slider → `wfFidelity(val)` → sets `data-wf-fidelity` on `<html>` → CS
 
 **Scenario walkthrough:**
 Select scenario → `wfScenarioStart(id)` → stores in sessionStorage → navigates to first step → scenario banner shows narrative + friction callouts → Next/Prev buttons advance steps → Exit clears sessionStorage
+
+**Review mode:**
+Toggle Review button → `wfReviewToggle()` → `html.wf-review-active` highlights all `[data-wf-confidence]` elements → hover shows floating toolbar (✓/？/✗) → reaction captured as annotation → stored in sessionStorage + POSTed to `/api/reviews` (Cloudflare KV) → `data-wf-review` attribute applied for visual feedback → Reviews tab in Notes panel shows summary + export
+
+**Review data persistence (Cloudflare):**
+```
+Browser → POST /api/reviews → Cloudflare Pages Function → KV store
+Agent   → nib pull-reviews  → GET /api/reviews → reviews/*.json (committed to git)
+```
+
+## 9. Extension Points
+
+**Block Registry** (proto-gen.js):
+Projects can register custom block types for PAGE_BLUEPRINT via `wfRegisterBlock(type, renderFn)`. Built-in types: detail-grid, related-list, card, kpi-row, timeline, form, table, chart-placeholder, empty-state, accordion, stepper, metric-grid, split-panel, timeline-horizontal.
+
+**Surface Plugin Registry** (proto-gen.js):
+Projects can register custom surface header generators via `wfRegisterSurface(id, { header: fn })`. Built-in surfaces: sfdc, slack, internal.
+
+## 10. REVIEW_ANNOTATIONS Structure
+
+Each annotation object:
+
+```javascript
+{
+  elementSelector: '.sfdc-card[data-journey="eligibility"]',
+  elementText: 'Eligibility Check',
+  previousConfidence: 'partial',
+  reaction: 'question',           // 'confirm' | 'question' | 'reject'
+  note: 'Can we try dropdown instead of radio buttons?',
+  reviewer: 'stakeholder-name',
+  timestamp: '2026-03-18T14:30:00Z',
+  page: 'eligibility-check'
+}
+```
+
+Stored in sessionStorage as `wf_review_annotations` (full array across pages). Persisted to Cloudflare KV via `/api/reviews` endpoint. Pulled to git via `nib pull-reviews` → `reviews/{page}-{date}.json`.

@@ -63,19 +63,49 @@ Agents read this data and the reference docs to generate pages that are internal
 
 ## Quick Start
 
-```
-my-project/
-├── core/           ← copy from nib (don't modify)
-├── surfaces/       ← copy from nib (don't modify)
-├── project-data.js ← your project's data
-├── project.css     ← your project's custom styles
-└── [pages].html    ← generated from starters
+### Recommended: Git submodule (stays up to date)
+
+```bash
+# Create your project repo
+mkdir my-project && cd my-project && git init
+
+# Add nib as a submodule
+git submodule add https://github.com/rybooth/nib.git nib
+git commit -m "Add nib framework"
 ```
 
-1. Copy `core/` and `surfaces/` from the framework
-2. Copy `starters/project-data.js` and define your `SECTIONS`
-3. Copy a starter page from `starters/` and customize
-4. Open in a browser — navigation, design notes, and fidelity controls work immediately
+```
+my-project/
+├── nib/                ← submodule (don't modify — updates from upstream)
+│   ├── core/
+│   ├── surfaces/
+│   ├── starters/
+│   └── ref/
+├── pages/
+│   ├── project-data.js ← your project's data
+│   ├── project.css     ← your project's custom styles
+│   └── [pages].html    ← generated from starters
+└── reviews/            ← review annotations (pulled from API)
+```
+
+1. Add nib as a submodule (above)
+2. Copy `nib/starters/project-data.js` to `pages/` and define your `SECTIONS`
+3. Copy a starter page from `nib/starters/` to `pages/` and customize
+4. Pages reference `../nib/core/proto-core.css` and `../nib/core/proto-nav.js`
+5. Open in a browser — navigation, design notes, and fidelity controls work immediately
+
+**To update nib** when new features land:
+
+```bash
+cd my-project
+git submodule update --remote nib
+git add nib
+git commit -m "Update nib framework"
+```
+
+### Alternative: Copy (for simple projects or no-git environments)
+
+Copy `core/` and `surfaces/` directly into your project. Pages reference `core/proto-core.css` etc. with no `nib/` prefix. You'll need to manually re-copy when nib updates.
 
 For the full bootstrap process, read `ref/new-project.md`.
 

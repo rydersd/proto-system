@@ -215,6 +215,7 @@ var WIREFRAME_CONFIG = {
 | `emailPrefix` | string | `'[WF]'` | Subject line prefix for feedback emails |
 | `emailFooter` | string | `'Sent from wireframe prototype'` | Footer text appended to feedback emails |
 | `emailRecipient` | string | `''` | Recipient email for feedback panel |
+| `noSurfaceHeader` | boolean | `false` | When `true`, suppresses auto-generated surface headers (e.g., SFDC global nav). Use when you build a custom header in HTML |
 
 ## Fidelity Slider
 
