@@ -63,14 +63,15 @@ Agents read this data and the reference docs to generate pages that are internal
 
 ## Quick Start
 
-### Recommended: Git submodule (stays up to date)
+### Recommended: Git submodule
+
+Nib lives as a submodule inside your project. Your pages reference its CSS and JS via relative paths. When nib ships new features — new surfaces, new components, bug fixes — you pull them with one command.
+
+#### New project setup
 
 ```bash
-# Create your project repo
 mkdir my-project && cd my-project && git init
-
-# Add nib as a submodule
-git submodule add https://github.com/rybooth/nib.git nib
+git submodule add https://github.com/rydersd/nib.git nib
 git commit -m "Add nib framework"
 ```
 
@@ -94,13 +95,51 @@ my-project/
 4. Pages reference `../nib/core/proto-core.css` and `../nib/core/proto-nav.js`
 5. Open in a browser — navigation, design notes, and fidelity controls work immediately
 
-**To update nib** when new features land:
+#### Migrating an existing project (zero refactoring)
+
+If you already have `core/` and `surfaces/` copied into your project, you can switch to the submodule without changing any HTML paths:
 
 ```bash
 cd my-project
-git submodule update --remote nib
+
+# Remove the copied directories
+rm -rf core/ surfaces/
+
+# Add nib as a submodule
+git submodule add https://github.com/rydersd/nib.git nib
+
+# Create symlinks so existing paths still work
+ln -s nib/core core
+ln -s nib/surfaces surfaces
+
+# Commit
+git add .gitmodules nib core surfaces
+git commit -m "Migrate nib from copy to submodule"
+```
+
+All your existing `core/proto-nav.js` and `surfaces/salesforce.css` paths resolve through the symlinks. No pages need editing.
+
+#### Getting updates
+
+Nib submodules are pinned to a specific commit — your project won't change until you explicitly pull new updates. When you're ready:
+
+```bash
+cd my-project
+git submodule update --remote nib    # fetch latest from nib's main branch
 git add nib
 git commit -m "Update nib framework"
+```
+
+**Important:** `git submodule update` (without `--remote`) only checks out whatever commit was already pinned — it won't fetch new changes from nib. You need `--remote` to pull the latest.
+
+#### Cloning a project that uses the submodule
+
+```bash
+# Option 1: clone with submodules in one step
+git clone --recurse-submodules <project-url>
+
+# Option 2: if already cloned without submodules
+git submodule init && git submodule update
 ```
 
 ### Alternative: Copy (for simple projects or no-git environments)
