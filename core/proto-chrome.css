@@ -860,3 +860,274 @@ html.wf-review-heatmap [data-wf-review="reject"] {
   color: var(--wf-ink);
   font-family: inherit;
 }
+
+/* --- Theme Badge (Context Bar) ------------------------------------------- */
+
+.wf-ctx-theme-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--wf-accent-fill);
+  color: var(--wf-accent);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.wf-ctx-theme-badge:hover {
+  background: var(--wf-accent);
+  color: var(--wf-white, #fff);
+}
+
+/* --- Settings Panel ------------------------------------------------------ */
+
+.wf-settings-overlay {
+  position: fixed;
+  inset: 0;
+  right: 400px;
+  background: rgba(30, 42, 58, 0.2);
+  z-index: 3000;
+  display: none;
+}
+
+.wf-settings-overlay.open {
+  display: block;
+}
+
+.wf-settings-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  background: var(--wf-canvas);
+  border-left: 1.5px solid var(--wf-line);
+  z-index: 3001;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-settings-panel.open {
+  transform: translateX(0);
+}
+
+.wf-settings-hd {
+  padding: 14px 20px;
+  border-bottom: 1.5px dashed var(--wf-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.wf-settings-hd-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-ink);
+}
+
+.wf-settings-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--wf-muted);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.wf-settings-close:hover {
+  color: var(--wf-ink);
+}
+
+.wf-settings-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.wf-settings-section {
+  margin-bottom: 24px;
+}
+
+.wf-settings-section-title {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--wf-muted);
+  margin-bottom: 10px;
+}
+
+.wf-settings-section p {
+  font-size: 11px;
+  color: var(--wf-muted);
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+
+/* Settings: Active theme display */
+.wf-settings-active-theme {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wf-ink);
+  margin-bottom: 4px;
+}
+
+/* Settings: Theme assignments table */
+.wf-settings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.wf-settings-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 8px;
+  border-bottom: 1.5px solid var(--wf-line);
+}
+
+.wf-settings-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--wf-tint);
+  vertical-align: middle;
+}
+
+.wf-settings-table tr.wf-settings-group-row td {
+  font-weight: 700;
+  color: var(--wf-ink);
+  background: var(--wf-surface);
+  font-size: 11px;
+}
+
+.wf-settings-table tr.wf-settings-section-row td {
+  padding-left: 24px;
+  color: var(--wf-text);
+}
+
+.wf-settings-table .wf-settings-inherit {
+  font-size: 10px;
+  color: var(--wf-muted);
+  font-style: italic;
+  cursor: pointer;
+}
+
+.wf-settings-table .wf-settings-inherit:hover {
+  color: var(--wf-accent);
+}
+
+.wf-settings-table select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--wf-white, #fff);
+  color: var(--wf-ink);
+  border: 1px solid var(--wf-line);
+  border-radius: 3px;
+  padding: 3px 20px 3px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%231e2a3a'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 5px center;
+}
+
+.wf-settings-table select:hover {
+  border-color: var(--wf-ink);
+}
+
+/* Settings: Session override */
+.wf-settings-override {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--wf-text);
+}
+
+.wf-settings-override input[type="checkbox"] {
+  accent-color: var(--wf-accent);
+}
+
+.wf-settings-override select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--wf-white, #fff);
+  color: var(--wf-ink);
+  border: 1px solid var(--wf-line);
+  border-radius: 3px;
+  padding: 3px 20px 3px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%231e2a3a'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 5px center;
+}
+
+/* Settings: Custom theme builder */
+.wf-settings-custom-field {
+  margin-bottom: 8px;
+}
+
+.wf-settings-custom-field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--wf-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.wf-settings-custom-field input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 12px;
+  border: 1px solid var(--wf-line);
+  border-radius: 3px;
+  background: var(--wf-white, #fff);
+  color: var(--wf-ink);
+  font-family: inherit;
+}
+
+.wf-settings-custom-field input[type="color"] {
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+/* Settings link in drawer */
+.wf-nav-settings-link {
+  display: block;
+  padding: 10px 20px;
+  font-size: 11px;
+  color: var(--wf-muted);
+  text-decoration: none;
+  cursor: pointer;
+  border-top: 1px dashed var(--wf-line);
+  margin-top: 8px;
+  transition: color 0.15s;
+}
+
+.wf-nav-settings-link:hover {
+  color: var(--wf-accent);
+}

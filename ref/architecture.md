@@ -22,7 +22,9 @@ project-data.js → proto-nav.js → [blueprint-data.js → proto-gen.js]
 6. `buildDrawer()` — navigation drawer from SECTIONS data
 7. `buildDesignNotesPanel()` — 3-tab design notes overlay
 8. `buildFeedbackPanel()` — feedback/annotation overlay
-9. `buildStoryModeSelector()` — journey/story mode dropdown
+9. `buildSettingsPanel()` — theme/settings configuration panel
+10. `wfThemeDetect()` — resolve and apply design system theme for current page
+11. `buildStoryModeSelector()` — journey/story mode dropdown
 10. `buildScenarioBanner()` — guided walkthrough banner
 11. `hideOldChrome()` — remove legacy chrome elements
 12. `wfInitModals()` — modal dialog system
@@ -137,6 +139,10 @@ proto-nav.js  (wfNavInit on DOMContentLoaded)
 | `wf_scatter_angle` | Scatter transition angle | Scatter GL init |
 | `wf_review_annotations` | JSON array of review annotations across all pages | Review mode reactions |
 | `wf_reviewer` | Reviewer display name | Review mode reviewer input |
+| `wf_theme` | Active theme ID | Theme detection / apply |
+| `wf_theme_override` | Session-wide theme override ID | Settings panel force-all |
+| `wf_theme_assignments` | JSON map of section/group ID → theme ID overrides | Settings panel assignments |
+| `wf_custom_themes` | JSON map of user-defined custom themes | Settings panel custom builder |
 
 **CSS class/attribute state on `<html>`:**
 
@@ -150,8 +156,33 @@ proto-nav.js  (wfNavInit on DOMContentLoaded)
 | `.wf-review-active` | Added/removed | Review mode toggle |
 | `.wf-review-heatmap` | Added/removed | Review heat map toggle |
 | `[data-wf-review]` | Per-element: `"confirm"`, `"question"`, `"reject"` | Review mode reactions |
+| `[data-wf-theme]` | Active theme ID (e.g., `"slds"`, `"nib"`) | Theme detection |
 
-## 8. Key Interaction Flows
+## 8. Theme Resolution Chain
+
+Design system themes are resolved per-page on load:
+
+```
+item.theme → section.theme → nearest isGroup.theme → WF_CONFIG.defaultTheme → 'nib'
+                                                                                ↑
+                                                              sessionStorage override trumps all
+```
+
+1. `wfThemeDetect()` calls `findPage()` to locate the current page in SECTIONS
+2. Checks item-level theme, then section-level, then walks backward through SECTIONS to find nearest `isGroup: true` with a `theme`
+3. Falls back to `WF_CONFIG.defaultTheme` (default: `'nib'`)
+4. Checks `sessionStorage('wf_theme_override')` — if set, overrides everything
+5. Calls `wfThemeApply(themeId)` which:
+   - Resets all `--wf-*` tokens to captured nib defaults
+   - Injects `<link>` for `fontUrl` if specified (deduplicated)
+   - Sets `--wf-font` on `:root`
+   - Applies token overrides from the theme's `tokens` object
+   - Sets `data-wf-theme` on `<html>` for CSS hooks
+   - Updates the theme badge in the context bar
+
+Built-in themes: `nib`, `slds`, `material`, `high-contrast`. Projects add custom themes via `WIREFRAME_CONFIG.themes`.
+
+## 9. Key Interaction Flows
 
 **Hamburger → Drawer:**
 Context bar hamburger button → `wfNavToggle()` → drawer slides in/out, lists pages from SECTIONS
@@ -174,7 +205,7 @@ Browser → POST /api/reviews → Cloudflare Pages Function → KV store
 Agent   → nib pull-reviews  → GET /api/reviews → reviews/*.json (committed to git)
 ```
 
-## 9. Extension Points
+## 10. Extension Points
 
 **Block Registry** (proto-gen.js):
 Projects can register custom block types for PAGE_BLUEPRINT via `wfRegisterBlock(type, renderFn)`. Built-in types: detail-grid, related-list, card, kpi-row, timeline, form, table, chart-placeholder, empty-state, accordion, stepper, metric-grid, split-panel, timeline-horizontal.
@@ -182,7 +213,7 @@ Projects can register custom block types for PAGE_BLUEPRINT via `wfRegisterBlock
 **Surface Plugin Registry** (proto-gen.js):
 Projects can register custom surface header generators via `wfRegisterSurface(id, { header: fn })`. Built-in surfaces: sfdc, slack, internal.
 
-## 10. REVIEW_ANNOTATIONS Structure
+## 11. REVIEW_ANNOTATIONS Structure
 
 Each annotation object:
 

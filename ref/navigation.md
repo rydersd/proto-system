@@ -203,7 +203,19 @@ var WIREFRAME_CONFIG = {
   fallbackPage: 'index.html',       // Fallback for modal close navigation
   emailPrefix: '[WF]',              // Subject line prefix for feedback emails
   emailFooter: 'Sent from wireframe prototype',  // Footer text in feedback emails
-  emailRecipient: 'team@example.com' // Recipient for feedback panel submissions
+  emailRecipient: 'team@example.com', // Recipient for feedback panel submissions
+  defaultTheme: 'nib',              // Default design system theme
+  themes: {                          // Project-specific themes (merged with built-ins)
+    'my-brand': {
+      label: 'My Brand',
+      font: "'Next Text', -apple-system, sans-serif",
+      fontUrl: 'fonts/next-text.css',
+      tokens: {
+        '--wf-accent': '#0070c9',
+        '--wf-ink': '#1a1a1a'
+      }
+    }
+  }
 };
 ```
 
@@ -216,6 +228,63 @@ var WIREFRAME_CONFIG = {
 | `emailFooter` | string | `'Sent from wireframe prototype'` | Footer text appended to feedback emails |
 | `emailRecipient` | string | `''` | Recipient email for feedback panel |
 | `noSurfaceHeader` | boolean | `false` | When `true`, suppresses auto-generated surface headers (e.g., SFDC global nav). Use when you build a custom header in HTML |
+| `defaultTheme` | string | `'nib'` | Default design system theme applied when no group/section theme is set |
+| `themes` | object | `{}` | Project-specific theme definitions (merged with built-in themes: nib, slds, material, high-contrast) |
+
+## Design System Themes
+
+Themes control fonts and design tokens per section/group. See `ref/design-system-theme.md` for the full guide.
+
+### Group-level theme assignment
+
+Use `isGroup: true` entries in SECTIONS to assign themes to groups of sections:
+
+```javascript
+var SECTIONS = [
+  // Group header — theme applies to all sections until the next group
+  { id: 'grp-sfdc', label: 'SFDC', isGroup: true, theme: 'slds' },
+  { id: 'ae', label: 'AE', persona: 'ae', items: [/* ... */] },
+  { id: 'psm', label: 'PSM', persona: 'psm', items: [/* ... */] },
+
+  // New group — different theme
+  { id: 'grp-partner', label: 'Partner Portal', isGroup: true, theme: 'partner-portal' },
+  { id: 'rep', label: 'Sales Rep', items: [/* ... */] },
+
+  // Section can override its group's theme
+  { id: 'brand', label: 'Brand Pages', theme: 'blueprint-ds', items: [/* ... */] }
+];
+```
+
+### Theme resolution order (most specific wins)
+
+1. **Item-level:** `item.theme` (rare, for one-off pages)
+2. **Section-level:** `section.theme` (explicit on the section)
+3. **Group-level:** nearest `isGroup` entry above this section with a `theme`
+4. **Global default:** `WIREFRAME_CONFIG.defaultTheme` or `'nib'`
+5. **Session override:** Force-all via Settings panel (`sessionStorage('wf_theme_override')`)
+
+### Nested children
+
+Items with `children: [...]` sub-pages inherit their parent item's section/group theme chain.
+
+```javascript
+items: [
+  { file: 'opportunities', label: 'Opportunities', type: 'sfdc',
+    children: [
+      { file: 'create-order', label: 'Create Order' },
+      { file: 'fulfillment', label: 'Fulfillment' }
+    ]
+  }
+]
+```
+
+### Settings panel
+
+Accessible via the drawer's "Settings" link or by clicking the theme badge in the context bar. Shows:
+- Active theme (auto-detected from current page)
+- Theme assignments table (groups with dropdowns, sections showing inheritance)
+- Session override (force all pages to one theme)
+- Custom theme builder (name, font, accent/surface colors)
 
 ## Fidelity Slider
 
