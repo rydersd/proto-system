@@ -6,6 +6,11 @@
    that every other module builds on.
    ============================================================================ */
 
+/* ── @property registrations — enable smooth CSS transitions on custom props ── */
+@property --wf-grain-opacity { syntax: '<number>'; inherits: true; initial-value: 0.12; }
+@property --wf-grid-opacity  { syntax: '<number>'; inherits: true; initial-value: 0.08; }
+@property --wf-shadow-scale  { syntax: '<number>'; inherits: true; initial-value: 1; }
+
 :root {
   --wf-ink:         #1e2a3a;
   --wf-text:        #3b4f68;
@@ -44,6 +49,7 @@ html.wireframe {
   --wf-grid-opacity: 0.08;
   --wf-shadow-scale: 1;
   --wf-wobble-filter: url(#wf-line-wobble);
+  transition: --wf-grain-opacity 0.4s ease, --wf-grid-opacity 0.4s ease, --wf-shadow-scale 0.4s ease;
 }
 
 html.wireframe[data-wf-fidelity="napkin"] {
@@ -157,13 +163,12 @@ html.wireframe body {
   position: relative;
 }
 
-/* Napkin mode — full grayscale on html (root), NOT body.
-   Per CSS spec, filter on a non-root element creates a containing block
-   for fixed descendants, breaking position:fixed on drawers/panels.
-   The root element does NOT create this containing block. */
-html.wireframe[data-wf-fidelity="napkin"] {
-  filter: grayscale(1);
-}
+/* Napkin mode grayscale — applied via backdrop-filter on body::after,
+   NOT via filter on html or body. CSS filter on ANY element (including
+   the root) creates a containing block for fixed descendants, which
+   breaks hit-testing when combined with the paper texture overlay.
+   backdrop-filter on the existing body::after pseudo-element achieves
+   grayscale without affecting stacking contexts. */
 
 html.wireframe[data-wf-fidelity="napkin"] body {
   /* Stacking context so coffee ring stencils at z-index:-1 sit
@@ -207,8 +212,11 @@ html.wireframe::after {
   z-index: 1000;
 }
 
-/* Paper grain texture overlay — napkin mode only.
-   Natural paper texture gives the "working on actual paper" feel. */
+/* Paper grain texture overlay + grayscale — napkin mode only.
+   Natural paper texture gives the "working on actual paper" feel.
+   backdrop-filter: grayscale(1) desaturates everything behind this overlay
+   without creating a containing block on html/body. Chrome (context bar
+   at z≥1000, drawers at z≥2000) sits above z-800 and stays in color. */
 html.wireframe[data-wf-fidelity="napkin"] body::after {
   content: '';
   position: fixed;
@@ -218,6 +226,8 @@ html.wireframe[data-wf-fidelity="napkin"] body::after {
   opacity: 0.7;
   pointer-events: none;
   z-index: 800; /* Above page content, below framework chrome (context bar ≥1000) */
+  -webkit-backdrop-filter: grayscale(1);
+  backdrop-filter: grayscale(1);
 }
 
 /* Per-element paper texture — napkin mode only.
