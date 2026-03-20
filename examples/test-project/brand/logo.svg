@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+  <!-- Vogon Construction Fleet logo -->
+  <rect x="2" y="4" width="32" height="32" rx="4" fill="#3d6daa"/>
+  <text x="18" y="27" font-family="sans-serif" font-size="18" font-weight="800" fill="#fff" text-anchor="middle">V</text>
+  <text x="42" y="27" font-family="sans-serif" font-size="14" font-weight="700" fill="#1e2a3a" letter-spacing="0.5">VOGON</text>
+  <text x="42" y="37" font-family="sans-serif" font-size="7" font-weight="600" fill="#4a5f7f" letter-spacing="1.5">CONSTRUCTION FLEET</text>
+</svg>
