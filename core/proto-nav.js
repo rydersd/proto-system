@@ -30,7 +30,8 @@ var WF_CONFIG = Object.assign({
   emailFooter: 'Sent from wireframe prototype',
   emailRecipient: '',
   defaultTheme: 'nib',
-  themes: {}
+  themes: {},
+  logo: ''
 }, window.WIREFRAME_CONFIG || {});
 
 /* ── normalizeJourneys ── Accept both array and object formats ──────── */
@@ -205,7 +206,10 @@ function buildSurfaceHeader() {
     '<header class="sfdc-global-header">' +
       '<div class="sfdc-global-header-inner">' +
         '<div class="sfdc-global-header-left">' +
-          '<button class="sfdc-app-launcher" title="App Launcher">⊞</button>' +
+          (WF_CONFIG.logo ?
+            '<img src="' + WF_CONFIG.logo + '" class="wf-ctx-logo" alt="' + appName + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'\'" style="height:24px;margin-right:8px">' +
+            '<button class="sfdc-app-launcher" title="App Launcher" style="display:none">⊞</button>' :
+            '<button class="sfdc-app-launcher" title="App Launcher">⊞</button>') +
           '<span class="sfdc-app-name">' + appName + '</span>' +
         '</div>' +
         '<nav class="sfdc-global-tabs">' + tabsHTML + '</nav>' +
@@ -242,6 +246,8 @@ function buildContextBar() {
           '<button class="wf-ctx-hamburger" onclick="wfNavOpen()" title="Open navigation">' +
             '<span></span><span></span><span></span>' +
           '</button>' +
+          '<img src="' + (WF_CONFIG.logo || 'brand/logo.svg') + '" class="wf-ctx-logo" alt="' +
+            (WF_CONFIG.title || 'Logo') + '" onerror="this.style.display=\'none\'">' +
           '<nav class="wf-ctx-breadcrumbs">' +
             buildBreadcrumbs(file) +
           '</nav>' +
@@ -290,6 +296,8 @@ function buildDrawer() {
     '<nav class="wf-nav-drawer" id="wf-nav-drawer">' +
       '<div class="wf-nav-drawer-hd">' +
         '<div>' +
+          '<img src="' + (WF_CONFIG.logo || 'brand/logo.svg') + '" class="wf-nav-drawer-logo" alt="' +
+            (WF_CONFIG.title || 'Logo') + '" onerror="this.style.display=\'none\'">' +
           '<div class="wf-nav-drawer-title">' + WF_CONFIG.title + '</div>' +
           '<div class="wf-nav-drawer-subtitle">' + WF_CONFIG.subtitle + '</div>' +
         '</div>' +
@@ -3001,6 +3009,9 @@ function wfNavInit() {
   injectWobbleVariants();
   buildContextBar();
   buildSurfaceHeader();
+  // Set data-wf-surface attribute for polished fidelity CSS selectors
+  var _surf = (WF_CONFIG.surface) || detectSurface();
+  if (_surf) document.documentElement.setAttribute('data-wf-surface', _surf);
   wfFidelityRestore();
   buildDrawer();
   buildDesignNotesPanel();

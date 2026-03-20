@@ -391,110 +391,20 @@
   font-size: 10px; color: var(--wf-muted); margin-top: 2px;
 }
 
-/* ── MEDDPICC Summary Card (SFDC version) ───────────────────── */
-.sfdc-meddpicc-card { }
-.sfdc-meddpicc-strip {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 10px;
-}
-/* Chips inside SFDC strip fill equally like pills did */
-.sfdc-meddpicc-strip .meddpicc-chip {
-  flex: 1;
-  text-align: center;
-  justify-content: center;
-}
-.sfdc-meddpicc-pill {
-  flex: 1;
-  text-align: center;
-  padding: 6px 2px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  border: 1.5px solid var(--wf-line);
-  background: var(--wf-surface);
-  color: var(--wf-muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  position: relative;
-}
-.sfdc-meddpicc-pill:hover { border-color: var(--wf-accent); color: var(--wf-accent); }
-.sfdc-meddpicc-pill.unknown { background: var(--wf-surface); color: var(--wf-muted); border-color: var(--wf-line); }
-.sfdc-meddpicc-pill.partial { background: rgba(107,90,47,0.1); color: var(--wf-amber); border-color: var(--wf-amber); }
-.sfdc-meddpicc-pill.confirmed { background: rgba(69,120,90,0.1); color: var(--wf-green); border-color: var(--wf-green); }
-.sfdc-meddpicc-pill.needs-review { background: rgba(107,91,138,0.1); color: var(--wf-purple); border-color: var(--wf-purple); }
-.sfdc-meddpicc-pill.needs-review::after {
-  content: ''; position: absolute; top: -3px; right: -3px;
-  width: 7px; height: 7px; border-radius: 50%; background: var(--wf-purple);
-}
-.sfdc-meddpicc-pill-label {
-  display: block; font-size: 8px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.3px;
-  margin-top: 1px; opacity: 0.8;
-}
-
-.sfdc-meddpicc-meta {
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 11px; color: var(--wf-muted);
-  padding-top: 8px; border-top: 1px solid var(--wf-tint);
-}
-.sfdc-meddpicc-meta a { color: var(--wf-accent); text-decoration: none; font-weight: 600; }
-
-/* Completeness bar */
-.sfdc-completeness-bar {
+/* ── Progress Bar ──────────────────────────────────────────── */
+.sfdc-progress-bar {
   height: 6px; background: var(--wf-tint); border-radius: 3px;
   overflow: hidden; margin-bottom: 6px;
 }
-.sfdc-completeness-fill {
+.sfdc-progress-fill {
   height: 100%; border-radius: 3px; transition: width 0.3s;
 }
-.sfdc-completeness-fill.low { background: var(--wf-red); }
-.sfdc-completeness-fill.mid { background: var(--wf-amber); }
-.sfdc-completeness-fill.high { background: var(--wf-green); }
+.sfdc-progress-fill.low { background: var(--wf-red); }
+.sfdc-progress-fill.mid { background: var(--wf-amber); }
+.sfdc-progress-fill.high { background: var(--wf-green); }
 
-/* ── Slack Deal Room Tile ───────────────────────────────────── */
-.sfdc-slack-tile {
-  background: var(--wf-surface);
-  border: 1px solid var(--wf-line);
-  border-radius: 6px;
-  padding: 14px;
-}
-.sfdc-slack-channel {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
-}
-.sfdc-slack-hash {
-  font-size: 18px; font-weight: 800; color: var(--wf-ink);
-}
-.sfdc-slack-channel-name {
-  font-size: 13px; font-weight: 700; color: var(--wf-ink);
-}
-.sfdc-slack-channel-meta {
-  font-size: 10px; color: var(--wf-muted);
-}
-.sfdc-slack-msg {
-  display: flex; gap: 8px; padding: 6px 0;
-  border-top: 1px solid var(--wf-tint);
-}
-.sfdc-slack-msg-avatar {
-  width: 24px; height: 24px; border-radius: 4px;
-  background: var(--wf-tint);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; color: var(--wf-ink); flex-shrink: 0;
-}
-.sfdc-slack-msg-author {
-  font-size: 11px; font-weight: 700; color: var(--wf-ink);
-}
-.sfdc-slack-msg-author span { font-weight: 400; color: var(--wf-muted); margin-left: 4px; }
-.sfdc-slack-msg-text {
-  font-size: 11px; color: var(--wf-text); margin-top: 1px;
-}
-.sfdc-slack-actions {
-  display: flex; gap: 8px; margin-top: 10px; padding-top: 8px;
-  border-top: 1px solid var(--wf-tint);
-}
-
-/* ── Missing Stage Requirements Banner ──────────────────────── */
-.sfdc-stage-banner {
+/* ── Alert Banner (Stage Requirements, Warnings) ───────────── */
+.sfdc-alert {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 16px;
   background: rgba(107,90,47,0.06);
@@ -502,12 +412,12 @@
   border-radius: 4px;
   font-size: 11px; color: var(--wf-amber);
 }
-.sfdc-stage-banner.ok {
+.sfdc-alert.ok {
   background: rgba(69,120,90,0.06);
   border-color: var(--wf-green);
   color: var(--wf-green);
 }
-.sfdc-stage-banner strong { font-weight: 700; }
+.sfdc-alert strong { font-weight: 700; }
 
 /* ── CPQ/Paper Process Summary ──────────────────────────────── */
 .sfdc-summary-row {
@@ -638,35 +548,8 @@
   font-size: 16px; font-weight: 700; color: var(--wf-ink);
 }
 
-/* ── Evidence Log Specific ──────────────────────────────────── */
-.sfdc-evidence-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 9px; font-weight: 700; padding: 2px 6px;
-  border-radius: 3px;
-}
-.sfdc-evidence-badge.attested { background: rgba(69,120,90,0.1); color: var(--wf-green); }
-.sfdc-evidence-badge.unattested { background: rgba(107,90,47,0.1); color: var(--wf-amber); }
-.sfdc-evidence-source {
-  font-size: 10px; color: var(--wf-muted); font-family: var(--wf-mono);
-}
-
-/* ── Paper Process Steps ────────────────────────────────────── */
-.sfdc-paper-steps {
-  display: flex; gap: 0; margin-bottom: 12px;
-}
-.sfdc-paper-step {
-  flex: 1; text-align: center; padding: 6px 4px;
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.3px; color: var(--wf-muted);
-  background: var(--wf-surface); border: 1px solid var(--wf-line); border-right: none;
-}
-.sfdc-paper-step:first-child { border-radius: 4px 0 0 4px; }
-.sfdc-paper-step:last-child { border-radius: 0 4px 4px 0; border-right: 1px solid var(--wf-line); }
-.sfdc-paper-step.complete { background: var(--wf-green); color: var(--wf-white); border-color: var(--wf-green); }
-.sfdc-paper-step.current { background: var(--wf-white); color: var(--wf-accent); border-color: var(--wf-accent); border-width: 2px; }
-
-/* ── Suggested Status Banner ────────────────────────────────── */
-.sfdc-suggestion-banner {
+/* ── Prompt Banner (AI Suggestions, Status Prompts) ────────── */
+.sfdc-prompt {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 14px; border-radius: 4px;
   background: rgba(107,91,138,0.06);
@@ -674,75 +557,8 @@
   font-size: 11px; color: var(--wf-purple);
   margin-bottom: 12px;
 }
-.sfdc-suggestion-banner strong { font-weight: 700; }
-.sfdc-suggestion-banner .sfdc-btn { margin-left: auto; }
-
-/* ── Partner Involvement Card */
-.sfdc-partner-card { border: 2px solid var(--wf-accent); }
-.sfdc-partner-card .sfdc-card-header {
-  background: var(--wf-accent); color: var(--wf-white);
-}
-.sfdc-partner-card .sfdc-card-header h3 { color: var(--wf-white); }
-.sfdc-partner-card .sfdc-card-header-action { color: rgba(255,255,255,0.8); }
-
-.sfdc-partner-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 10px; border-radius: 12px;
-  font-size: 11px; font-weight: 600;
-  background: var(--wf-surface); color: var(--wf-ink);
-  margin-bottom: 10px;
-}
-.sfdc-partner-badge .dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--wf-green);
-}
-
-.sfdc-partner-org {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px; background: var(--wf-surface);
-  border-radius: 6px; margin-bottom: 10px;
-}
-.sfdc-partner-org-logo {
-  width: 40px; height: 40px; border-radius: 6px;
-  background: var(--wf-tint);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; color: var(--wf-ink); font-size: 14px; flex-shrink: 0;
-}
-.sfdc-partner-org-name { font-size: 13px; font-weight: 700; color: var(--wf-ink); }
-.sfdc-partner-org-tier { font-size: 11px; color: var(--wf-muted); }
-
-.sfdc-partner-contact {
-  display: flex; align-items: center; gap: 10px;
-  padding: 6px 0; border-bottom: 1px solid var(--wf-tint);
-}
-.sfdc-partner-contact:last-child { border-bottom: none; }
-.sfdc-partner-avatar {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: var(--wf-muted);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--wf-white); font-size: 11px; font-weight: 600; flex-shrink: 0;
-}
-.sfdc-partner-contact-name { font-size: 12px; font-weight: 600; color: var(--wf-ink); }
-.sfdc-partner-contact-role { font-size: 11px; color: var(--wf-muted); }
-.sfdc-partner-contact-action {
-  font-size: 11px; color: var(--wf-accent); text-decoration: none; margin-left: auto;
-}
-
-.sfdc-partner-meta {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px; margin-top: 10px; font-size: 12px;
-}
-.sfdc-partner-meta dt { color: var(--wf-muted); font-weight: 500; }
-.sfdc-partner-meta dd { color: var(--wf-ink); font-weight: 600; margin: 0; }
-
-.sfdc-partner-protection {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 12px; margin-top: 10px;
-  background: rgba(69,120,90,0.06); border: 1px solid var(--wf-green);
-  border-radius: 4px; font-size: 11px; color: var(--wf-green); font-weight: 600;
-}
-.sfdc-partner-protection.expiring {
-  background: rgba(107,90,47,0.06); border-color: var(--wf-amber); color: var(--wf-amber);
-}
+.sfdc-prompt strong { font-weight: 700; }
+.sfdc-prompt .sfdc-btn { margin-left: auto; }
 
 /* Related action link (View All, Add Contact) */
 .sfdc-related-action {
@@ -762,108 +578,321 @@
 }
 .sfdc-detail-value a { color: var(--wf-accent); text-decoration: none; }
 
+/* ── SFDC Global Header ──────────────────────────────────────── */
+/* Auto-generated by proto-nav.js buildSurfaceHeader() */
+
+.sfdc-global-header {
+  background: var(--wf-ink);
+  color: var(--wf-white);
+  position: relative;
+  z-index: 900;
+}
+.sfdc-global-header-inner {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 16px;
+  max-width: 100%;
+}
+.sfdc-global-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.sfdc-app-launcher {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.sfdc-app-launcher:hover { background: rgba(255,255,255,0.1); }
+.sfdc-app-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--wf-white);
+}
+.sfdc-global-tabs {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  margin: 0 16px;
+  height: 100%;
+  overflow-x: auto;
+}
+.sfdc-global-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.sfdc-global-tab:hover { color: rgba(255,255,255,0.95); }
+.sfdc-global-tab--active {
+  color: #FFFFFF;
+  border-bottom-color: #FFFFFF;
+}
+.sfdc-global-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.sfdc-global-icon {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.sfdc-global-icon:hover { color: #FFFFFF; background: rgba(255,255,255,0.1); }
+.sfdc-global-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
 /* ============================================================================
-   POLISHED FIDELITY: Real SLDS 2 Cosmos token values
+   POLISHED FIDELITY: Real SLDS 2 Cosmos
    When fidelity = polished AND surface = sfdc, override wireframe-muted tokens
-   with production SLDS 2 color/typography values.
+   with production SLDS 2 color/typography values. Component overrides use
+   html.wireframe[data-wf-fidelity="polished"] for specificity over blueprint
+   paper adaptations (html.wireframe .sfdc-*).
    ============================================================================ */
 
 html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] {
   /* Override --wf-* tokens with real SLDS 2 Cosmos values */
-  --wf-accent:      #0070D2;  /* SCIENCE_BLUE / --slds-g-color-accent-1 */
-  --wf-accent-lt:   #EEF4FF;  /* Blue-90 */
+  --wf-accent:      #0070D2;  /* SCIENCE_BLUE */
+  --wf-accent-lt:   #EEF4FF;
   --wf-accent-fill: rgba(0,112,210,0.07);
-  --wf-red:         #C23934;  /* FLUSH_MAHOGANY / --slds-g-color-error-1 */
-  --wf-amber:       #844800;  /* CINNAMON / --slds-g-color-warning-1 */
-  --wf-green:       #04844B;  /* SALEM / --slds-g-color-success-1 */
-  --wf-purple:      #5A1BA9;  /* SLDS purple / --slds-g-color-brand-1 */
+  --wf-red:         #C23934;  /* FLUSH_MAHOGANY */
+  --wf-amber:       #844800;  /* CINNAMON */
+  --wf-green:       #04844B;  /* SALEM */
+  --wf-purple:      #5A1BA9;
   --wf-muted:       #7E8C99;  /* REGENT_GREY */
-  --wf-ink:         #181818;  /* SLDS on-surface */
-  --wf-text:        #444444;  /* SLDS body text */
-  --wf-line:        #C9C9C9;  /* SLDS border */
-  --wf-tint:        #E5E5E5;  /* SLDS subtle dividers */
-  --wf-surface:     #F3F3F3;  /* SLDS surface */
-  --wf-canvas:      #F3F3F3;  /* SLDS page background */
+  --wf-ink:         #181818;
+  --wf-text:        #444444;
+  --wf-line:        #C9C9C9;
+  --wf-tint:        #E5E5E5;
+  --wf-surface:     #F3F3F3;
+  --wf-canvas:      #F3F3F3;
   --wf-white:       #FFFFFF;
-  --wf-radius:      4px;      /* BORDER_RADIUS_MEDIUM */
-  --wf-font:        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --wf-radius:      4px;
+  --wf-font:        'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* SFDC components get crisper styling at polished fidelity */
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-card {
-  border-radius: 8px;  /* BORDER_RADIUS_LARGE for Cosmos */
-  border: 1px solid var(--wf-line);
+/* ── Global Header — DEEP_COVE ─────────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-global-header {
+  background: #061C3F;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* ── Record Header — clean SLDS ────────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-record-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+/* Record icon — opportunity yellow (#FCB95B) in polished */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-record-icon {
+  background: #FCB95B;
+  border-radius: 8px;
+  filter: none;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-record-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Highlights Bar — crisp SLDS ───────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-highlights-bar {
+  background: #FFFFFF;
+  border-color: #E5E5E5;
+  filter: none;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-highlight {
+  border-color: #E5E5E5;
+}
+
+/* ── Path Bar — chevron-shaped steps like real SFDC ────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-bar {
+  padding: 12px 24px 16px;
+  gap: 0;
+  background: #FFFFFF;
+}
+
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-step {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+  border: none;
+  border-radius: 0;
+  margin-left: -2px;
+  padding: 10px 12px 10px 22px;
+  background: #ECEBEA;
+  color: #706E6B;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  filter: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* First step — no left indent */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-step:first-child {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  border-radius: 4px 0 0 4px;
+  padding-left: 14px;
+  margin-left: 0;
+}
+
+/* Last path step — flat right edge (2nd-to-last child because button follows) */
+html.wireframe[data-wf-fidelity="polished"] span.sfdc-path-step:last-of-type {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Completed — SLDS blue with check */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-step.complete {
+  background: #0070D2;
+  color: #FFFFFF;
+  border: none;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-step.complete::before {
+  content: '\2713\00a0';
+  font-weight: 700;
+}
+
+/* Current step — white with blue text */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-step.current {
+  background: #FFFFFF;
+  color: #0070D2;
+  font-weight: 700;
+  border: none;
+}
+
+/* Lost — red */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-step.lost {
+  background: #C23934;
+  color: #FFFFFF;
+  border: none;
+}
+
+/* Mark Complete button */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-complete-btn {
+  border-radius: 4px;
+  background: #0070D2;
+  font-size: 12px;
+  padding: 8px 16px;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-path-complete-btn:hover {
+  background: #005FB2;
+}
+
+/* ── Cards — SLDS Cosmos ───────────────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-card {
+  border-radius: 8px;
+  border: 1px solid #E5E5E5;
   box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+  filter: none;
+  transform: none;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-card:hover {
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-card-header {
+html.wireframe[data-wf-fidelity="polished"] .sfdc-card-header {
+  background: #FAFAFA;
+  border-bottom: 1px solid #E5E5E5;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-card-header h3 {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-chart-card {
+html.wireframe[data-wf-fidelity="polished"] .sfdc-chart-card {
   border-radius: 8px;
   box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+  filter: none;
 }
 
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-btn {
-  border-radius: 6px;  /* Cosmos button radius */
+/* ── Buttons — SLDS Cosmos ─────────────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-btn {
+  border-radius: 4px;
+  border: 1px solid #C9C9C9;
   font-weight: 600;
+  filter: none;
+  transition: all 0.15s;
 }
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-btn-primary {
-  border-radius: 6px;
+html.wireframe[data-wf-fidelity="polished"] .sfdc-btn:hover {
+  background: #F3F3F3;
+  border-color: #0070D2;
+  color: #0070D2;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-btn-primary {
   background: #0070D2;
   border-color: #0070D2;
+  color: #FFFFFF;
+  border-radius: 4px;
+  filter: none;
 }
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-btn-primary:hover {
+html.wireframe[data-wf-fidelity="polished"] .sfdc-btn-primary:hover {
   background: #005FB2;
+  border-color: #005FB2;
 }
 
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-step {
-  font-size: 11px;
-  letter-spacing: 0.4px;
-}
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-step:first-child {
-  border-radius: 6px 0 0 6px;
-}
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-step:last-child {
-  border-radius: 0 6px 6px 0;
-}
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-path-complete-btn {
-  border-radius: 6px;
-  background: #0070D2;
-}
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-table th {
+/* ── Tables — SLDS ─────────────────────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-table th {
   font-size: 11px;
   letter-spacing: 0.4px;
   background: #F3F3F3;
   border-bottom: 2px solid #C9C9C9;
 }
 
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-record-icon {
-  border-radius: 8px;
-  background: #0070D2;
-}
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-tabs {
+/* ── Tabs — SLDS ───────────────────────────────────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-tabs {
   border-bottom-color: #C9C9C9;
 }
-
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-tab.active {
+html.wireframe[data-wf-fidelity="polished"] .sfdc-tab.active {
   color: #0070D2;
   border-bottom-color: #0070D2;
 }
 
-html[data-wf-fidelity="polished"][data-wf-surface="sfdc"] .sfdc-global-header {
-  background: #061C3F;  /* DEEP_COVE — real SFDC header color */
+/* ── Related Items & Feed — clean in polished ──────────────── */
+html.wireframe[data-wf-fidelity="polished"] .sfdc-related-icon,
+html.wireframe[data-wf-fidelity="polished"] .sfdc-feed-avatar {
+  filter: none;
+}
+
+html.wireframe[data-wf-fidelity="polished"] .sfdc-related-item {
+  border-radius: 4px;
+  transition: background 0.12s;
+}
+html.wireframe[data-wf-fidelity="polished"] .sfdc-related-item:hover {
+  background: #F3F3F3;
+}
+
+html.wireframe[data-wf-fidelity="polished"] .sfdc-feed-item,
+html.wireframe[data-wf-fidelity="polished"] .sfdc-feed-item-link {
+  border-radius: 4px;
 }
 
 /* ============================================================================

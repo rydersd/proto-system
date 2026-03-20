@@ -70,6 +70,19 @@ html.wireframe[data-wf-fidelity="napkin"] .wf-ctx-bar {
   background: var(--wf-accent);
 }
 
+.wf-ctx-logo {
+  height: 20px;
+  width: auto;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.wf-nav-drawer-logo {
+  height: 28px;
+  width: auto;
+  margin-bottom: 6px;
+}
+
 .wf-ctx-breadcrumbs {
   display: flex;
   align-items: center;
