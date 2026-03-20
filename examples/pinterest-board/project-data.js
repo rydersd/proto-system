@@ -6,7 +6,8 @@ window.WIREFRAME_CONFIG = {
   fallbackPage: 'index.html',
   emailPrefix: '[Mood Board WF]',
   emailFooter: 'Sent from Mood Board wireframe prototype',
-  emailRecipient: ''
+  emailRecipient: '',
+  surface: 'pinterest'
 };
 
 var SECTIONS = [

@@ -863,6 +863,134 @@
 .slack-modal-overlay > .slack-modal { cursor: default; }
 
 /* ============================================================================
+   POLISHED FIDELITY — Slack Design System (Layer 2)
+   ============================================================================
+   Real Slack brand colors and dark sidebar/rail. Applied only when
+   data-wf-fidelity="polished" AND data-wf-surface="slack".
+   ============================================================================ */
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] {
+  --wf-accent:    #1264A3;
+  --wf-accent-lt: #E8F5FA;
+  --wf-accent-fill: rgba(18, 100, 163, 0.06);
+  --wf-green:     #2EB67D;
+  --wf-red:       #E01E5A;
+  --wf-amber:     #ECB22E;
+}
+
+/* Restore dark rail */
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-rail {
+  background: #1a1d21;
+  border-right-color: rgba(255,255,255,0.06);
+  box-shadow: none;
+  filter: none;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-rail-workspace {
+  background: #1264A3;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-rail-btn {
+  color: rgba(255,255,255,0.5);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-rail-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.8);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-rail-btn.active {
+  background: rgba(18, 100, 163, 0.35);
+  color: #fff;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-rail-icon {
+  filter: none;
+}
+
+/* Restore dark sidebar */
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-sidebar {
+  background: #19171D;
+  color: #D1D2D3;
+  border-right-color: rgba(255,255,255,0.08);
+  box-shadow: none;
+  filter: none;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .workspace-name {
+  color: #fff;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .workspace-menu {
+  color: rgba(255,255,255,0.5);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-nav-section-title {
+  color: rgba(255,255,255,0.4);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-nav-item {
+  color: rgba(255,255,255,0.7);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-nav-item:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-nav-item-active,
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-nav-item.active {
+  background: rgba(18, 100, 163, 0.35);
+  color: #fff;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-workspace-header {
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+/* Clean wobble on polished Slack elements */
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-message-avatar,
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-composer-input,
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-bot-card,
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-lane-header,
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-thread-count {
+  filter: none;
+  border-radius: var(--wf-radius);
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-message-avatar {
+  border-radius: 6px;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-bot-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* Slack brand button colors */
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-btn-primary {
+  background: #007A5A;
+  border-color: #007A5A;
+  color: #fff;
+  border-radius: 4px;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-btn-primary:hover {
+  background: #005E45;
+  border-color: #005E45;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-btn-danger {
+  background: #E01E5A;
+  border-color: #E01E5A;
+  color: #fff;
+}
+
+html.wireframe[data-wf-fidelity="polished"][data-wf-surface="slack"] .slack-btn-success {
+  background: #2EB67D;
+  border-color: #2EB67D;
+  color: #fff;
+}
+
+/* ============================================================================
    BLUEPRINT PAPER ADAPTATIONS
    ============================================================================ */
 
