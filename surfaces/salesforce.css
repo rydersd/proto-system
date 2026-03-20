@@ -391,6 +391,383 @@
   font-size: 10px; color: var(--wf-muted); margin-top: 2px;
 }
 
+/* ── Page Header ───────────────────────────────────────────── */
+.sfdc-page-header {
+  margin-bottom: 20px;
+}
+.sfdc-page-title {
+  font-size: 20px; font-weight: 700; color: var(--wf-ink);
+  margin: 0 0 4px;
+}
+.sfdc-page-subtitle {
+  font-size: 12px; color: var(--wf-muted); margin: 0;
+}
+
+/* ── KPI Cards ─────────────────────────────────────────────── */
+/* SLDS: white card, 1px border, 6px radius, 16px/20px padding, vertical stack */
+.sfdc-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.sfdc-kpi-card {
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+.sfdc-kpi-card--success { border-left: 3px solid var(--wf-green); }
+.sfdc-kpi-card--warning { border-left: 3px solid var(--wf-amber); }
+.sfdc-kpi-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-muted); margin-bottom: 4px;
+}
+.sfdc-kpi-value {
+  font-size: 24px; font-weight: 700; color: var(--wf-ink);
+}
+.sfdc-kpi-delta { font-size: 11px; margin-top: 4px; color: var(--wf-muted); }
+.sfdc-kpi-delta.up { color: var(--wf-green); }
+.sfdc-kpi-delta.down { color: var(--wf-red); }
+.sfdc-kpi-detail { font-size: 11px; color: var(--wf-muted); margin-top: 2px; }
+
+/* ── Status Badge ──────────────────────────────────────────── */
+/* SLDS badge: 3px radius, 10px uppercase bold, 2px/8px padding */
+.sfdc-status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 2px 8px; border-radius: 3px;
+  background: var(--wf-surface); color: var(--wf-muted);
+  white-space: nowrap;
+}
+.sfdc-status-badge--active,
+.sfdc-status-badge--approved,
+.sfdc-status-badge--completed,
+.sfdc-status-badge--success { background: #dce8df; color: var(--wf-green); }
+.sfdc-status-badge--pending,
+.sfdc-status-badge--inprogress,
+.sfdc-status-badge--warning { background: #e8e4d8; color: var(--wf-amber); }
+.sfdc-status-badge--expired,
+.sfdc-status-badge--rejected,
+.sfdc-status-badge--error,
+.sfdc-status-badge--danger { background: #e8dce0; color: var(--wf-red); }
+.sfdc-status-badge--draft,
+.sfdc-status-badge--inactive,
+.sfdc-status-badge--neutral { background: var(--wf-surface); color: var(--wf-muted); }
+.sfdc-status-badge--info { background: #dce4f0; color: var(--wf-accent); }
+
+/* ── Card Title (standalone, outside card-header) ──────────── */
+.sfdc-card-title {
+  font-size: 14px; font-weight: 700; color: var(--wf-ink);
+  margin: 0 0 12px;
+}
+
+/* ── Data Table ────────────────────────────────────────────── */
+/* SLDS data-table: white bg, 10px uppercase headers, 12px cells */
+.sfdc-data-table {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+  background: var(--wf-white);
+}
+.sfdc-data-table th {
+  text-align: left; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  color: var(--wf-muted); padding: 8px 10px;
+  border-bottom: 2px solid var(--wf-line);
+  background: var(--wf-surface);
+}
+.sfdc-data-table td {
+  padding: 8px 10px; border-bottom: 1px solid var(--wf-tint);
+  color: var(--wf-text); vertical-align: middle;
+}
+.sfdc-data-table tr:hover { background: var(--wf-accent-fill, rgba(61,109,170,0.04)); }
+.sfdc-data-table td a { color: var(--wf-accent); text-decoration: none; }
+
+/* ── Filter Bar ────────────────────────────────────────────── */
+/* SLDS filter-bar: horizontal, 12px gap, centered items */
+.sfdc-filter-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; flex-wrap: wrap;
+}
+.sfdc-filter-bar label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  color: var(--wf-muted);
+}
+.sfdc-filter-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; flex-wrap: wrap;
+}
+.sfdc-filter-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 600;
+  background: var(--wf-surface); color: var(--wf-text);
+  border: 1px solid var(--wf-line); cursor: pointer;
+}
+.sfdc-filter-pill:hover { border-color: var(--wf-accent); color: var(--wf-accent); }
+
+/* ── Form Elements ─────────────────────────────────────────── */
+/* SLDS: 32px height, 4px radius, 1px #C9C9C9 border, 13px text */
+.sfdc-select,
+.sfdc-input {
+  height: 32px; padding: 0 8px;
+  font-size: 13px; font-family: var(--wf-font);
+  color: var(--wf-text);
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: 4px;
+}
+.sfdc-select:focus,
+.sfdc-input:focus {
+  outline: none; border-color: var(--wf-accent);
+  box-shadow: 0 0 0 1px var(--wf-accent);
+}
+.sfdc-form-group {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.sfdc-form-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-muted);
+}
+.sfdc-form-input,
+.sfdc-form-select,
+.sfdc-form-control {
+  height: 32px; padding: 0 8px;
+  font-size: 13px; font-family: var(--wf-font);
+  color: var(--wf-text);
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: 4px;
+}
+.sfdc-form-input:focus,
+.sfdc-form-select:focus,
+.sfdc-form-control:focus {
+  outline: none; border-color: var(--wf-accent);
+  box-shadow: 0 0 0 1px var(--wf-accent);
+}
+.sfdc-form-textarea {
+  padding: 8px; font-size: 13px; font-family: var(--wf-font);
+  color: var(--wf-text); background: var(--wf-white);
+  border: 1px solid var(--wf-line); border-radius: 4px;
+  resize: vertical; min-height: 80px;
+}
+.sfdc-form-textarea:focus {
+  outline: none; border-color: var(--wf-accent);
+  box-shadow: 0 0 0 1px var(--wf-accent);
+}
+.sfdc-form-row {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+
+/* ── Breadcrumb ────────────────────────────────────────────── */
+.sfdc-breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--wf-muted); margin-bottom: 8px;
+}
+.sfdc-breadcrumb a { color: var(--wf-accent); text-decoration: none; }
+.sfdc-breadcrumb a:hover { text-decoration: underline; }
+
+/* ── Sidebar / Rail Tabs ───────────────────────────────────── */
+.sfdc-sidebar {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.sfdc-sidebar-card {
+  background: var(--wf-white);
+  border: 1px solid var(--wf-line);
+  border-radius: 6px; overflow: hidden;
+}
+.sfdc-sidebar-card-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; color: var(--wf-ink);
+  padding: 10px 14px; border-bottom: 1px solid var(--wf-tint);
+  background: var(--wf-surface);
+}
+.sfdc-sidebar-card-list {
+  list-style: none; margin: 0; padding: 0;
+}
+.sfdc-sidebar-card-list li {
+  padding: 8px 14px; font-size: 12px; color: var(--wf-text);
+  border-bottom: 1px solid var(--wf-tint);
+}
+.sfdc-sidebar-card-list li:last-child { border-bottom: none; }
+
+.sfdc-rail-tabs {
+  display: flex; border-bottom: 2px solid var(--wf-line);
+  margin-bottom: 12px;
+}
+.sfdc-rail-tab {
+  padding: 8px 14px; font-size: 11px; font-weight: 600;
+  color: var(--wf-muted); border-bottom: 2px solid transparent;
+  margin-bottom: -2px; cursor: pointer;
+}
+.sfdc-rail-tab:hover { color: var(--wf-ink); }
+.sfdc-rail-tab.active { color: var(--wf-accent); border-bottom-color: var(--wf-accent); }
+.sfdc-rail-tab-content { display: none; }
+.sfdc-rail-tab-content.active { display: block; }
+
+/* ── Action Buttons ────────────────────────────────────────── */
+.sfdc-action-buttons {
+  display: flex; gap: 8px; align-items: center;
+}
+.sfdc-action-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; font-size: 11px; font-weight: 600;
+  font-family: var(--wf-font);
+  border: 1px solid var(--wf-line); border-radius: 4px;
+  background: var(--wf-white); color: var(--wf-text);
+  cursor: pointer; text-decoration: none;
+}
+.sfdc-action-btn:hover { border-color: var(--wf-accent); color: var(--wf-accent); }
+.sfdc-action-btn--primary {
+  background: var(--wf-accent); color: var(--wf-white);
+  border-color: var(--wf-accent);
+}
+.sfdc-action-btn--primary:hover { background: #2c5a94; }
+.sfdc-action-btn--secondary {
+  background: var(--wf-white); color: var(--wf-text);
+}
+
+/* ── Compact Feed ──────────────────────────────────────────── */
+.sfdc-feed-sm {
+  display: flex; gap: 8px; padding: 6px 0;
+  border-bottom: 1px solid var(--wf-tint);
+}
+.sfdc-feed-sm:last-child { border-bottom: none; }
+.sfdc-feed-sm-text { font-size: 11px; color: var(--wf-text); flex: 1; }
+.sfdc-feed-sm-time { font-size: 10px; color: var(--wf-muted); white-space: nowrap; }
+
+/* ── Alert Variants ────────────────────────────────────────── */
+.sfdc-alert--info {
+  background: rgba(61,109,170,0.06); border-color: var(--wf-accent);
+  color: var(--wf-accent);
+}
+.sfdc-alert--success {
+  background: rgba(69,120,90,0.06); border-color: var(--wf-green);
+  color: var(--wf-green);
+}
+.sfdc-alert--warning {
+  background: rgba(107,90,47,0.06); border-color: var(--wf-amber);
+  color: var(--wf-amber);
+}
+.sfdc-alert--error {
+  background: rgba(139,69,83,0.06); border-color: var(--wf-red);
+  color: var(--wf-red);
+}
+
+/* ── Dashboard Grid ────────────────────────────────────────── */
+.sfdc-dashboard-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.sfdc-dashboard-grid--thirds {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ── Layout Utilities ──────────────────────────────────────── */
+.sfdc-card--surface { background: var(--wf-surface); }
+.sfdc-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sfdc-flex { display: flex; }
+.sfdc-gap-8 { gap: 8px; }
+.sfdc-mb-16 { margin-bottom: 16px; }
+
+/* ── Section Header ────────────────────────────────────────── */
+.sfdc-section-header {
+  font-size: 14px; font-weight: 700; color: var(--wf-ink);
+  margin: 0 0 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--wf-tint);
+}
+
+/* ── Tier Badge ────────────────────────────────────────────── */
+.sfdc-tier-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px; padding: 2px 8px; border-radius: 3px;
+}
+.sfdc-tier-badge--gold { background: #fff8e1; color: #8b7745; }
+.sfdc-tier-badge--silver { background: #f0f4fa; color: #546e8a; }
+.sfdc-tier-badge--bronze { background: #f9ede8; color: #8b4553; }
+
+/* ── Stepper / Wizard Steps ────────────────────────────────── */
+.sfdc-stepper {
+  display: flex; align-items: center; gap: 0; margin-bottom: 20px;
+}
+.sfdc-step {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; color: var(--wf-muted);
+}
+.sfdc-step.active { color: var(--wf-accent); }
+.sfdc-step.complete { color: var(--wf-green); }
+.sfdc-step-circle {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--wf-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--wf-muted);
+}
+.sfdc-step.active .sfdc-step-circle {
+  border-color: var(--wf-accent); color: var(--wf-accent);
+}
+.sfdc-step.complete .sfdc-step-circle {
+  border-color: var(--wf-green); background: var(--wf-green);
+  color: var(--wf-white);
+}
+.sfdc-step-line {
+  flex: 1; height: 2px; background: var(--wf-line);
+  margin: 0 8px;
+}
+
+/* ── Trend Indicator ───────────────────────────────────────── */
+.sfdc-trend-indicator { font-size: 11px; font-weight: 600; }
+.sfdc-trend-up { color: var(--wf-green); }
+.sfdc-trend-down { color: var(--wf-red); }
+.sfdc-trend-stable { color: var(--wf-muted); }
+
+/* ── Indicator Dot ─────────────────────────────────────────── */
+.sfdc-indicator-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block;
+}
+.sfdc-indicator-dot--green { background: var(--wf-green); }
+.sfdc-indicator-dot--amber { background: var(--wf-amber); }
+.sfdc-indicator-dot--red { background: var(--wf-red); }
+
+/* ── Key-Value Row ─────────────────────────────────────────── */
+.sfdc-kv-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; font-size: 12px;
+}
+.sfdc-kv-label { color: var(--wf-muted); font-weight: 600; }
+.sfdc-kv-value { color: var(--wf-ink); font-weight: 500; }
+
+/* ── Vertical Nav (Left Rail) ──────────────────────────────── */
+.sfdc-nav-left {
+  list-style: none; margin: 0; padding: 0;
+}
+.sfdc-nav-left-item {
+  display: block; padding: 8px 14px; font-size: 12px;
+  color: var(--wf-text); text-decoration: none;
+  border-left: 3px solid transparent;
+}
+.sfdc-nav-left-item:hover { background: var(--wf-surface); }
+.sfdc-nav-left-item.active {
+  color: var(--wf-accent); border-left-color: var(--wf-accent);
+  background: var(--wf-accent-fill, rgba(61,109,170,0.04));
+  font-weight: 600;
+}
+
+/* ── Tab Button (toggle-style) ─────────────────────────────── */
+.sfdc-tab-button {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px; font-size: 11px; font-weight: 600;
+  color: var(--wf-muted); background: var(--wf-white);
+  border: 1px solid var(--wf-line); cursor: pointer;
+}
+.sfdc-tab-button:first-child { border-radius: 4px 0 0 4px; }
+.sfdc-tab-button:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+.sfdc-tab-button.active {
+  background: var(--wf-accent); color: var(--wf-white);
+  border-color: var(--wf-accent);
+}
+
 /* ── Progress Bar ──────────────────────────────────────────── */
 .sfdc-progress-bar {
   height: 6px; background: var(--wf-tint); border-radius: 3px;
@@ -898,6 +1275,18 @@ html.wireframe[data-wf-fidelity="polished"] .sfdc-feed-item-link {
 /* ============================================================================
    BLUEPRINT PAPER ADAPTATIONS
    ============================================================================ */
+
+html.wireframe .sfdc-kpi-card {
+  box-shadow: var(--wf-paper-shadow);
+  border-radius: var(--wf-wobble-radius);
+  filter: var(--wf-wobble-filter);
+}
+
+html.wireframe .sfdc-sidebar-card {
+  box-shadow: var(--wf-paper-shadow);
+  border-radius: var(--wf-wobble-radius);
+  filter: var(--wf-wobble-filter);
+}
 
 html.wireframe .sfdc-card {
   box-shadow: var(--wf-paper-shadow);
