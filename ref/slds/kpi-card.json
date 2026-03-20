@@ -1,0 +1,66 @@
+{
+  "component": "kpi-card",
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "KPI",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1,
+      "cornerRadius": 6,
+      "paddingTop": 16,
+      "paddingRight": 20,
+      "paddingBottom": 16,
+      "paddingLeft": 20,
+      "itemSpacing": 4,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "TEXT",
+          "name": "Value",
+          "characters": "$VALUE",
+          "fontFamily": "$FONT",
+          "fontSize": 24,
+          "fontWeight": 700,
+          "fillColor": "#03234D"
+        },
+        {
+          "type": "TEXT",
+          "name": "Detail",
+          "characters": "$DETAIL",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 400,
+          "fillColor": "#5C5C5C"
+        }
+      ]
+    },
+    "accent_green": {
+      "_extends": "base",
+      "_note": "Value text in green for positive metrics",
+      "children_override": {
+        "Value": { "fillColor": "#04844B" }
+      }
+    },
+    "accent_red": {
+      "_extends": "base",
+      "_note": "Value text in red for negative metrics",
+      "children_override": {
+        "Value": { "fillColor": "#C23934" }
+      }
+    }
+  }
+}

@@ -1,0 +1,663 @@
+{
+  "component": "wizard",
+  "usage": "Multi-step wizard layout. Contains: page shell (hero + 2-col grid), progress stepper, guidance sidebar, dual listbox, and review accordion. Used for deal registration (pc-dr-step1-4).",
+  "subcomponents": {
+    "progress_stepper": {
+      "usage": "$STEPS = [{number, label, state}]. States: complete (filled+check), current (filled+number), future (outlined+muted). Steps are horizontal, equal width.",
+      "step_states": {
+        "complete": { "circleFill": "#0070D2", "circleStroke": "#0070D2", "textColor": "#FFFFFF", "characters": "\u2713", "labelColor": "#5C5C5C" },
+        "current":  { "circleFill": "#0070D2", "circleStroke": "#0070D2", "textColor": "#FFFFFF", "characters": "$NUMBER", "labelColor": "#5C5C5C", "labelWeight": 600 },
+        "future":   { "circleFill": "#FFFFFF", "circleStroke": "#DCE4EF", "textColor": "#5C5C5C", "characters": "$NUMBER", "labelColor": "#5C5C5C" }
+      },
+      "template": {
+        "type": "FRAME",
+        "name": "ProgressStepper",
+        "layoutMode": "HORIZONTAL",
+        "layoutSizingHorizontal": "FILL",
+        "layoutSizingVertical": "HUG",
+        "paddingBottom": 36,
+        "children": [
+          {
+            "_comment": "$repeat: one Step per wizard step",
+            "type": "FRAME",
+            "name": "Step",
+            "layoutMode": "VERTICAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "counterAxisAlignItems": "CENTER",
+            "itemSpacing": 7,
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "Circle",
+                "layoutMode": "HORIZONTAL",
+                "width": 28,
+                "height": 28,
+                "cornerRadius": 14,
+                "fillColor": "$STATE_FILL",
+                "strokeColor": "$STATE_STROKE",
+                "strokeWeight": 2,
+                "primaryAxisAlignItems": "CENTER",
+                "counterAxisAlignItems": "CENTER",
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "name": "Number",
+                    "characters": "$NUMBER_OR_CHECK",
+                    "fontFamily": "$FONT",
+                    "fontSize": 12,
+                    "fontWeight": 700,
+                    "fillColor": "$STATE_TEXT"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "name": "Label",
+                "characters": "$STEP_LABEL",
+                "fontFamily": "$FONT",
+                "fontSize": 11,
+                "fontWeight": 400,
+                "fillColor": "#5C5C5C",
+                "textAlignHorizontal": "CENTER",
+                "maxWidth": 80
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    "wizard_page_shell": {
+      "usage": "Full wizard page: Partner Central header + hero bar + 2-col grid (main form + guidance sidebar). Width 1440.",
+      "template": {
+        "type": "FRAME",
+        "name": "$PAGE_TITLE",
+        "layoutMode": "VERTICAL",
+        "width": 1440,
+        "layoutSizingVertical": "HUG",
+        "fillColor": "#FFFFFF",
+        "clipsContent": true,
+        "children": [
+          { "_ref": "global-header.json > base", "_note": "Use Partner Central header variant (dark ink bg, Equinix logo)" },
+          {
+            "type": "FRAME",
+            "name": "Hero",
+            "layoutMode": "VERTICAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "fillColor": "#F0F4FA",
+            "paddingTop": 20,
+            "paddingRight": 24,
+            "paddingBottom": 20,
+            "paddingLeft": 24,
+            "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+            "itemSpacing": 4,
+            "children": [
+              {
+                "type": "TEXT",
+                "name": "Title",
+                "characters": "Deal Registration",
+                "fontFamily": "$FONT",
+                "fontSize": 22,
+                "fontWeight": 700,
+                "fillColor": "#1E2A3A"
+              },
+              {
+                "type": "TEXT",
+                "name": "Subtitle",
+                "characters": "$SUBTITLE",
+                "fontFamily": "$FONT",
+                "fontSize": 13,
+                "fontWeight": 400,
+                "fillColor": "#5C5C5C"
+              },
+              {
+                "type": "FRAME",
+                "name": "ContextChips",
+                "layoutMode": "HORIZONTAL",
+                "layoutSizingVertical": "HUG",
+                "itemSpacing": 8,
+                "paddingTop": 10,
+                "counterAxisAlignItems": "CENTER",
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "name": "TypeChip",
+                    "layoutMode": "HORIZONTAL",
+                    "layoutSizingVertical": "HUG",
+                    "paddingTop": 2,
+                    "paddingRight": 10,
+                    "paddingBottom": 2,
+                    "paddingLeft": 10,
+                    "cornerRadius": 12,
+                    "fillColor": "rgba(61,109,170,0.1)",
+                    "counterAxisAlignItems": "CENTER",
+                    "itemSpacing": 4,
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "name": "ChipLabel",
+                        "characters": "$REG_TYPE",
+                        "fontFamily": "$FONT",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "fillColor": "#0070D2"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "name": "ProspectLabel",
+                    "characters": "Prospect:",
+                    "fontFamily": "$FONT",
+                    "fontSize": 12,
+                    "fontWeight": 400,
+                    "fillColor": "#5C5C5C"
+                  },
+                  {
+                    "type": "TEXT",
+                    "name": "ProspectName",
+                    "characters": "$PROSPECT_NAME",
+                    "fontFamily": "$FONT",
+                    "fontSize": 12,
+                    "fontWeight": 600,
+                    "fillColor": "#1E2A3A"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "name": "WizardBody",
+            "layoutMode": "HORIZONTAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "paddingTop": 28,
+            "paddingRight": 24,
+            "paddingBottom": 48,
+            "paddingLeft": 24,
+            "itemSpacing": 32,
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "MainForm",
+                "layoutMode": "VERTICAL",
+                "layoutSizingHorizontal": "FILL",
+                "layoutSizingVertical": "HUG",
+                "itemSpacing": 0,
+                "_comment": "Insert stepper + form sections + action bar here"
+              },
+              {
+                "type": "FRAME",
+                "name": "GuidanceSidebar",
+                "layoutMode": "VERTICAL",
+                "width": 300,
+                "layoutSizingVertical": "HUG",
+                "_comment": "Insert guidance_sidebar template here"
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    "guidance_sidebar": {
+      "usage": "Sticky right-rail help card. Has header, illustration area, step label, description, and checklist items.",
+      "template": {
+        "type": "FRAME",
+        "name": "GuidanceSidebar",
+        "layoutMode": "VERTICAL",
+        "width": 300,
+        "layoutSizingVertical": "HUG",
+        "strokeColor": "#DCE4EF",
+        "strokeWeight": 1,
+        "cornerRadius": 8,
+        "clipsContent": true,
+        "children": [
+          {
+            "type": "FRAME",
+            "name": "SidebarHeader",
+            "layoutMode": "HORIZONTAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "fillColor": "#FFFFFF",
+            "paddingTop": 14,
+            "paddingRight": 16,
+            "paddingBottom": 14,
+            "paddingLeft": 16,
+            "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+            "children": [
+              {
+                "type": "TEXT",
+                "name": "Title",
+                "characters": "$SIDEBAR_TITLE",
+                "fontFamily": "$FONT",
+                "fontSize": 13,
+                "fontWeight": 600,
+                "fillColor": "#1E2A3A"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "name": "IllustrationArea",
+            "layoutMode": "HORIZONTAL",
+            "layoutSizingHorizontal": "FILL",
+            "height": 100,
+            "fillColor": "#FFFFFF",
+            "primaryAxisAlignItems": "CENTER",
+            "counterAxisAlignItems": "CENTER",
+            "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+            "_comment": "Placeholder for step-specific illustration"
+          },
+          {
+            "type": "FRAME",
+            "name": "Content",
+            "layoutMode": "VERTICAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "fillColor": "#F0F4FA",
+            "paddingTop": 18,
+            "paddingRight": 16,
+            "paddingBottom": 20,
+            "paddingLeft": 16,
+            "itemSpacing": 14,
+            "children": [
+              {
+                "type": "TEXT",
+                "name": "StepLabel",
+                "characters": "$STEP_LABEL",
+                "fontFamily": "$FONT",
+                "fontSize": 11,
+                "fontWeight": 700,
+                "fillColor": "#0070D2",
+                "textCase": "UPPER",
+                "letterSpacing": 0.5
+              },
+              {
+                "type": "TEXT",
+                "name": "Description",
+                "characters": "$DESCRIPTION",
+                "fontFamily": "$FONT",
+                "fontSize": 12,
+                "fontWeight": 400,
+                "fillColor": "#5C5C5C",
+                "lineHeight": 18
+              },
+              {
+                "_comment": "$repeat: one ChecklistItem per requirement",
+                "type": "FRAME",
+                "name": "ChecklistItem",
+                "layoutMode": "HORIZONTAL",
+                "layoutSizingHorizontal": "FILL",
+                "layoutSizingVertical": "HUG",
+                "itemSpacing": 10,
+                "paddingBottom": 8,
+                "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+                "counterAxisAlignItems": "MIN",
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "name": "CheckIcon",
+                    "width": 16,
+                    "height": 16,
+                    "cornerRadius": 8,
+                    "strokeColor": "#0070D2",
+                    "strokeWeight": 1.5,
+                    "_comment": "Circle with checkmark — use vector or text glyph"
+                  },
+                  {
+                    "type": "TEXT",
+                    "name": "ItemText",
+                    "characters": "$ITEM_TEXT",
+                    "fontFamily": "$FONT",
+                    "fontSize": 12,
+                    "fontWeight": 400,
+                    "fillColor": "#2E2E2E",
+                    "lineHeight": 18,
+                    "layoutSizingHorizontal": "FILL"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    "dual_listbox": {
+      "usage": "Available/Selected transfer widget. Used for IBX locations and alliance partners. Has optional region filter pills above.",
+      "template": {
+        "type": "FRAME",
+        "name": "DualListbox",
+        "layoutMode": "HORIZONTAL",
+        "layoutSizingHorizontal": "FILL",
+        "layoutSizingVertical": "HUG",
+        "strokeColor": "#C9C9C9",
+        "strokeWeight": 1,
+        "cornerRadius": 4,
+        "clipsContent": true,
+        "children": [
+          {
+            "type": "FRAME",
+            "name": "AvailablePane",
+            "layoutMode": "VERTICAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "PaneHeader",
+                "layoutMode": "HORIZONTAL",
+                "layoutSizingHorizontal": "FILL",
+                "layoutSizingVertical": "HUG",
+                "fillColor": "#F0F4FA",
+                "paddingTop": 8,
+                "paddingRight": 10,
+                "paddingBottom": 8,
+                "paddingLeft": 10,
+                "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "name": "Label",
+                    "characters": "AVAILABLE",
+                    "fontFamily": "$FONT",
+                    "fontSize": 11,
+                    "fontWeight": 700,
+                    "fillColor": "#5C5C5C",
+                    "textCase": "UPPER",
+                    "letterSpacing": 0.3
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "name": "OptionsList",
+                "layoutMode": "VERTICAL",
+                "layoutSizingHorizontal": "FILL",
+                "height": 140,
+                "fillColor": "#FFFFFF",
+                "_comment": "$repeat: option rows",
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "name": "Option",
+                    "characters": "$OPTION_TEXT",
+                    "fontFamily": "$FONT",
+                    "fontSize": 13,
+                    "fontWeight": 400,
+                    "fillColor": "#2E2E2E",
+                    "paddingTop": 4,
+                    "paddingLeft": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "name": "TransferButtons",
+            "layoutMode": "VERTICAL",
+            "width": 36,
+            "layoutSizingVertical": "FILL",
+            "fillColor": "#F0F4FA",
+            "primaryAxisAlignItems": "CENTER",
+            "counterAxisAlignItems": "CENTER",
+            "itemSpacing": 6,
+            "strokes": [
+              { "color": "#DCE4EF", "weight": 1, "side": "LEFT" },
+              { "color": "#DCE4EF", "weight": 1, "side": "RIGHT" }
+            ],
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "AddBtn",
+                "layoutMode": "HORIZONTAL",
+                "width": 26,
+                "height": 26,
+                "cornerRadius": 4,
+                "fillColor": "#FFFFFF",
+                "strokeColor": "#C9C9C9",
+                "strokeWeight": 1,
+                "primaryAxisAlignItems": "CENTER",
+                "counterAxisAlignItems": "CENTER",
+                "children": [
+                  { "type": "TEXT", "name": "Arrow", "characters": "\u2192", "fontFamily": "$FONT", "fontSize": 12, "fillColor": "#5C5C5C" }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "name": "RemoveBtn",
+                "layoutMode": "HORIZONTAL",
+                "width": 26,
+                "height": 26,
+                "cornerRadius": 4,
+                "fillColor": "#FFFFFF",
+                "strokeColor": "#C9C9C9",
+                "strokeWeight": 1,
+                "primaryAxisAlignItems": "CENTER",
+                "counterAxisAlignItems": "CENTER",
+                "children": [
+                  { "type": "TEXT", "name": "Arrow", "characters": "\u2190", "fontFamily": "$FONT", "fontSize": 12, "fillColor": "#5C5C5C" }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "name": "SelectedPane",
+            "layoutMode": "VERTICAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "PaneHeader",
+                "layoutMode": "HORIZONTAL",
+                "layoutSizingHorizontal": "FILL",
+                "layoutSizingVertical": "HUG",
+                "fillColor": "#F0F4FA",
+                "paddingTop": 8,
+                "paddingRight": 10,
+                "paddingBottom": 8,
+                "paddingLeft": 10,
+                "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "name": "Label",
+                    "characters": "SELECTED",
+                    "fontFamily": "$FONT",
+                    "fontSize": 11,
+                    "fontWeight": 700,
+                    "fillColor": "#5C5C5C",
+                    "textCase": "UPPER",
+                    "letterSpacing": 0.3
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "name": "SelectedList",
+                "layoutMode": "VERTICAL",
+                "layoutSizingHorizontal": "FILL",
+                "height": 140,
+                "fillColor": "#FFFFFF",
+                "_comment": "Empty by default or $repeat selected items"
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    "review_accordion": {
+      "usage": "Read-only summary of a wizard step. Collapsible header with step badge and Edit link. Body contains label-value grid.",
+      "template": {
+        "type": "FRAME",
+        "name": "$SECTION_TITLE",
+        "layoutMode": "VERTICAL",
+        "layoutSizingHorizontal": "FILL",
+        "layoutSizingVertical": "HUG",
+        "strokeColor": "#DCE4EF",
+        "strokeWeight": 1,
+        "cornerRadius": 6,
+        "clipsContent": true,
+        "paddingBottom": 0,
+        "children": [
+          {
+            "type": "FRAME",
+            "name": "AccordionHeader",
+            "layoutMode": "HORIZONTAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "fillColor": "#F0F4FA",
+            "paddingTop": 16,
+            "paddingRight": 20,
+            "paddingBottom": 16,
+            "paddingLeft": 20,
+            "primaryAxisAlignItems": "SPACE_BETWEEN",
+            "counterAxisAlignItems": "CENTER",
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "TitleRow",
+                "layoutMode": "HORIZONTAL",
+                "layoutSizingVertical": "HUG",
+                "itemSpacing": 10,
+                "counterAxisAlignItems": "CENTER",
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "name": "SectionTitle",
+                    "characters": "$SECTION_TITLE",
+                    "fontFamily": "$FONT",
+                    "fontSize": 14,
+                    "fontWeight": 700,
+                    "fillColor": "#1E2A3A"
+                  },
+                  {
+                    "type": "FRAME",
+                    "name": "StepBadge",
+                    "layoutMode": "HORIZONTAL",
+                    "layoutSizingVertical": "HUG",
+                    "paddingTop": 2,
+                    "paddingRight": 8,
+                    "paddingBottom": 2,
+                    "paddingLeft": 8,
+                    "cornerRadius": 10,
+                    "fillColor": "rgba(61,109,170,0.12)",
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "name": "StepNum",
+                        "characters": "Step $N",
+                        "fontFamily": "$FONT",
+                        "fontSize": 11,
+                        "fontWeight": 600,
+                        "fillColor": "#0070D2"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "name": "EditLink",
+                "characters": "Edit",
+                "fontFamily": "$FONT",
+                "fontSize": 12,
+                "fontWeight": 500,
+                "fillColor": "#0070D2"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "name": "AccordionBody",
+            "layoutMode": "VERTICAL",
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "HUG",
+            "fillColor": "#FFFFFF",
+            "paddingTop": 16,
+            "paddingRight": 20,
+            "paddingBottom": 20,
+            "paddingLeft": 20,
+            "_comment": "$repeat: label-value rows. Each row is HORIZONTAL with 180px label + fill value.",
+            "children": [
+              {
+                "type": "FRAME",
+                "name": "ReviewRow",
+                "layoutMode": "HORIZONTAL",
+                "layoutSizingHorizontal": "FILL",
+                "layoutSizingVertical": "HUG",
+                "paddingTop": 9,
+                "paddingBottom": 9,
+                "strokes": [{ "color": "#F0F4FA", "weight": 1, "side": "BOTTOM" }],
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "name": "Label",
+                    "characters": "$LABEL",
+                    "fontFamily": "$FONT",
+                    "fontSize": 13,
+                    "fontWeight": 500,
+                    "fillColor": "#5C5C5C",
+                    "width": 180
+                  },
+                  {
+                    "type": "TEXT",
+                    "name": "Value",
+                    "characters": "$VALUE",
+                    "fontFamily": "$FONT",
+                    "fontSize": 13,
+                    "fontWeight": 500,
+                    "fillColor": "#1E2A3A",
+                    "layoutSizingHorizontal": "FILL"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    "wizard_action_bar": {
+      "usage": "Bottom action bar: Save & Exit (left), Back + Next/Submit (right). Use success fill for final Submit.",
+      "template": {
+        "type": "FRAME",
+        "name": "ActionBar",
+        "layoutMode": "HORIZONTAL",
+        "layoutSizingHorizontal": "FILL",
+        "layoutSizingVertical": "HUG",
+        "paddingTop": 28,
+        "primaryAxisAlignItems": "SPACE_BETWEEN",
+        "counterAxisAlignItems": "CENTER",
+        "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "TOP" }],
+        "children": [
+          {
+            "type": "TEXT",
+            "name": "SaveExit",
+            "characters": "Save & Exit",
+            "fontFamily": "$FONT",
+            "fontSize": 14,
+            "fontWeight": 600,
+            "fillColor": "#5C5C5C"
+          },
+          {
+            "type": "FRAME",
+            "name": "NavButtons",
+            "layoutMode": "HORIZONTAL",
+            "layoutSizingVertical": "HUG",
+            "itemSpacing": 12,
+            "_comment": "Insert Back (neutral) + Next (brand) or Submit (success) buttons"
+          }
+        ]
+      }
+    }
+  }
+}

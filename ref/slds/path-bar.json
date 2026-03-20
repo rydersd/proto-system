@@ -1,0 +1,78 @@
+{
+  "component": "path-bar",
+  "usage": "Build steps array with state per step: complete, current, future, lost. First step gets TL/BL radius, last gets TR/BR radius.",
+  "step_states": {
+    "complete": { "fillColor": "#0070D2", "strokeColor": "#0070D2", "textColor": "#FFFFFF" },
+    "current":  { "fillColor": "#FFFFFF", "strokeColor": "#0070D2", "strokeWeight": 2, "textColor": "#0070D2" },
+    "future":   { "fillColor": "#F3F3F3", "strokeColor": "#C9C9C9", "textColor": "#5C5C5C" },
+    "lost":     { "fillColor": "#C23934", "strokeColor": "#C23934", "textColor": "#FFFFFF" }
+  },
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "PathBar",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 0,
+      "paddingTop": 12,
+      "paddingBottom": 16,
+      "counterAxisAlignItems": "CENTER",
+      "children": [
+        {
+          "_comment": "$repeat: one Step per stage. Apply state colors from step_states. First: cornerRadius TL:4 BL:4. Last: cornerRadius TR:4 BR:4.",
+          "type": "FRAME",
+          "name": "Step",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 8,
+          "paddingRight": 4,
+          "paddingBottom": 8,
+          "paddingLeft": 4,
+          "fillColor": "$STATE_FILL",
+          "strokeColor": "$STATE_STROKE",
+          "strokeWeight": 1,
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "StageLabel",
+              "characters": "$STAGE_NAME",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 700,
+              "fillColor": "$STATE_TEXT",
+              "textCase": "UPPER",
+              "letterSpacing": 0.3
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "CompleteBtn",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 6,
+          "paddingRight": 14,
+          "paddingBottom": 6,
+          "paddingLeft": 14,
+          "cornerRadius": 4,
+          "fillColor": "#0070D2",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "BtnLabel",
+              "characters": "Mark as Complete",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 700,
+              "fillColor": "#FFFFFF"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "component": "component-card",
+  "usage": "Wrapper for Lightning record page components in the 3-column layout. Used in left rail, main column, and right rail. Each 'module' on a record page is wrapped in this card. Inner content uses other templates (related-list, feed-item, detail-grid, data-table, etc.).",
+  "variants": {
+    "base": {
+      "_note": "Standard component card with icon + title + count + actions header. Used for Related Lists, Details, Activity, etc.",
+      "type": "FRAME",
+      "name": "$COMPONENT_TITLE",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1,
+      "cornerRadius": 6,
+      "clipsContent": true,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "ComponentHeader",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 10,
+          "paddingRight": 12,
+          "paddingBottom": 10,
+          "paddingLeft": 12,
+          "primaryAxisAlignItems": "SPACE_BETWEEN",
+          "counterAxisAlignItems": "CENTER",
+          "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "TitleGroup",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 8,
+              "counterAxisAlignItems": "CENTER",
+              "children": [
+                {
+                  "type": "FRAME",
+                  "name": "Icon",
+                  "layoutMode": "HORIZONTAL",
+                  "width": 24,
+                  "height": 24,
+                  "cornerRadius": 4,
+                  "fillColor": "$ICON_BG",
+                  "primaryAxisAlignItems": "CENTER",
+                  "counterAxisAlignItems": "CENTER",
+                  "children": [
+                    {
+                      "type": "TEXT",
+                      "name": "IconText",
+                      "characters": "$ICON",
+                      "fontFamily": "$FONT",
+                      "fontSize": 11,
+                      "fontWeight": 700,
+                      "fillColor": "#FFFFFF"
+                    }
+                  ]
+                },
+                {
+                  "type": "TEXT",
+                  "name": "Title",
+                  "characters": "$COMPONENT_TITLE",
+                  "fontFamily": "$FONT",
+                  "fontSize": 12,
+                  "fontWeight": 700,
+                  "fillColor": "#1E2A3A"
+                },
+                {
+                  "type": "FRAME",
+                  "name": "CountBadge",
+                  "layoutMode": "HORIZONTAL",
+                  "layoutSizingVertical": "HUG",
+                  "paddingTop": 1,
+                  "paddingRight": 6,
+                  "paddingBottom": 1,
+                  "paddingLeft": 6,
+                  "cornerRadius": 8,
+                  "fillColor": "#F3F3F3",
+                  "children": [
+                    {
+                      "type": "TEXT",
+                      "name": "Count",
+                      "characters": "$COUNT",
+                      "fontFamily": "$FONT",
+                      "fontSize": 10,
+                      "fontWeight": 600,
+                      "fillColor": "#5C5C5C"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "name": "Actions",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 8,
+              "counterAxisAlignItems": "CENTER",
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "ViewAll",
+                  "characters": "View All",
+                  "fontFamily": "$FONT",
+                  "fontSize": 11,
+                  "fontWeight": 600,
+                  "fillColor": "#0070D2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "ComponentBody",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 8,
+          "paddingRight": 12,
+          "paddingBottom": 12,
+          "paddingLeft": 12,
+          "itemSpacing": 0,
+          "_comment": "Insert inner content: related-list items, feed-items, detail-grid, etc."
+        }
+      ]
+    },
+    "compact": {
+      "_note": "Minimal header — title only, no icon or count. For simple sidebar modules.",
+      "type": "FRAME",
+      "name": "$COMPONENT_TITLE",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1,
+      "cornerRadius": 6,
+      "clipsContent": true,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "ComponentHeader",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 10,
+          "paddingRight": 12,
+          "paddingBottom": 10,
+          "paddingLeft": 12,
+          "primaryAxisAlignItems": "SPACE_BETWEEN",
+          "counterAxisAlignItems": "CENTER",
+          "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Title",
+              "characters": "$COMPONENT_TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 700,
+              "fillColor": "#1E2A3A",
+              "textCase": "UPPER",
+              "letterSpacing": 0.3
+            },
+            {
+              "type": "TEXT",
+              "name": "Action",
+              "characters": "$ACTION",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 600,
+              "fillColor": "#0070D2"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "ComponentBody",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 8,
+          "paddingRight": 12,
+          "paddingBottom": 12,
+          "paddingLeft": 12,
+          "itemSpacing": 0
+        }
+      ]
+    },
+    "empty_state": {
+      "_note": "Component card showing empty/no-data state with illustration and CTA",
+      "type": "FRAME",
+      "name": "$COMPONENT_TITLE",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1,
+      "cornerRadius": 6,
+      "clipsContent": true,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "ComponentHeader",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 10,
+          "paddingRight": 12,
+          "paddingBottom": 10,
+          "paddingLeft": 12,
+          "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Title",
+              "characters": "$COMPONENT_TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 700,
+              "fillColor": "#1E2A3A"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "EmptyBody",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 32,
+          "paddingRight": 24,
+          "paddingBottom": 32,
+          "paddingLeft": 24,
+          "counterAxisAlignItems": "CENTER",
+          "itemSpacing": 8,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "EmptyTitle",
+              "characters": "$EMPTY_TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 14,
+              "fontWeight": 600,
+              "fillColor": "#1E2A3A",
+              "textAlignHorizontal": "CENTER"
+            },
+            {
+              "type": "TEXT",
+              "name": "EmptyMessage",
+              "characters": "$EMPTY_MESSAGE",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 400,
+              "fillColor": "#5C5C5C",
+              "textAlignHorizontal": "CENTER",
+              "lineHeight": 18
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "icon_colors": {
+    "_note": "Common SFDC object icon backgrounds for the component header icon",
+    "opportunity": "#FCB95B",
+    "account": "#7F8DE1",
+    "contact": "#A094ED",
+    "lead": "#F88962",
+    "case": "#F2CF5B",
+    "task": "#4BC076",
+    "event": "#EB7092",
+    "note": "#E6D478",
+    "file": "#8199AF",
+    "custom": "#0070D2"
+  }
+}

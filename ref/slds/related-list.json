@@ -1,0 +1,87 @@
+{
+  "component": "related-list",
+  "usage": "$repeat RelatedItem children. Icon color variants: green, amber, red, purple, accent.",
+  "icon_colors": {
+    "green":  { "bgFill": "rgba(69,120,90,0.15)",  "textFill": "#04844B" },
+    "amber":  { "bgFill": "rgba(107,90,47,0.15)",  "textFill": "#844800" },
+    "red":    { "bgFill": "rgba(139,69,83,0.15)",  "textFill": "#C23934" },
+    "purple": { "bgFill": "rgba(107,91,138,0.15)", "textFill": "#5A1BA9" },
+    "accent": { "bgFill": "rgba(61,109,170,0.15)", "textFill": "#0070D2" }
+  },
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "RelatedItem",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "paddingTop": 8,
+      "paddingBottom": 8,
+      "itemSpacing": 10,
+      "counterAxisAlignItems": "CENTER",
+      "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Icon",
+          "layoutMode": "HORIZONTAL",
+          "width": 28,
+          "height": 28,
+          "cornerRadius": 14,
+          "fillColor": "#DCE4EF",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Initials",
+              "characters": "$INITIALS",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 700,
+              "fillColor": "#1E2A3A"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Info",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "itemSpacing": 2,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Title",
+              "characters": "$TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 600,
+              "fillColor": "#1E2A3A"
+            },
+            {
+              "type": "TEXT",
+              "name": "Subtitle",
+              "characters": "$SUBTITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 400,
+              "fillColor": "#5C5C5C"
+            }
+          ]
+        },
+        {
+          "type": "TEXT",
+          "name": "Meta",
+          "characters": "$META",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 400,
+          "fillColor": "#5C5C5C",
+          "textAlignHorizontal": "RIGHT"
+        }
+      ]
+    }
+  }
+}

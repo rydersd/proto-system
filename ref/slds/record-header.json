@@ -1,0 +1,142 @@
+{
+  "component": "record-header",
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "RecordHeader",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "strokes": [{ "color": "#C9C9C9", "weight": 1, "side": "BOTTOM" }],
+      "paddingTop": 16,
+      "paddingRight": 24,
+      "paddingBottom": 0,
+      "paddingLeft": 24,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "TopRow",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "itemSpacing": 12,
+          "counterAxisAlignItems": "CENTER",
+          "paddingBottom": 12,
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "Icon",
+              "layoutMode": "HORIZONTAL",
+              "width": 40,
+              "height": 40,
+              "cornerRadius": 8,
+              "fillColor": "#0070D2",
+              "primaryAxisAlignItems": "CENTER",
+              "counterAxisAlignItems": "CENTER",
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "IconText",
+                  "characters": "$ICON",
+                  "fontFamily": "$FONT",
+                  "fontSize": 16,
+                  "fontWeight": 700,
+                  "fillColor": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "name": "Info",
+              "layoutMode": "VERTICAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 2,
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "RecordType",
+                  "characters": "$RECORD_TYPE",
+                  "fontFamily": "$FONT",
+                  "fontSize": 10,
+                  "fontWeight": 700,
+                  "fillColor": "#5C5C5C",
+                  "textCase": "UPPER",
+                  "letterSpacing": 0.5
+                },
+                {
+                  "type": "TEXT",
+                  "name": "RecordName",
+                  "characters": "$RECORD_NAME",
+                  "fontFamily": "$FONT",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "fillColor": "#1E2A3A"
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "name": "Actions",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 8,
+              "counterAxisAlignItems": "CENTER",
+              "_comment": "Insert button children here"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "HighlightsBar",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 12,
+          "paddingBottom": 12,
+          "strokes": [
+            { "color": "#DCE4EF", "weight": 1, "side": "TOP" },
+            { "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }
+          ],
+          "children": [
+            {
+              "_comment": "$repeat: one Highlight per field. Use strokeRight on all except last.",
+              "type": "FRAME",
+              "name": "Highlight",
+              "layoutMode": "VERTICAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "paddingLeft": 20,
+              "paddingRight": 20,
+              "itemSpacing": 2,
+              "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "RIGHT" }],
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "Label",
+                  "characters": "$LABEL",
+                  "fontFamily": "$FONT",
+                  "fontSize": 10,
+                  "fontWeight": 700,
+                  "fillColor": "#5C5C5C",
+                  "textCase": "UPPER",
+                  "letterSpacing": 0.3
+                },
+                {
+                  "type": "TEXT",
+                  "name": "Value",
+                  "characters": "$VALUE",
+                  "fontFamily": "$FONT",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "fillColor": "#1E2A3A"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "component": "button",
+  "variants": {
+    "neutral": {
+      "type": "FRAME",
+      "name": "Button",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 6,
+      "paddingRight": 14,
+      "paddingBottom": 6,
+      "paddingLeft": 14,
+      "cornerRadius": 4,
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1.5,
+      "itemSpacing": 6,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 600,
+          "fillColor": "#2E2E2E"
+        }
+      ]
+    },
+    "brand": {
+      "type": "FRAME",
+      "name": "Button",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 6,
+      "paddingRight": 14,
+      "paddingBottom": 6,
+      "paddingLeft": 14,
+      "cornerRadius": 4,
+      "fillColor": "#0070D2",
+      "strokeColor": "#0070D2",
+      "strokeWeight": 1.5,
+      "itemSpacing": 6,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 600,
+          "fillColor": "#FFFFFF"
+        }
+      ]
+    },
+    "destructive": {
+      "type": "FRAME",
+      "name": "Button",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 6,
+      "paddingRight": 14,
+      "paddingBottom": 6,
+      "paddingLeft": 14,
+      "cornerRadius": 4,
+      "fillColor": "#C23934",
+      "strokeColor": "#C23934",
+      "strokeWeight": 1.5,
+      "itemSpacing": 6,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 600,
+          "fillColor": "#FFFFFF"
+        }
+      ]
+    },
+    "success": {
+      "type": "FRAME",
+      "name": "Button",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 6,
+      "paddingRight": 14,
+      "paddingBottom": 6,
+      "paddingLeft": 14,
+      "cornerRadius": 4,
+      "fillColor": "#04844B",
+      "strokeColor": "#04844B",
+      "strokeWeight": 1.5,
+      "itemSpacing": 6,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 600,
+          "fillColor": "#FFFFFF"
+        }
+      ]
+    },
+    "neutral_sm": {
+      "type": "FRAME",
+      "name": "Button",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 4,
+      "paddingRight": 10,
+      "paddingBottom": 4,
+      "paddingLeft": 10,
+      "cornerRadius": 4,
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1.5,
+      "itemSpacing": 6,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 600,
+          "fillColor": "#2E2E2E"
+        }
+      ]
+    },
+    "brand_sm": {
+      "type": "FRAME",
+      "name": "Button",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 4,
+      "paddingRight": 10,
+      "paddingBottom": 4,
+      "paddingLeft": 10,
+      "cornerRadius": 4,
+      "fillColor": "#0070D2",
+      "strokeColor": "#0070D2",
+      "strokeWeight": 1.5,
+      "itemSpacing": 6,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 600,
+          "fillColor": "#FFFFFF"
+        }
+      ]
+    }
+  }
+}

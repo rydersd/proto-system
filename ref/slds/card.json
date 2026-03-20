@@ -1,0 +1,118 @@
+{
+  "component": "card",
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "$TITLE",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "strokeColor": "#C9C9C9",
+      "strokeWeight": 1,
+      "cornerRadius": 6,
+      "clipsContent": true,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Header",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "fillColor": "#F3F3F3",
+          "paddingTop": 10,
+          "paddingRight": 16,
+          "paddingBottom": 10,
+          "paddingLeft": 16,
+          "itemSpacing": 8,
+          "primaryAxisAlignItems": "SPACE_BETWEEN",
+          "counterAxisAlignItems": "CENTER",
+          "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Title",
+              "characters": "$TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 700,
+              "fillColor": "#1E2A3A",
+              "textCase": "UPPER",
+              "letterSpacing": 0.3
+            },
+            {
+              "type": "TEXT",
+              "name": "Action",
+              "characters": "$ACTION",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 600,
+              "fillColor": "#0070D2"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Body",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 14,
+          "paddingRight": 16,
+          "paddingBottom": 14,
+          "paddingLeft": 16,
+          "itemSpacing": 12
+        },
+        {
+          "type": "FRAME",
+          "name": "Footer",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 10,
+          "paddingRight": 16,
+          "paddingBottom": 10,
+          "paddingLeft": 16,
+          "primaryAxisAlignItems": "CENTER",
+          "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "TOP" }]
+        }
+      ]
+    },
+    "accent_blue": {
+      "_extends": "base",
+      "_note": "Add left stroke 3px #0070D2 to root frame",
+      "strokes": [
+        { "color": "#C9C9C9", "weight": 1 },
+        { "color": "#0070D2", "weight": 3, "side": "LEFT" }
+      ]
+    },
+    "accent_green": {
+      "_extends": "base",
+      "strokes": [
+        { "color": "#C9C9C9", "weight": 1 },
+        { "color": "#04844B", "weight": 3, "side": "LEFT" }
+      ]
+    },
+    "accent_amber": {
+      "_extends": "base",
+      "strokes": [
+        { "color": "#C9C9C9", "weight": 1 },
+        { "color": "#844800", "weight": 3, "side": "LEFT" }
+      ]
+    },
+    "accent_red": {
+      "_extends": "base",
+      "strokes": [
+        { "color": "#C9C9C9", "weight": 1 },
+        { "color": "#C23934", "weight": 3, "side": "LEFT" }
+      ]
+    },
+    "accent_purple": {
+      "_extends": "base",
+      "strokes": [
+        { "color": "#C9C9C9", "weight": 1 },
+        { "color": "#5A1BA9", "weight": 3, "side": "LEFT" }
+      ]
+    }
+  }
+}

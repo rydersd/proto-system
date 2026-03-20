@@ -1,0 +1,326 @@
+{
+  "component": "form-elements",
+  "variants": {
+    "input": {
+      "type": "FRAME",
+      "name": "FormField",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 4,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "FRAME",
+          "name": "Input",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "height": 32,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+          "cornerRadius": 4,
+          "fillColor": "#FFFFFF",
+          "strokeColor": "#C9C9C9",
+          "strokeWeight": 1,
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Value",
+              "characters": "$VALUE",
+              "fontFamily": "$FONT",
+              "fontSize": 13,
+              "fontWeight": 400,
+              "fillColor": "#2E2E2E"
+            }
+          ]
+        }
+      ]
+    },
+    "input_placeholder": {
+      "_note": "Same as input but text is placeholder color",
+      "type": "FRAME",
+      "name": "FormField",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 4,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "FRAME",
+          "name": "Input",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "height": 32,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+          "cornerRadius": 4,
+          "fillColor": "#FFFFFF",
+          "strokeColor": "#C9C9C9",
+          "strokeWeight": 1,
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Placeholder",
+              "characters": "$PLACEHOLDER",
+              "fontFamily": "$FONT",
+              "fontSize": 13,
+              "fontWeight": 400,
+              "fillColor": "#757575"
+            }
+          ]
+        }
+      ]
+    },
+    "input_error": {
+      "type": "FRAME",
+      "name": "FormField",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 4,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "FRAME",
+          "name": "Input",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "height": 32,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+          "cornerRadius": 4,
+          "fillColor": "#FFFFFF",
+          "strokeColor": "#C23934",
+          "strokeWeight": 1,
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Value",
+              "characters": "$VALUE",
+              "fontFamily": "$FONT",
+              "fontSize": 13,
+              "fontWeight": 400,
+              "fillColor": "#2E2E2E"
+            }
+          ]
+        },
+        {
+          "type": "TEXT",
+          "name": "Error",
+          "characters": "$ERROR",
+          "fontFamily": "$FONT",
+          "fontSize": 11,
+          "fontWeight": 400,
+          "fillColor": "#C23934"
+        }
+      ]
+    },
+    "textarea": {
+      "type": "FRAME",
+      "name": "FormField",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 4,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "FRAME",
+          "name": "Textarea",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "height": 80,
+          "paddingTop": 8,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+          "paddingBottom": 8,
+          "cornerRadius": 4,
+          "fillColor": "#FFFFFF",
+          "strokeColor": "#C9C9C9",
+          "strokeWeight": 1,
+          "counterAxisAlignItems": "MIN",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Value",
+              "characters": "$VALUE",
+              "fontFamily": "$FONT",
+              "fontSize": 13,
+              "fontWeight": 400,
+              "fillColor": "#2E2E2E"
+            }
+          ]
+        }
+      ]
+    },
+    "select": {
+      "type": "FRAME",
+      "name": "FormField",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 4,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "FRAME",
+          "name": "Select",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "height": 32,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+          "cornerRadius": 4,
+          "fillColor": "#FFFFFF",
+          "strokeColor": "#C9C9C9",
+          "strokeWeight": 1,
+          "counterAxisAlignItems": "CENTER",
+          "primaryAxisAlignItems": "SPACE_BETWEEN",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Value",
+              "characters": "$VALUE",
+              "fontFamily": "$FONT",
+              "fontSize": 13,
+              "fontWeight": 400,
+              "fillColor": "#2E2E2E"
+            },
+            {
+              "type": "TEXT",
+              "name": "Chevron",
+              "characters": "\u25BC",
+              "fontFamily": "$FONT",
+              "fontSize": 8,
+              "fontWeight": 400,
+              "fillColor": "#5C5C5C"
+            }
+          ]
+        }
+      ]
+    },
+    "checkbox": {
+      "type": "FRAME",
+      "name": "Checkbox",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 8,
+      "counterAxisAlignItems": "CENTER",
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Box",
+          "width": 16,
+          "height": 16,
+          "cornerRadius": 2,
+          "fillColor": "#FFFFFF",
+          "strokeColor": "#C9C9C9",
+          "strokeWeight": 1
+        },
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 12,
+          "fontWeight": 400,
+          "fillColor": "#2E2E2E"
+        }
+      ]
+    },
+    "checkbox_checked": {
+      "type": "FRAME",
+      "name": "Checkbox",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "itemSpacing": 8,
+      "counterAxisAlignItems": "CENTER",
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Box",
+          "width": 16,
+          "height": 16,
+          "cornerRadius": 2,
+          "fillColor": "#066AFE",
+          "strokeColor": "#066AFE",
+          "strokeWeight": 1,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Check",
+              "characters": "\u2713",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 700,
+              "fillColor": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 12,
+          "fontWeight": 400,
+          "fillColor": "#2E2E2E"
+        }
+      ]
+    }
+  }
+}
