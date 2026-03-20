@@ -622,7 +622,7 @@
   background: var(--wf-accent); color: var(--wf-white);
   border-color: var(--wf-accent);
 }
-.sfdc-action-btn--primary:hover { background: #2c5a94; }
+.sfdc-action-btn--primary:hover { background: var(--wf-accent-dk, #2c5a94); }
 .sfdc-action-btn--secondary {
   background: var(--wf-white); color: var(--wf-text);
 }
@@ -820,7 +820,7 @@
 }
 .sfdc-btn:hover { border-color: var(--wf-accent); color: var(--wf-accent); }
 .sfdc-btn-primary { background: var(--wf-accent); color: var(--wf-white); border-color: var(--wf-accent); }
-.sfdc-btn-primary:hover { background: #2c5a94; }
+.sfdc-btn-primary:hover { background: var(--wf-accent-dk, #2c5a94); }
 .sfdc-btn-slack {
   background: var(--wf-ink); color: var(--wf-white); border-color: var(--wf-ink);
 }
@@ -1276,12 +1276,7 @@ html.wireframe[data-wf-fidelity="polished"] .sfdc-feed-item-link {
    BLUEPRINT PAPER ADAPTATIONS
    ============================================================================ */
 
-html.wireframe .sfdc-kpi-card {
-  box-shadow: var(--wf-paper-shadow);
-  border-radius: var(--wf-wobble-radius);
-  filter: var(--wf-wobble-filter);
-}
-
+html.wireframe .sfdc-kpi-card,
 html.wireframe .sfdc-sidebar-card {
   box-shadow: var(--wf-paper-shadow);
   border-radius: var(--wf-wobble-radius);
