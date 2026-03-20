@@ -1,0 +1,169 @@
+{
+  "component": "badge",
+  "variants": {
+    "default": {
+      "type": "FRAME",
+      "name": "Badge",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 2,
+      "paddingRight": 8,
+      "paddingBottom": 2,
+      "paddingLeft": 8,
+      "cornerRadius": 3,
+      "fillColor": "#F3F3F3",
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5C5C5C",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        }
+      ]
+    },
+    "inverse": {
+      "type": "FRAME",
+      "name": "Badge",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 2,
+      "paddingRight": 8,
+      "paddingBottom": 2,
+      "paddingLeft": 8,
+      "cornerRadius": 3,
+      "fillColor": "#2E2E2E",
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#FFFFFF",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        }
+      ]
+    },
+    "info": {
+      "type": "FRAME",
+      "name": "Badge",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 2,
+      "paddingRight": 8,
+      "paddingBottom": 2,
+      "paddingLeft": 8,
+      "cornerRadius": 3,
+      "fillColor": "#E8E0F0",
+      "strokeColor": "#5A1BA9",
+      "strokeWeight": 1,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#5A1BA9",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        }
+      ]
+    },
+    "success": {
+      "type": "FRAME",
+      "name": "Badge",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 2,
+      "paddingRight": 8,
+      "paddingBottom": 2,
+      "paddingLeft": 8,
+      "cornerRadius": 3,
+      "fillColor": "#DCE8DF",
+      "strokeColor": "#04844B",
+      "strokeWeight": 1,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#04844B",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        }
+      ]
+    },
+    "warning": {
+      "type": "FRAME",
+      "name": "Badge",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 2,
+      "paddingRight": 8,
+      "paddingBottom": 2,
+      "paddingLeft": 8,
+      "cornerRadius": 3,
+      "fillColor": "#E8E4D8",
+      "strokeColor": "#844800",
+      "strokeWeight": 1,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#844800",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        }
+      ]
+    },
+    "error": {
+      "type": "FRAME",
+      "name": "Badge",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "counterAxisAlignItems": "CENTER",
+      "paddingTop": 2,
+      "paddingRight": 8,
+      "paddingBottom": 2,
+      "paddingLeft": 8,
+      "cornerRadius": 3,
+      "fillColor": "#E8DCE0",
+      "strokeColor": "#C23934",
+      "strokeWeight": 1,
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Label",
+          "characters": "$LABEL",
+          "fontFamily": "$FONT",
+          "fontSize": 10,
+          "fontWeight": 700,
+          "fillColor": "#C23934",
+          "textCase": "UPPER",
+          "letterSpacing": 0.3
+        }
+      ]
+    }
+  }
+}

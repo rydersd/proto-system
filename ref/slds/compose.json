@@ -1,0 +1,569 @@
+{
+  "$schema": "nib-compose-v1",
+  "$font": "Nexa Text",
+  "screens": {
+    "deal-detail": {
+      "name": "Deal Registration Detail",
+      "layout": "page-layouts > record_page",
+      "width": 1440,
+      "sections": {
+        "header": {
+          "template": "record-header > base",
+          "data": {
+            "$ICON": "DR",
+            "$RECORD_TYPE": "Deal Registration",
+            "$RECORD_NAME": "Meridian Capital Group — Colocation + Fabric",
+            "$highlights": [
+              { "$LABEL": "Status", "$VALUE": "Under Review" },
+              { "$LABEL": "Submitted", "$VALUE": "Mar 15, 2026" },
+              { "$LABEL": "Partner", "$VALUE": "CloudBridge Solutions" },
+              { "$LABEL": "Equinix PSM", "$VALUE": "Marcus Chen" }
+            ]
+          }
+        },
+        "path": {
+          "template": "path-bar > base",
+          "data": {
+            "$stages": [
+              { "$STAGE_NAME": "Submitted", "state": "complete" },
+              { "$STAGE_NAME": "Under Review", "state": "current" },
+              { "$STAGE_NAME": "Approved", "state": "future" },
+              { "$STAGE_NAME": "Active", "state": "future" },
+              { "$STAGE_NAME": "Closed", "state": "future" }
+            ]
+          }
+        },
+        "left": [
+          {
+            "template": "component-card > base",
+            "data": { "$COMPONENT_TITLE": "Related Partners", "$ICON": "AC", "$ICON_BG": "#7F8DE1", "$COUNT": "2" },
+            "body": {
+              "template": "related-list > base",
+              "repeat": [
+                { "$INITIALS": "CB", "$TITLE": "CloudBridge Solutions", "$SUBTITLE": "Gold Partner", "$META": "Referral" },
+                { "$INITIALS": "MC", "$TITLE": "Meridian Capital Group", "$SUBTITLE": "Prospect", "$META": "End Customer" }
+              ]
+            }
+          },
+          {
+            "template": "component-card > compact",
+            "data": { "$COMPONENT_TITLE": "Quick Actions", "$ACTION": "" },
+            "body": "_buttons: [Edit, Clone, Submit for Approval, Change Owner]"
+          }
+        ],
+        "main": [
+          {
+            "template": "component-card > base",
+            "data": { "$COMPONENT_TITLE": "Deal Details", "$ICON": "DR", "$ICON_BG": "#FCB95B", "$COUNT": "" },
+            "body": {
+              "template": "detail-grid > base",
+              "repeat": [
+                { "$LABEL": "Deal Type", "$VALUE": "New Business · Referral" },
+                { "$LABEL": "Distributor", "$VALUE": "None (direct)" },
+                { "$LABEL": "Locations", "$VALUE": "SG1 — Singapore, DC6 — Ashburn" },
+                { "$LABEL": "Primary Services", "$VALUE": "Colocation, Equinix Fabric, Network Edge" },
+                { "$LABEL": "Partner Project Code", "$VALUE": "CB-2026-4401" },
+                { "$LABEL": "Submitted By", "$VALUE": "Jordan Reeves" }
+              ]
+            }
+          },
+          {
+            "template": "component-card > base",
+            "data": { "$COMPONENT_TITLE": "Sales Contact", "$ICON": "CT", "$ICON_BG": "#A094ED", "$COUNT": "" },
+            "body": {
+              "template": "detail-grid > base",
+              "repeat": [
+                { "$LABEL": "Name", "$VALUE": "Steve Rogers" },
+                { "$LABEL": "Title", "$VALUE": "Senior Solutions Architect" },
+                { "$LABEL": "Email", "$VALUE": "steve.rogers@cloudbridge.com" },
+                { "$LABEL": "Phone", "$VALUE": "+1 (617) 555-0194" },
+                { "$LABEL": "Partner ID", "$VALUE": "P-0047291" }
+              ]
+            }
+          },
+          {
+            "template": "component-card > base",
+            "data": { "$COMPONENT_TITLE": "Description", "$ICON": "NT", "$ICON_BG": "#E6D478", "$COUNT": "" },
+            "body": "_text: Meridian Capital Group is building a low-latency trading platform requiring sub-millisecond connectivity to NASDAQ and NYSE matching engines. Evaluating SG1 for APAC expansion and DC6 for primary US presence. CloudBridge has existing relationship through their managed hosting engagement."
+          }
+        ],
+        "right": [
+          {
+            "template": "component-card > base",
+            "data": { "$COMPONENT_TITLE": "Activity", "$ICON": "EV", "$ICON_BG": "#EB7092", "$COUNT": "5" },
+            "body": {
+              "template": "feed-item > user",
+              "repeat": [
+                { "$INITIALS": "MC", "$TEXT": "Marcus Chen assigned as PSM reviewer", "$TIME": "2 hours ago" },
+                { "$INITIALS": "JR", "$TEXT": "Jordan Reeves submitted deal registration", "$TIME": "Mar 15, 2026" },
+                { "$INITIALS": "JR", "$TEXT": "Jordan Reeves uploaded Meridian_Infrastructure_Brief.pdf", "$TIME": "Mar 15, 2026" }
+              ]
+            }
+          },
+          {
+            "template": "component-card > compact",
+            "data": { "$COMPONENT_TITLE": "Files", "$ACTION": "Upload" },
+            "body": "_file: Meridian_Infrastructure_Brief.pdf (2.4 MB)"
+          }
+        ]
+      }
+    },
+
+    "deal-reg-step1": {
+      "name": "Deal Registration — Step 1: Prospect Information",
+      "layout": "wizard > wizard_page_shell",
+      "width": 1440,
+      "sections": {
+        "hero": {
+          "data": {
+            "$SUBTITLE": "All required fields must be filled out in English.",
+            "$REG_TYPE": "Referral",
+            "$PROSPECT_NAME": ""
+          }
+        },
+        "stepper": {
+          "template": "wizard > progress_stepper",
+          "data": {
+            "$STEPS": [
+              { "number": 1, "label": "Prospect Information", "state": "current" },
+              { "number": 2, "label": "Deal Details", "state": "future" },
+              { "number": 3, "label": "Sales Contact", "state": "future" },
+              { "number": 4, "label": "Review", "state": "future" }
+            ]
+          }
+        },
+        "form": [
+          {
+            "section_title": "Find the Prospect Company",
+            "fields": [
+              {
+                "template": "form-elements > input",
+                "data": { "$LABEL": "Company Name *", "$PLACEHOLDER": "Search by company name or D&B number..." },
+                "_note": "D&B lookup with typeahead. Shows matching companies below."
+              }
+            ]
+          },
+          {
+            "section_title": "Company Details",
+            "_note": "Auto-populated from D&B lookup or manual entry fallback",
+            "fields": [
+              { "template": "form-elements > input", "data": { "$LABEL": "Company Name *", "$VALUE": "Meridian Capital Group" } },
+              { "template": "form-elements > input", "data": { "$LABEL": "Website", "$VALUE": "meridiancapital.com" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "DUNS Number", "$VALUE": "84-729-3041" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Industry", "$VALUE": "Financial Services" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Headquarters", "$VALUE": "New York, NY" }, "half_width": true }
+            ]
+          }
+        ],
+        "guidance": {
+          "template": "wizard > guidance_sidebar",
+          "data": {
+            "$SIDEBAR_TITLE": "Guidance",
+            "$STEP_LABEL": "Step 1 of 4",
+            "$DESCRIPTION": "Search for the prospect company using D&B lookup to ensure accurate data. Manual entry is available if the company isn't found.",
+            "$checklist": [
+              "Search by company name or DUNS number",
+              "Verify the company details are correct",
+              "Check for existing deal registrations"
+            ]
+          }
+        },
+        "action_bar": {
+          "template": "wizard > wizard_action_bar",
+          "data": {
+            "$back_visible": false,
+            "$next_label": "Next: Deal Details"
+          }
+        }
+      }
+    },
+
+    "deal-reg-step2": {
+      "name": "Deal Registration — Step 2: Deal Details",
+      "layout": "wizard > wizard_page_shell",
+      "width": 1440,
+      "sections": {
+        "hero": {
+          "data": {
+            "$SUBTITLE": "All required fields must be filled out in English.",
+            "$REG_TYPE": "Referral",
+            "$PROSPECT_NAME": "Meridian Capital Group"
+          }
+        },
+        "stepper": {
+          "template": "wizard > progress_stepper",
+          "data": {
+            "$STEPS": [
+              { "number": 1, "label": "Prospect Information", "state": "complete" },
+              { "number": 2, "label": "Deal Details", "state": "current" },
+              { "number": 3, "label": "Sales Contact", "state": "future" },
+              { "number": 4, "label": "Review", "state": "future" }
+            ]
+          }
+        },
+        "form": [
+          {
+            "section_title": "Deal Information",
+            "fields": [
+              { "template": "form-elements > input", "data": { "$LABEL": "Deal Name *", "$PLACEHOLDER": "e.g., Meridian — Colocation + Fabric" } },
+              { "template": "form-elements > input", "data": { "$LABEL": "Deal Value / TCV *", "$PLACEHOLDER": "$0.00" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Expected Close Date *", "$PLACEHOLDER": "MM/DD/YYYY" }, "half_width": true },
+              { "template": "form-elements > select", "data": { "$LABEL": "Distributor", "$VALUE": "Select distributor..." }, "half_width": true },
+              { "template": "form-elements > select", "data": { "$LABEL": "Deal Registration Type *", "$VALUE": "Select type..." }, "half_width": true,
+                "_options": ["New Business", "Expansion/Upsell", "Renewal Influence", "Migration"]
+              },
+              { "template": "form-elements > input", "data": { "$LABEL": "Partner Project Code", "$PLACEHOLDER": "Optional internal reference" } }
+            ]
+          },
+          {
+            "section_title": "Locations",
+            "_note": "Region filter pills + dual listbox for IBX selection",
+            "region_pills": ["Americas", "EMEA", "Asia-Pacific"],
+            "fields": [
+              {
+                "template": "wizard > dual_listbox",
+                "data": {
+                  "$available": ["NY5 — New York", "NY7 — New York", "NY9 — New York", "DC2 — Ashburn", "DC6 — Ashburn", "CH1 — Chicago", "CH2 — Chicago", "SV1 — Silicon Valley", "SV5 — Silicon Valley", "LA1 — Los Angeles", "DA1 — Dallas", "DA3 — Dallas", "SE2 — Seattle", "AT1 — Atlanta", "MI1 — Miami", "TR1 — Toronto", "TR2 — Toronto", "SP2 — São Paulo", "SP4 — São Paulo"],
+                  "$selected": []
+                }
+              }
+            ]
+          },
+          {
+            "section_title": "Services",
+            "fields": [
+              {
+                "template": "form-elements > checkbox",
+                "data": { "$LABEL": "Primary Services *" },
+                "_options": ["Colocation", "Equinix Fabric", "Equinix Metal", "Network Edge", "Internet Exchange", "Equinix Connect"]
+              },
+              {
+                "template": "form-elements > checkbox",
+                "data": { "$LABEL": "Additional Services" },
+                "_options": ["Smart Hands / Remote Hands", "Cross Connect", "ECIA / Advanced Suite", "Peering / Private Interconnect"]
+              }
+            ]
+          },
+          {
+            "section_title": "Deal Description",
+            "fields": [
+              { "template": "form-elements > textarea", "data": { "$LABEL": "Description *", "$PLACEHOLDER": "Describe the opportunity, customer needs, and your engagement... (min 50 characters)" } },
+              { "_note": "File upload zone", "label": "Supporting Documents", "hint": "PDF, DOCX, PPTX — max 10MB" }
+            ]
+          },
+          {
+            "section_title": "Alliance Partners",
+            "_note": "Optional multi-select",
+            "fields": [
+              {
+                "template": "wizard > dual_listbox",
+                "data": {
+                  "$available": ["AWS", "Azure", "GCP", "IBM Cloud", "Oracle Cloud", "Salesforce", "ServiceNow", "Cisco", "VMware", "Zscaler"],
+                  "$selected": []
+                }
+              }
+            ]
+          }
+        ],
+        "guidance": {
+          "template": "wizard > guidance_sidebar",
+          "data": {
+            "$SIDEBAR_TITLE": "Guidance",
+            "$STEP_LABEL": "Step 2 of 4",
+            "$DESCRIPTION": "Provide details about the deal including locations, services, and expected value. More detail helps your PSM review faster.",
+            "$checklist": [
+              "Name the deal clearly (customer + services)",
+              "Select all relevant IBX locations",
+              "Choose primary and additional services",
+              "Add a description (min 50 characters)",
+              "Attach supporting documents if available"
+            ]
+          }
+        },
+        "action_bar": {
+          "template": "wizard > wizard_action_bar",
+          "data": {
+            "$back_label": "Back",
+            "$next_label": "Next: Sales Contact"
+          }
+        }
+      }
+    },
+
+    "deal-reg-step3": {
+      "name": "Deal Registration — Step 3: Sales Contact",
+      "layout": "wizard > wizard_page_shell",
+      "width": 1440,
+      "sections": {
+        "hero": {
+          "data": {
+            "$SUBTITLE": "All required fields must be filled out in English.",
+            "$REG_TYPE": "Referral",
+            "$PROSPECT_NAME": "Meridian Capital Group"
+          }
+        },
+        "stepper": {
+          "template": "wizard > progress_stepper",
+          "data": {
+            "$STEPS": [
+              { "number": 1, "label": "Prospect Information", "state": "complete" },
+              { "number": 2, "label": "Deal Details", "state": "complete" },
+              { "number": 3, "label": "Sales Contact", "state": "current" },
+              { "number": 4, "label": "Review", "state": "future" }
+            ]
+          }
+        },
+        "form": [
+          {
+            "section_title": "Sales Contact",
+            "_note": "Checkbox to auto-fill from logged-in user profile",
+            "prefill_checkbox": { "$LABEL": "I am the sales contact for this deal", "$checked": true },
+            "fields": [
+              { "template": "form-elements > input", "data": { "$LABEL": "First Name *", "$VALUE": "Steve" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Last Name *", "$VALUE": "Rogers" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Job Title *", "$VALUE": "Senior Solutions Architect" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Partner Company *", "$VALUE": "CloudBridge Solutions" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Email Address *", "$VALUE": "steve.rogers@cloudbridge.com" } },
+              { "template": "form-elements > input", "data": { "$LABEL": "Phone Number", "$VALUE": "+1 (617) 555-0194" }, "half_width": true },
+              { "template": "form-elements > input", "data": { "$LABEL": "Equinix Partner ID", "$VALUE": "P-0047291", "$PLACEHOLDER": "P-XXXXXX" }, "half_width": true }
+            ]
+          }
+        ],
+        "guidance": {
+          "template": "wizard > guidance_sidebar",
+          "data": {
+            "$SIDEBAR_TITLE": "Guidance",
+            "$STEP_LABEL": "Step 3 of 4",
+            "$DESCRIPTION": "Confirm the sales contact who will be the primary point of contact for this deal. Your PSM will reach out to this person.",
+            "$checklist": [
+              "Verify contact details are current",
+              "Ensure email is monitored for PSM communications",
+              "Partner ID helps speed up review"
+            ]
+          }
+        },
+        "action_bar": {
+          "template": "wizard > wizard_action_bar",
+          "data": {
+            "$back_label": "Back",
+            "$next_label": "Next: Review"
+          }
+        }
+      }
+    },
+
+    "deal-reg-step4": {
+      "name": "Deal Registration — Step 4: Review & Submit",
+      "layout": "wizard > wizard_page_shell",
+      "width": 1440,
+      "sections": {
+        "hero": {
+          "data": {
+            "$SUBTITLE": "Review all details before submitting.",
+            "$REG_TYPE": "Referral",
+            "$PROSPECT_NAME": "Meridian Capital Group"
+          }
+        },
+        "stepper": {
+          "template": "wizard > progress_stepper",
+          "data": {
+            "$STEPS": [
+              { "number": 1, "label": "Prospect Information", "state": "complete" },
+              { "number": 2, "label": "Deal Details", "state": "complete" },
+              { "number": 3, "label": "Sales Contact", "state": "complete" },
+              { "number": 4, "label": "Review", "state": "current" }
+            ]
+          }
+        },
+        "form": [
+          {
+            "template": "wizard > review_accordion",
+            "data": {
+              "$SECTION_TITLE": "Prospect Information",
+              "$N": "1",
+              "$rows": [
+                { "$LABEL": "Company Name", "$VALUE": "Meridian Capital Group" },
+                { "$LABEL": "Website", "$VALUE": "meridiancapital.com" },
+                { "$LABEL": "DUNS Number", "$VALUE": "84-729-3041" },
+                { "$LABEL": "Industry", "$VALUE": "Financial Services" },
+                { "$LABEL": "Headquarters", "$VALUE": "New York, NY" }
+              ]
+            }
+          },
+          {
+            "template": "wizard > review_accordion",
+            "data": {
+              "$SECTION_TITLE": "Deal Details",
+              "$N": "2",
+              "$rows": [
+                { "$LABEL": "Deal Name", "$VALUE": "Meridian — Colocation + Fabric" },
+                { "$LABEL": "Deal Value / TCV", "$VALUE": "$1,620,000" },
+                { "$LABEL": "Expected Close", "$VALUE": "Jun 30, 2026" },
+                { "$LABEL": "Deal Type", "$VALUE": "New Business" },
+                { "$LABEL": "Distributor", "$VALUE": "None (direct)" },
+                { "$LABEL": "Locations", "$VALUE": "SG1 — Singapore, DC6 — Ashburn" },
+                { "$LABEL": "Primary Services", "$VALUE": "Colocation, Equinix Fabric, Network Edge" },
+                { "$LABEL": "Additional Services", "$VALUE": "Cross Connect" },
+                { "$LABEL": "Alliance Partners", "$VALUE": "AWS, Cisco" },
+                { "$LABEL": "Description", "$VALUE": "Meridian Capital Group is building a low-latency trading platform..." }
+              ]
+            }
+          },
+          {
+            "template": "wizard > review_accordion",
+            "data": {
+              "$SECTION_TITLE": "Sales Contact",
+              "$N": "3",
+              "$rows": [
+                { "$LABEL": "Name", "$VALUE": "Steve Rogers" },
+                { "$LABEL": "Title", "$VALUE": "Senior Solutions Architect" },
+                { "$LABEL": "Company", "$VALUE": "CloudBridge Solutions" },
+                { "$LABEL": "Email", "$VALUE": "steve.rogers@cloudbridge.com" },
+                { "$LABEL": "Phone", "$VALUE": "+1 (617) 555-0194" },
+                { "$LABEL": "Partner ID", "$VALUE": "P-0047291" }
+              ]
+            }
+          }
+        ],
+        "guidance": {
+          "template": "wizard > guidance_sidebar",
+          "data": {
+            "$SIDEBAR_TITLE": "Guidance",
+            "$STEP_LABEL": "Step 4 of 4",
+            "$DESCRIPTION": "Review all information before submitting. Click Edit on any section to make changes. Once submitted, your PSM will review within 2 business days.",
+            "$checklist": [
+              "All sections show correct information",
+              "Deal description is detailed enough",
+              "Supporting documents are attached",
+              "Sales contact email is monitored"
+            ]
+          }
+        },
+        "action_bar": {
+          "template": "wizard > wizard_action_bar",
+          "data": {
+            "$back_label": "Back",
+            "$next_label": "Submit Deal Registration",
+            "$next_variant": "success"
+          }
+        }
+      }
+    },
+
+    "deal-registration-list": {
+      "name": "Deal Registrations — List View",
+      "layout": "page-layouts > list_view",
+      "width": 1440,
+      "sections": {
+        "header": {
+          "data": {
+            "$PAGE_TITLE": "Deal Registrations",
+            "$actions": [
+              { "template": "button > brand", "data": { "$LABEL": "Register New Deal" } }
+            ]
+          }
+        },
+        "kpis": {
+          "template": "kpi-card > base",
+          "repeat": [
+            { "$LABEL": "Total Deals", "$VALUE": "47", "$DETAIL": "All time" },
+            { "$LABEL": "Pending Approval", "$VALUE": "12", "$DETAIL": "Awaiting PSM review" },
+            { "$LABEL": "Approved", "$VALUE": "28", "$DETAIL": "Active protection" },
+            { "$LABEL": "Rejected", "$VALUE": "4", "$DETAIL": "This quarter" },
+            { "$LABEL": "Pipeline Value", "$VALUE": "$8.4M", "$DETAIL": "Active deals TCV" }
+          ]
+        },
+        "filters": {
+          "_note": "Filter bar above table",
+          "search": { "$PLACEHOLDER": "Search by deal ID, name, customer, or partner..." },
+          "dropdowns": [
+            { "$LABEL": "Status", "$OPTIONS": ["All", "Pending", "Approved", "Rejected", "Expired", "Won"] },
+            { "$LABEL": "Partner", "$OPTIONS": ["All", "CloudBridge Solutions", "TechVision Partners", "Meridian Financial", "NetCore Systems"] },
+            { "$LABEL": "Sort", "$OPTIONS": ["Newest first", "Oldest first", "Highest value", "Lowest value"] }
+          ],
+          "date_range": { "$FROM": "", "$TO": "" }
+        },
+        "table": {
+          "template": "data-table > base",
+          "data": {
+            "$columns": ["Deal ID", "Deal Name", "Partner", "Customer", "Value (TCV)", "Submitted", "Assigned To", "Status", "Protection"],
+            "$rows": [
+              ["DR-2026-4401", "Secure Connect Infrastructure", "CloudBridge Solutions", "SHIELD Division", "$1,620,000", "Jan 22, 2026", "Steve Rogers", "Approved", "45d left"],
+              ["DR-2026-4398", "Cloud Migration Phase 2", "TechVision Partners", "Stark Industries", "$2,100,000", "Jan 18, 2026", "Lisa Park", "Pending", "—"],
+              ["DR-2026-4395", "Network Edge Deployment", "CloudBridge Solutions", "Wayne Enterprises", "$890,000", "Jan 15, 2026", "Steve Rogers", "Approved", "62d left"],
+              ["DR-2026-4390", "Fabric Interconnect", "NetCore Systems", "Oscorp Labs", "$450,000", "Jan 10, 2026", "James Liu", "Rejected", "—"],
+              ["DR-2026-4387", "Colocation Expansion", "Meridian Financial", "Pym Technologies", "$3,200,000", "Jan 8, 2026", "Sarah Chen", "Won", "Active"],
+              ["DR-2026-4380", "IX Peering Setup", "CloudBridge Solutions", "Daily Bugle Media", "$180,000", "Jan 3, 2026", "Steve Rogers", "Expired", "Expired"]
+            ]
+          }
+        }
+      }
+    },
+
+    "deal-reg-empty": {
+      "name": "Deal Registrations — Empty State",
+      "layout": "page-layouts > list_view",
+      "width": 1440,
+      "sections": {
+        "header": {
+          "data": {
+            "$PAGE_TITLE": "Deal Registrations",
+            "$actions": [
+              { "template": "button > brand", "data": { "$LABEL": "Register New Deal" } }
+            ]
+          }
+        },
+        "body": {
+          "template": "component-card > empty_state",
+          "data": {
+            "$COMPONENT_TITLE": "Deal Registrations",
+            "$EMPTY_TITLE": "No Deal Registrations Yet",
+            "$EMPTY_MESSAGE": "Register your first deal to start earning commissions and get deal protection. Your PSM will review and approve within 2 business days."
+          },
+          "actions": [
+            { "template": "button > brand", "data": { "$LABEL": "Register Your First Deal" } }
+          ]
+        }
+      }
+    },
+
+    "deal-reg-loading": {
+      "name": "Deal Registrations — Loading State",
+      "layout": "page-layouts > list_view",
+      "width": 1440,
+      "sections": {
+        "header": {
+          "data": { "$PAGE_TITLE": "Deal Registrations" }
+        },
+        "body": {
+          "_note": "Skeleton loading state — 5 shimmer rows in table, KPI cards show pulse placeholders",
+          "skeleton_kpis": 5,
+          "skeleton_rows": 5,
+          "skeleton_columns": ["Deal ID", "Deal Name", "Partner", "Customer", "Value (TCV)", "Submitted", "Status"]
+        }
+      }
+    },
+
+    "deal-reg-error": {
+      "name": "Deal Registrations — Error State",
+      "layout": "page-layouts > list_view",
+      "width": 1440,
+      "sections": {
+        "header": {
+          "data": { "$PAGE_TITLE": "Deal Registrations" }
+        },
+        "body": {
+          "template": "alert > error",
+          "data": {
+            "$TITLE": "Unable to Load Deal Registrations",
+            "$MESSAGE": "We couldn't retrieve your deal registrations. This may be due to a sync issue with Salesforce. Please try again or contact support if the issue persists.",
+            "$actions": [
+              { "template": "button > neutral", "data": { "$LABEL": "Try Again" } },
+              { "template": "button > neutral", "data": { "$LABEL": "Contact Support" } }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

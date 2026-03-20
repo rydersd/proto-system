@@ -1,0 +1,188 @@
+{
+  "component": "page-layouts",
+  "usage": "Full-page shells. Compose with other templates for content areas.",
+  "variants": {
+    "record_page": {
+      "_note": "Standard record detail page: header + path + three-column body (left nav/related, main detail, right activity/sidebar)",
+      "type": "FRAME",
+      "name": "$PAGE_TITLE",
+      "layoutMode": "VERTICAL",
+      "width": 1440,
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#F3F3F3",
+      "clipsContent": true,
+      "children": [
+        { "_ref": "global-header.json > base" },
+        { "_ref": "record-header.json > base" },
+        { "_ref": "path-bar.json > base", "_optional": true },
+        {
+          "type": "FRAME",
+          "name": "PageBody",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 16,
+          "paddingRight": 24,
+          "paddingBottom": 24,
+          "paddingLeft": 24,
+          "itemSpacing": 16,
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "LeftColumn",
+              "layoutMode": "VERTICAL",
+              "width": 260,
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 16,
+              "_comment": "Left rail — related lists, nav, quick links"
+            },
+            {
+              "type": "FRAME",
+              "name": "MainColumn",
+              "layoutMode": "VERTICAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 16,
+              "_comment": "Center — detail cards, forms, primary content"
+            },
+            {
+              "type": "FRAME",
+              "name": "RightColumn",
+              "layoutMode": "VERTICAL",
+              "width": 320,
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 16,
+              "_comment": "Right rail — activity feed, sidebar actions"
+            }
+          ]
+        }
+      ]
+    },
+    "list_view": {
+      "_note": "Standard list view: header + filters + data table",
+      "type": "FRAME",
+      "name": "$PAGE_TITLE",
+      "layoutMode": "VERTICAL",
+      "width": 1440,
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#F3F3F3",
+      "clipsContent": true,
+      "children": [
+        { "_ref": "global-header.json > base" },
+        {
+          "type": "FRAME",
+          "name": "PageHeader",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "fillColor": "#FFFFFF",
+          "paddingTop": 16,
+          "paddingRight": 24,
+          "paddingBottom": 16,
+          "paddingLeft": 24,
+          "primaryAxisAlignItems": "SPACE_BETWEEN",
+          "counterAxisAlignItems": "CENTER",
+          "strokes": [{ "color": "#C9C9C9", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Title",
+              "characters": "$PAGE_TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 20,
+              "fontWeight": 700,
+              "fillColor": "#03234D"
+            },
+            {
+              "type": "FRAME",
+              "name": "Actions",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingVertical": "HUG",
+              "itemSpacing": 8,
+              "_comment": "Add buttons here"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "TableContainer",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 16,
+          "paddingRight": 24,
+          "paddingBottom": 24,
+          "paddingLeft": 24,
+          "_comment": "Add data-table.json here"
+        }
+      ]
+    },
+    "dashboard": {
+      "_note": "Dashboard layout: header + KPI row + card grid",
+      "type": "FRAME",
+      "name": "$PAGE_TITLE",
+      "layoutMode": "VERTICAL",
+      "width": 1440,
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#F3F3F3",
+      "clipsContent": true,
+      "children": [
+        { "_ref": "global-header.json > base" },
+        {
+          "type": "FRAME",
+          "name": "PageHeader",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "fillColor": "#FFFFFF",
+          "paddingTop": 16,
+          "paddingRight": 24,
+          "paddingBottom": 16,
+          "paddingLeft": 24,
+          "primaryAxisAlignItems": "SPACE_BETWEEN",
+          "counterAxisAlignItems": "CENTER",
+          "strokes": [{ "color": "#C9C9C9", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Title",
+              "characters": "$PAGE_TITLE",
+              "fontFamily": "$FONT",
+              "fontSize": 20,
+              "fontWeight": 700,
+              "fillColor": "#03234D"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "KPIRow",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 16,
+          "paddingRight": 24,
+          "paddingBottom": 0,
+          "paddingLeft": 24,
+          "itemSpacing": 16,
+          "_comment": "Add kpi-card.json children here"
+        },
+        {
+          "type": "FRAME",
+          "name": "CardGrid",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 16,
+          "paddingRight": 24,
+          "paddingBottom": 24,
+          "paddingLeft": 24,
+          "itemSpacing": 16,
+          "layoutWrap": "WRAP",
+          "counterAxisSpacing": 16,
+          "_comment": "Add card.json children here, each 50% minus gap"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "component": "feed-item",
+  "variants": {
+    "user": {
+      "type": "FRAME",
+      "name": "FeedItem",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "paddingTop": 10,
+      "paddingBottom": 10,
+      "itemSpacing": 10,
+      "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Avatar",
+          "layoutMode": "HORIZONTAL",
+          "width": 28,
+          "height": 28,
+          "cornerRadius": 14,
+          "fillColor": "#DCE4EF",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Initials",
+              "characters": "$INITIALS",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 700,
+              "fillColor": "#5C5C5C"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Body",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "itemSpacing": 2,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Text",
+              "characters": "$TEXT",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 400,
+              "fillColor": "#2E2E2E",
+              "lineHeight": 18
+            },
+            {
+              "type": "TEXT",
+              "name": "Time",
+              "characters": "$TIME",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 400,
+              "fillColor": "#5C5C5C"
+            }
+          ]
+        }
+      ]
+    },
+    "system": {
+      "_note": "Same as user but avatar uses system colors",
+      "type": "FRAME",
+      "name": "FeedItem",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "paddingTop": 10,
+      "paddingBottom": 10,
+      "itemSpacing": 10,
+      "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Avatar",
+          "layoutMode": "HORIZONTAL",
+          "width": 28,
+          "height": 28,
+          "cornerRadius": 14,
+          "fillColor": "#F3F3F3",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Icon",
+              "characters": "\u2699",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 700,
+              "fillColor": "#0070D2"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Body",
+          "layoutMode": "VERTICAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "itemSpacing": 2,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Text",
+              "characters": "$TEXT",
+              "fontFamily": "$FONT",
+              "fontSize": 12,
+              "fontWeight": 400,
+              "fillColor": "#2E2E2E",
+              "lineHeight": 18
+            },
+            {
+              "type": "TEXT",
+              "name": "Time",
+              "characters": "$TIME",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 400,
+              "fillColor": "#5C5C5C"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "component": "data-table",
+  "usage": "Replace $COLUMNS with array of {name, width}. Replace $DATA with array of row arrays. Each row array matches column order.",
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "$TITLE",
+      "layoutMode": "VERTICAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "fillColor": "#FFFFFF",
+      "clipsContent": true,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "HeaderRow",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "fillColor": "#F3F3F3",
+          "strokes": [{ "color": "#C9C9C9", "weight": 2, "side": "BOTTOM" }],
+          "children": [
+            {
+              "_comment": "$repeat: one HeaderCell per column",
+              "type": "FRAME",
+              "name": "HeaderCell",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "paddingTop": 8,
+              "paddingRight": 10,
+              "paddingBottom": 8,
+              "paddingLeft": 10,
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "ColLabel",
+                  "characters": "$COLUMN_NAME",
+                  "fontFamily": "$FONT",
+                  "fontSize": 10,
+                  "fontWeight": 700,
+                  "fillColor": "#5C5C5C",
+                  "textCase": "UPPER",
+                  "letterSpacing": 0.3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_comment": "$repeat: one DataRow per data item",
+          "type": "FRAME",
+          "name": "DataRow",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "strokes": [{ "color": "#DCE4EF", "weight": 1, "side": "BOTTOM" }],
+          "children": [
+            {
+              "_comment": "$repeat: one DataCell per column",
+              "type": "FRAME",
+              "name": "DataCell",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "paddingTop": 8,
+              "paddingRight": 10,
+              "paddingBottom": 8,
+              "paddingLeft": 10,
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "CellValue",
+                  "characters": "$VALUE",
+                  "fontFamily": "$FONT",
+                  "fontSize": 12,
+                  "fontWeight": 400,
+                  "fillColor": "#2E2E2E"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "cell_variants": {
+    "link": { "fillColor": "#0250D9" },
+    "bold": { "fontWeight": 600 },
+    "muted": { "fillColor": "#5C5C5C" }
+  }
+}

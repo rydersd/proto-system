@@ -1,0 +1,95 @@
+{
+  "component": "modal",
+  "sizes": { "small": 480, "medium": 640, "large": 960 },
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "ModalOverlay",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "FILL",
+      "fillColor": "rgba(0,0,0,0.5)",
+      "primaryAxisAlignItems": "CENTER",
+      "counterAxisAlignItems": "CENTER",
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Modal",
+          "layoutMode": "VERTICAL",
+          "width": 640,
+          "layoutSizingVertical": "HUG",
+          "fillColor": "#FFFFFF",
+          "cornerRadius": 8,
+          "clipsContent": true,
+          "effects": [
+            { "type": "DROP_SHADOW", "color": "rgba(0,0,0,0.12)", "offset": { "x": 0, "y": 7 }, "radius": 10, "spread": 0 }
+          ],
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "Header",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "paddingTop": 16,
+              "paddingRight": 16,
+              "paddingBottom": 16,
+              "paddingLeft": 16,
+              "strokes": [{ "color": "#C9C9C9", "weight": 1, "side": "BOTTOM" }],
+              "primaryAxisAlignItems": "SPACE_BETWEEN",
+              "counterAxisAlignItems": "CENTER",
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "Title",
+                  "characters": "$TITLE",
+                  "fontFamily": "$FONT",
+                  "fontSize": 16,
+                  "fontWeight": 400,
+                  "fillColor": "#03234D"
+                },
+                {
+                  "type": "TEXT",
+                  "name": "Close",
+                  "characters": "\u2715",
+                  "fontFamily": "$FONT",
+                  "fontSize": 16,
+                  "fontWeight": 400,
+                  "fillColor": "#5C5C5C"
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "name": "Content",
+              "layoutMode": "VERTICAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "paddingTop": 16,
+              "paddingRight": 16,
+              "paddingBottom": 16,
+              "paddingLeft": 16,
+              "itemSpacing": 16,
+              "_comment": "Add body content children here"
+            },
+            {
+              "type": "FRAME",
+              "name": "Footer",
+              "layoutMode": "HORIZONTAL",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
+              "paddingTop": 12,
+              "paddingRight": 16,
+              "paddingBottom": 12,
+              "paddingLeft": 16,
+              "strokes": [{ "color": "#C9C9C9", "weight": 1, "side": "TOP" }],
+              "primaryAxisAlignItems": "MAX",
+              "itemSpacing": 8,
+              "_comment": "Add Cancel (neutral) + Save (brand) buttons here"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

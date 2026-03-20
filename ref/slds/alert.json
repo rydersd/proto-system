@@ -1,0 +1,161 @@
+{
+  "component": "alert",
+  "variants": {
+    "info": {
+      "type": "FRAME",
+      "name": "Toast",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "width": 480,
+      "paddingTop": 12,
+      "paddingRight": 48,
+      "paddingBottom": 12,
+      "paddingLeft": 24,
+      "cornerRadius": 6,
+      "fillColor": "#5C5C5C",
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 12,
+      "effects": [
+        { "type": "DROP_SHADOW", "color": "rgba(0,0,0,0.14)", "offset": { "x": 0, "y": 5 }, "radius": 7, "spread": 0 }
+      ],
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Icon",
+          "characters": "\u2139",
+          "fontFamily": "$FONT",
+          "fontSize": 16,
+          "fontWeight": 400,
+          "fillColor": "#FFFFFF"
+        },
+        {
+          "type": "TEXT",
+          "name": "Message",
+          "characters": "$MESSAGE",
+          "fontFamily": "$FONT",
+          "fontSize": 14,
+          "fontWeight": 400,
+          "fillColor": "#FFFFFF",
+          "layoutSizingHorizontal": "FILL"
+        }
+      ]
+    },
+    "success": {
+      "type": "FRAME",
+      "name": "Toast",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "width": 480,
+      "paddingTop": 12,
+      "paddingRight": 48,
+      "paddingBottom": 12,
+      "paddingLeft": 24,
+      "cornerRadius": 6,
+      "fillColor": "#04844B",
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 12,
+      "effects": [
+        { "type": "DROP_SHADOW", "color": "rgba(0,0,0,0.14)", "offset": { "x": 0, "y": 5 }, "radius": 7, "spread": 0 }
+      ],
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Icon",
+          "characters": "\u2713",
+          "fontFamily": "$FONT",
+          "fontSize": 16,
+          "fontWeight": 400,
+          "fillColor": "#FFFFFF"
+        },
+        {
+          "type": "TEXT",
+          "name": "Message",
+          "characters": "$MESSAGE",
+          "fontFamily": "$FONT",
+          "fontSize": 14,
+          "fontWeight": 400,
+          "fillColor": "#FFFFFF",
+          "layoutSizingHorizontal": "FILL"
+        }
+      ]
+    },
+    "warning": {
+      "type": "FRAME",
+      "name": "Toast",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "width": 480,
+      "paddingTop": 12,
+      "paddingRight": 48,
+      "paddingBottom": 12,
+      "paddingLeft": 24,
+      "cornerRadius": 6,
+      "fillColor": "#FF9A3C",
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 12,
+      "effects": [
+        { "type": "DROP_SHADOW", "color": "rgba(0,0,0,0.14)", "offset": { "x": 0, "y": 5 }, "radius": 7, "spread": 0 }
+      ],
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Icon",
+          "characters": "\u26A0",
+          "fontFamily": "$FONT",
+          "fontSize": 16,
+          "fontWeight": 400,
+          "fillColor": "#844800"
+        },
+        {
+          "type": "TEXT",
+          "name": "Message",
+          "characters": "$MESSAGE",
+          "fontFamily": "$FONT",
+          "fontSize": 14,
+          "fontWeight": 400,
+          "fillColor": "#844800",
+          "layoutSizingHorizontal": "FILL"
+        }
+      ]
+    },
+    "error": {
+      "type": "FRAME",
+      "name": "Toast",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingVertical": "HUG",
+      "width": 480,
+      "paddingTop": 12,
+      "paddingRight": 48,
+      "paddingBottom": 12,
+      "paddingLeft": 24,
+      "cornerRadius": 6,
+      "fillColor": "#C23934",
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 12,
+      "effects": [
+        { "type": "DROP_SHADOW", "color": "rgba(0,0,0,0.14)", "offset": { "x": 0, "y": 5 }, "radius": 7, "spread": 0 }
+      ],
+      "children": [
+        {
+          "type": "TEXT",
+          "name": "Icon",
+          "characters": "\u2717",
+          "fontFamily": "$FONT",
+          "fontSize": 16,
+          "fontWeight": 400,
+          "fillColor": "#FFFFFF"
+        },
+        {
+          "type": "TEXT",
+          "name": "Message",
+          "characters": "$MESSAGE",
+          "fontFamily": "$FONT",
+          "fontSize": 14,
+          "fontWeight": 400,
+          "fillColor": "#FFFFFF",
+          "layoutSizingHorizontal": "FILL"
+        }
+      ]
+    }
+  }
+}

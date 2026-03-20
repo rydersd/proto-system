@@ -1,0 +1,116 @@
+{
+  "component": "global-header",
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "GlobalHeader",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "height": 48,
+      "fillColor": "#061C3F",
+      "paddingLeft": 16,
+      "paddingRight": 16,
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 12,
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Logo",
+          "width": 40,
+          "height": 24,
+          "fillColor": "#0070D2",
+          "cornerRadius": 4,
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "LogoText",
+              "characters": "SF",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 700,
+              "fillColor": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Search",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingHorizontal": "FILL",
+          "height": 32,
+          "cornerRadius": 4,
+          "fillColor": "#1A3A5C",
+          "paddingLeft": 12,
+          "paddingRight": 12,
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Placeholder",
+              "characters": "Search Salesforce",
+              "fontFamily": "$FONT",
+              "fontSize": 13,
+              "fontWeight": 400,
+              "fillColor": "#8899AA"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Actions",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingVertical": "HUG",
+          "itemSpacing": 4,
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "ActionIcon",
+              "layoutMode": "HORIZONTAL",
+              "width": 32,
+              "height": 32,
+              "cornerRadius": 4,
+              "primaryAxisAlignItems": "CENTER",
+              "counterAxisAlignItems": "CENTER",
+              "children": [
+                {
+                  "type": "TEXT",
+                  "name": "Icon",
+                  "characters": "\uD83D\uDD14",
+                  "fontFamily": "$FONT",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "fillColor": "#8899AA"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "UserAvatar",
+          "layoutMode": "HORIZONTAL",
+          "width": 28,
+          "height": 28,
+          "cornerRadius": 14,
+          "fillColor": "#0070D2",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Initials",
+              "characters": "$INITIALS",
+              "fontFamily": "$FONT",
+              "fontSize": 10,
+              "fontWeight": 700,
+              "fillColor": "#FFFFFF"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "component": "tabs",
+  "usage": "Build tabs array. One tab gets active styling, rest get inactive. $TABS = [{label, active:bool}]",
+  "variants": {
+    "base": {
+      "type": "FRAME",
+      "name": "TabBar",
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG",
+      "strokes": [{ "color": "#C9C9C9", "weight": 2, "side": "BOTTOM" }],
+      "itemSpacing": 0,
+      "children": [
+        {
+          "_comment": "Active tab",
+          "type": "FRAME",
+          "name": "Tab",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 8,
+          "paddingRight": 16,
+          "paddingBottom": 8,
+          "paddingLeft": 16,
+          "strokes": [{ "color": "#0070D2", "weight": 2, "side": "BOTTOM" }],
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Label",
+              "characters": "$LABEL",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 600,
+              "fillColor": "#0070D2"
+            }
+          ]
+        },
+        {
+          "_comment": "Inactive tab",
+          "type": "FRAME",
+          "name": "Tab",
+          "layoutMode": "HORIZONTAL",
+          "layoutSizingVertical": "HUG",
+          "paddingTop": 8,
+          "paddingRight": 16,
+          "paddingBottom": 8,
+          "paddingLeft": 16,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Label",
+              "characters": "$LABEL",
+              "fontFamily": "$FONT",
+              "fontSize": 11,
+              "fontWeight": 600,
+              "fillColor": "#5C5C5C"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
