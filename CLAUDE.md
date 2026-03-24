@@ -28,6 +28,11 @@ Nib is an agent-consumable wireframe prototyping framework. It provides shared C
 - Starters: `starters/blueprint-record.html` (SFDC record) and `starters/blueprint-dashboard.html` (dashboard)
 - Script load order: `project-data.js` → `proto-nav.js` → blueprint data → `proto-gen.js`
 
+### For compose-format pages (template-level authoring):
+- Read `ref/page-compose.md` — define COMPOSE object with template references, proto-compose.js transforms to PAGE_BLUEPRINT
+- Starters: `starters/compose-record.html` (SFDC record) and `starters/compose-wizard.html` (wizard step)
+- Script load order: `project-data.js` → `proto-nav.js` → compose data → `proto-compose.js` → `proto-gen.js`
+
 ### For navigation setup:
 - Read `ref/navigation.md` — how SECTIONS drives the drawer + breadcrumbs
 
@@ -63,6 +68,7 @@ framework/
 │   ├── proto-keyframes.css # Animations
 │   ├── proto-story.css     # Story/narrative layout styles
 │   ├── proto-nav.js        # Context bar, drawer, toast, modal, normalizeJourneys, detectSurface, buildSurfaceHeader
+│   ├── proto-compose.js    # Compose runtime (COMPOSE → PAGE_BLUEPRINT transformation)
 │   ├── proto-gen.js        # Declarative Page Blueprint renderer (PAGE_BLUEPRINT → HTML)
 │   └── proto-scatter-gl.js # Scatter plot GL visualization
 ├── surfaces/     # Platform CSS overlays
@@ -85,6 +91,7 @@ Phase 1 (documentation + starters) and Phase 2 (core CSS/JS extraction + consoli
 - **AC badge auto-injection** — automatic acceptance criteria badges on wireframe elements
 - **Reference hub components** — reusable patterns for documentation and reference pages
 - **Declarative Page Blueprint** — `proto-gen.js` renders pages from `PAGE_BLUEPRINT` data objects (6 layouts, 9 block types, 4 surface headers)
+- **Compose Runtime** — `proto-compose.js` transforms `COMPOSE` objects (template references + variable substitution) into `PAGE_BLUEPRINT` objects, registers 7 new block types (component-card, wizard-hero, wizard-body, action-bar, alert, filter-bar, skeleton)
 
 ## Design Token Summary
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registration — Step 1: Prospect Information</title>
+  <!-- Core framework CSS (always required) -->
+  <link rel="stylesheet" href="core/proto-core.css">
+  <!-- Surface CSS: Salesforce -->
+  <link rel="stylesheet" href="surfaces/salesforce.css">
+  <!-- Project-specific overrides (create if needed) -->
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+  <!--
+    Compose-format wizard page. COMPOSE → proto-compose.js → PAGE_BLUEPRINT → proto-gen.js → HTML.
+    Customize the COMPOSE object below for your wizard step.
+    See ref/page-compose.md for the complete data structure reference.
+  -->
+
+  <!-- Load project-data.js first — defines SECTIONS for navigation drawer -->
+  <script src="project-data.js"></script>
+  <!-- Load proto-nav.js — builds context bar, drawer, design notes panel -->
+  <script src="core/proto-nav.js"></script>
+
+  <!--
+    COMPOSE — Wizard step in compose format.
+    Layout "wizard > wizard_page_shell" renders: hero → stepper → 2-column form/guidance → action bar.
+  -->
+  <script>
+  var COMPOSE = {
+
+    /* ── Screen Metadata ──────────────────────────────────────── */
+    name: 'Deal Registration — Step 1: Prospect Information',
+    layout: 'wizard > wizard_page_shell',
+
+    /* ── Sections ─────────────────────────────────────────────── */
+    sections: {
+
+      /* Hero bar with title, subtitle, and context chips */
+      hero: {
+        data: {
+          $SUBTITLE: 'All required fields must be filled out in English.',
+          $REG_TYPE: 'Referral',
+          $PROSPECT_NAME: ''
+        }
+      },
+
+      /* Progress stepper */
+      stepper: {
+        template: 'wizard > progress_stepper',
+        data: {
+          $STEPS: [
+            { number: 1, label: 'Prospect Information', state: 'current' },
+            { number: 2, label: 'Deal Details',         state: 'future' },
+            { number: 3, label: 'Sales Contact',        state: 'future' },
+            { number: 4, label: 'Review',               state: 'future' }
+          ]
+        }
+      },
+
+      /* Form sections — each section has a title and array of fields */
+      form: [
+        {
+          section_title: 'Find the Prospect Company',
+          fields: [
+            {
+              template: 'form-elements > input',
+              data: { $LABEL: 'Company Name *', $PLACEHOLDER: 'Search by company name or D&B number...' },
+              _note: 'D&B lookup with typeahead. Shows matching companies below.'
+            }
+          ]
+        },
+        {
+          section_title: 'Company Details',
+          _note: 'Auto-populated from D&B lookup or manual entry fallback',
+          fields: [
+            { template: 'form-elements > input', data: { $LABEL: 'Company Name *', $VALUE: 'Meridian Capital Group' } },
+            { template: 'form-elements > input', data: { $LABEL: 'Website',     $VALUE: 'meridiancapital.com' }, half_width: true },
+            { template: 'form-elements > input', data: { $LABEL: 'DUNS Number', $VALUE: '84-729-3041' },         half_width: true },
+            { template: 'form-elements > input', data: { $LABEL: 'Industry',    $VALUE: 'Financial Services' },  half_width: true },
+            { template: 'form-elements > input', data: { $LABEL: 'Headquarters', $VALUE: 'New York, NY' },       half_width: true }
+          ]
+        }
+      ],
+
+      /* Guidance sidebar */
+      guidance: {
+        template: 'wizard > guidance_sidebar',
+        data: {
+          $SIDEBAR_TITLE: 'Guidance',
+          $STEP_LABEL: 'Step 1 of 4',
+          $DESCRIPTION: 'Search for the prospect company using D&B lookup to ensure accurate data. Manual entry is available if the company isn\'t found.',
+          $checklist: [
+            'Search by company name or DUNS number',
+            'Verify the company details are correct',
+            'Check for existing deal registrations'
+          ]
+        }
+      },
+
+      /* Bottom action bar */
+      action_bar: {
+        template: 'wizard > wizard_action_bar',
+        data: {
+          $back_visible: false,
+          $next_label: 'Next: Deal Details'
+        }
+      }
+    }
+  };
+  </script>
+
+  <!-- Compose runtime: COMPOSE → PAGE_BLUEPRINT -->
+  <script src="core/proto-compose.js"></script>
+  <!-- Blueprint renderer: PAGE_BLUEPRINT → HTML -->
+  <script src="core/proto-gen.js"></script>
+
+</body>
+</html>
