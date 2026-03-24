@@ -56,6 +56,7 @@ All set in `project-data.js` on `window` before proto-nav.js loads:
 | `PROJECT_PHASES` | No | Array of project-level phase definitions — groups stories into delivery phases with system dependencies |
 | `PAGE_BLUEPRINT` | No | Declarative page definition — consumed by proto-gen.js (see §6) |
 | `COMPOSE` | No | Compose-format page definition — consumed by proto-compose.js, transformed into PAGE_BLUEPRINT |
+| `COMPOSE_FLOW` | No | Multi-page flow definition — consumed by compose-flow.js to wire wizard navigation, auto-generate SCENARIOS, sync stepper state |
 
 ## 3. CSS Module Ownership
 
@@ -126,6 +127,13 @@ proto-nav.js  (wfNavInit on DOMContentLoaded)
 │      Transforms: COMPOSE → PAGE_BLUEPRINT (template resolution, variable substitution, layout assembly)
 │      Registers block types: component-card, wizard-hero, wizard-body, action-bar, alert, filter-bar, skeleton
 │      Layout assemblers: record page, list view, wizard page
+│
+├──→ compose-flow.js [optional] (synchronous mutation of PAGE_BLUEPRINT + SCENARIOS generation)
+│      Reads: window.COMPOSE_FLOW
+│      Injects: navigation URLs into action-bar blocks (nextUrl, backUrl, exitUrl)
+│      Generates: SCENARIOS array for proto-nav.js guided walkthroughs
+│      Syncs: wizard stepper state across pages via sessionStorage
+│      Wires: button click handlers to flow entry points after DOM renders
 │
 ├──→ proto-gen.js [optional] (wfBlueprintInit on DOMContentLoaded)
 │      Reads: window.PAGE_BLUEPRINT

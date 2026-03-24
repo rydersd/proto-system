@@ -31,7 +31,9 @@ Nib is an agent-consumable wireframe prototyping framework. It provides shared C
 ### For compose-format pages (template-level authoring):
 - Read `ref/page-compose.md` — define COMPOSE object with template references, proto-compose.js transforms to PAGE_BLUEPRINT
 - Starters: `starters/compose-record.html` (SFDC record) and `starters/compose-wizard.html` (wizard step)
-- Script load order: `project-data.js` → `proto-nav.js` → compose data → `proto-compose.js` → `proto-gen.js`
+- Script load order: `project-data.js` → `proto-nav.js` → compose data → `proto-compose.js` → `compose-flow.js` (optional) → `proto-gen.js`
+- For clickable multi-page prototypes, add `COMPOSE_FLOW` to `project-data.js` and include `compose-flow.js` in the load order
+- Example: `examples/deal-registration/` — 9-screen clickable deal registration flow
 
 ### For navigation setup:
 - Read `ref/navigation.md` — how SECTIONS drives the drawer + breadcrumbs
@@ -69,6 +71,7 @@ framework/
 │   ├── proto-story.css     # Story/narrative layout styles
 │   ├── proto-nav.js        # Context bar, drawer, toast, modal, normalizeJourneys, detectSurface, buildSurfaceHeader
 │   ├── proto-compose.js    # Compose runtime (COMPOSE → PAGE_BLUEPRINT transformation)
+│   ├── compose-flow.js     # Multi-page flow wiring (wizard navigation, scenarios, stepper sync)
 │   ├── proto-gen.js        # Declarative Page Blueprint renderer (PAGE_BLUEPRINT → HTML)
 │   └── proto-scatter-gl.js # Scatter plot GL visualization
 ├── surfaces/     # Platform CSS overlays

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registrations — Empty State</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registrations — Empty State",
+    "layout": "page-layouts > list_view",
+    "width": 1440,
+    "sections": {
+        "header": {
+            "data": {
+                "$PAGE_TITLE": "Deal Registrations",
+                "$actions": [
+                    {
+                        "template": "button > brand",
+                        "data": {
+                            "$LABEL": "Register New Deal"
+                        }
+                    }
+                ]
+            }
+        },
+        "body": {
+            "template": "component-card > empty_state",
+            "data": {
+                "$COMPONENT_TITLE": "Deal Registrations",
+                "$EMPTY_TITLE": "No Deal Registrations Yet",
+                "$EMPTY_MESSAGE": "Register your first deal to start earning commissions and get deal protection. Your PSM will review and approve within 2 business days."
+            },
+            "actions": [
+                {
+                    "template": "button > brand",
+                    "data": {
+                        "$LABEL": "Register Your First Deal"
+                    }
+                }
+            ]
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>

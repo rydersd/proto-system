@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registrations — Loading State</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registrations — Loading State",
+    "layout": "page-layouts > list_view",
+    "width": 1440,
+    "sections": {
+        "header": {
+            "data": {
+                "$PAGE_TITLE": "Deal Registrations"
+            }
+        },
+        "body": {
+            "_note": "Skeleton loading state — 5 shimmer rows in table, KPI cards show pulse placeholders",
+            "skeleton_kpis": 5,
+            "skeleton_rows": 5,
+            "skeleton_columns": [
+                "Deal ID",
+                "Deal Name",
+                "Partner",
+                "Customer",
+                "Value (TCV)",
+                "Submitted",
+                "Status"
+            ]
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>

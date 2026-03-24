@@ -382,3 +382,51 @@ Templates that render multiple items use `repeat` arrays. Each item in the array
 
 - `starters/compose-record.html` — SFDC record page (deal detail)
 - `starters/compose-wizard.html` — Wizard step (deal registration step 1)
+
+## Multi-Page Flows (compose-flow.js)
+
+Add `compose-flow.js` between `proto-compose.js` and `proto-gen.js` to wire pages into a clickable prototype:
+
+```html
+<script src="core/proto-compose.js"></script>
+<script src="core/compose-flow.js"></script>   <!-- optional: wires navigation -->
+<script src="core/proto-gen.js"></script>
+```
+
+Define `COMPOSE_FLOW` in your `project-data.js`:
+
+```javascript
+window.COMPOSE_FLOW = {
+  flows: {
+    'deal-registration': {
+      label: 'Register a New Deal',
+      persona: 'Jordan Reeves, Partner Sales Rep',
+      entry: 'deal-registration-list',           // list page filename (no .html)
+      entryNarrative: 'Jordan opens the list to register a new deal.',
+      steps: [
+        { file: 'deal-reg-step1', label: 'Prospect', narrative: 'Searches for company...' },
+        { file: 'deal-reg-step2', label: 'Details',  narrative: 'Fills in deal info...',
+          friction: 'Dual listbox requires scrolling for long lists.' },
+        { file: 'deal-reg-step3', label: 'Contact',  narrative: 'Verifies contact...' },
+        { file: 'deal-reg-step4', label: 'Review',   narrative: 'Reviews and submits.' }
+      ]
+    }
+  },
+  links: {
+    'Register New Deal': 'deal-reg-step1.html',
+    'Register Your First Deal': 'deal-reg-step1.html'
+  }
+};
+```
+
+**What compose-flow.js does automatically:**
+
+| Feature | How |
+|---------|-----|
+| Wizard Back/Next navigation | Injects `backUrl`/`nextUrl` into action-bar blocks based on step position |
+| Save & Exit | Injects `exitUrl` pointing to the flow's entry page |
+| Stepper sync | Updates stepper step statuses via sessionStorage as you navigate |
+| Auto-generated scenarios | Creates `SCENARIOS` entries so proto-nav.js shows guided walkthroughs |
+| Button wiring | Matches button text (e.g., "Register New Deal") to URLs from `links` map |
+
+**Example project:** `examples/deal-registration/` — 9 screens with full flow wiring.

@@ -956,18 +956,39 @@
         padding: '28px 24px 0', borderTop: '1px solid var(--wf-tint)'
       }
     });
-    bar.appendChild(el('span', {
+    var saveExit = el('span', {
       style: { fontSize: '14px', fontWeight: '600', color: 'var(--wf-muted)', cursor: 'pointer' }
-    }, 'Save & Exit'));
+    }, 'Save & Exit');
+    if (block.exitUrl) {
+      saveExit.addEventListener('click', function () {
+        if (window.wfNavigate) window.wfNavigate(block.exitUrl);
+        else location.href = block.exitUrl;
+      });
+    }
+    bar.appendChild(saveExit);
     var navBtns = el('div', { style: { display: 'flex', gap: '12px' } });
     if (block.backVisible && block.backLabel) {
-      navBtns.appendChild(el('button', { className: 'btn' }, block.backLabel));
+      var backBtn = el('button', { className: 'btn' }, block.backLabel);
+      if (block.backUrl) {
+        backBtn.addEventListener('click', function () {
+          if (window.wfNavigate) window.wfNavigate(block.backUrl);
+          else location.href = block.backUrl;
+        });
+      }
+      navBtns.appendChild(backBtn);
     }
     var nextAttrs = { className: 'btn btn-primary' };
     if (block.nextVariant === 'success') {
       nextAttrs.style = { background: 'var(--wf-green)', borderColor: 'var(--wf-green)', color: '#fff' };
     }
-    navBtns.appendChild(el('button', nextAttrs, block.nextLabel || 'Next'));
+    var nextBtn = el('button', nextAttrs, block.nextLabel || 'Next');
+    if (block.nextUrl) {
+      nextBtn.addEventListener('click', function () {
+        if (window.wfNavigate) window.wfNavigate(block.nextUrl);
+        else location.href = block.nextUrl;
+      });
+    }
+    navBtns.appendChild(nextBtn);
     bar.appendChild(navBtns);
     return bar;
   }

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registrations — List View</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registrations — List View",
+    "layout": "page-layouts > list_view",
+    "width": 1440,
+    "sections": {
+        "header": {
+            "data": {
+                "$PAGE_TITLE": "Deal Registrations",
+                "$actions": [
+                    {
+                        "template": "button > brand",
+                        "data": {
+                            "$LABEL": "Register New Deal"
+                        }
+                    }
+                ]
+            }
+        },
+        "kpis": {
+            "template": "kpi-card > base",
+            "repeat": [
+                {
+                    "$LABEL": "Total Deals",
+                    "$VALUE": "47",
+                    "$DETAIL": "All time"
+                },
+                {
+                    "$LABEL": "Pending Approval",
+                    "$VALUE": "12",
+                    "$DETAIL": "Awaiting PSM review"
+                },
+                {
+                    "$LABEL": "Approved",
+                    "$VALUE": "28",
+                    "$DETAIL": "Active protection"
+                },
+                {
+                    "$LABEL": "Rejected",
+                    "$VALUE": "4",
+                    "$DETAIL": "This quarter"
+                },
+                {
+                    "$LABEL": "Pipeline Value",
+                    "$VALUE": "$8.4M",
+                    "$DETAIL": "Active deals TCV"
+                }
+            ]
+        },
+        "filters": {
+            "_note": "Filter bar above table",
+            "search": {
+                "$PLACEHOLDER": "Search by deal ID, name, customer, or partner..."
+            },
+            "dropdowns": [
+                {
+                    "$LABEL": "Status",
+                    "$OPTIONS": [
+                        "All",
+                        "Pending",
+                        "Approved",
+                        "Rejected",
+                        "Expired",
+                        "Won"
+                    ]
+                },
+                {
+                    "$LABEL": "Partner",
+                    "$OPTIONS": [
+                        "All",
+                        "CloudBridge Solutions",
+                        "TechVision Partners",
+                        "Meridian Financial",
+                        "NetCore Systems"
+                    ]
+                },
+                {
+                    "$LABEL": "Sort",
+                    "$OPTIONS": [
+                        "Newest first",
+                        "Oldest first",
+                        "Highest value",
+                        "Lowest value"
+                    ]
+                }
+            ],
+            "date_range": {
+                "$FROM": "",
+                "$TO": ""
+            }
+        },
+        "table": {
+            "template": "data-table > base",
+            "data": {
+                "$columns": [
+                    "Deal ID",
+                    "Deal Name",
+                    "Partner",
+                    "Customer",
+                    "Value (TCV)",
+                    "Submitted",
+                    "Assigned To",
+                    "Status",
+                    "Protection"
+                ],
+                "$rows": [
+                    [
+                        "DR-2026-4401",
+                        "Secure Connect Infrastructure",
+                        "CloudBridge Solutions",
+                        "SHIELD Division",
+                        "$1,620,000",
+                        "Jan 22, 2026",
+                        "Steve Rogers",
+                        "Approved",
+                        "45d left"
+                    ],
+                    [
+                        "DR-2026-4398",
+                        "Cloud Migration Phase 2",
+                        "TechVision Partners",
+                        "Stark Industries",
+                        "$2,100,000",
+                        "Jan 18, 2026",
+                        "Lisa Park",
+                        "Pending",
+                        "—"
+                    ],
+                    [
+                        "DR-2026-4395",
+                        "Network Edge Deployment",
+                        "CloudBridge Solutions",
+                        "Wayne Enterprises",
+                        "$890,000",
+                        "Jan 15, 2026",
+                        "Steve Rogers",
+                        "Approved",
+                        "62d left"
+                    ],
+                    [
+                        "DR-2026-4390",
+                        "Fabric Interconnect",
+                        "NetCore Systems",
+                        "Oscorp Labs",
+                        "$450,000",
+                        "Jan 10, 2026",
+                        "James Liu",
+                        "Rejected",
+                        "—"
+                    ],
+                    [
+                        "DR-2026-4387",
+                        "Colocation Expansion",
+                        "Meridian Financial",
+                        "Pym Technologies",
+                        "$3,200,000",
+                        "Jan 8, 2026",
+                        "Sarah Chen",
+                        "Won",
+                        "Active"
+                    ],
+                    [
+                        "DR-2026-4380",
+                        "IX Peering Setup",
+                        "CloudBridge Solutions",
+                        "Daily Bugle Media",
+                        "$180,000",
+                        "Jan 3, 2026",
+                        "Steve Rogers",
+                        "Expired",
+                        "Expired"
+                    ]
+                ]
+            }
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>
