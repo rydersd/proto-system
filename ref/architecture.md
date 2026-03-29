@@ -9,8 +9,14 @@
 project-data.js → proto-nav.js → [blueprint-data.js → proto-gen.js]
 ```
 
+**Compose-format pages (extended order):**
+```
+project-data.js → proto-nav.js → compose-data.js → proto-compose.js → proto-gen.js
+```
+
 - `project-data.js` sets global data structures on `window` (see §2)
 - `proto-nav.js` reads those globals and builds the page chrome (context bar, drawer, design notes panel, story mode, etc.)
+- `proto-compose.js` (optional) reads `window.COMPOSE` and transforms it into `window.PAGE_BLUEPRINT`, registers compose-specific block types on DOMContentLoaded
 - `proto-gen.js` (optional) reads `window.PAGE_BLUEPRINT` and generates page content — runs on `DOMContentLoaded`, after proto-nav.js has executed
 
 **`wfNavInit()` sequence** (proto-nav.js entry point):
@@ -25,14 +31,14 @@ project-data.js → proto-nav.js → [blueprint-data.js → proto-gen.js]
 9. `buildSettingsPanel()` — theme/settings configuration panel
 10. `wfThemeDetect()` — resolve and apply design system theme for current page
 11. `buildStoryModeSelector()` — journey/story mode dropdown
-10. `buildScenarioBanner()` — guided walkthrough banner
-11. `hideOldChrome()` — remove legacy chrome elements
-12. `wfInitModals()` — modal dialog system
-13. `wfInitThreadPanel()` — thread/comment panel
-14. `wfCheckActions()` — process pending modal actions from sessionStorage
-15. `randomizeTornEdges()` / `randomizeWobble()` — paper aesthetic randomization
-16. `wfInitScatterTransition()` — scatter GL transition setup
-17. `buildStencilLayer()` — stencil overlay for blueprint aesthetic
+12. `buildScenarioBanner()` — guided walkthrough banner
+13. `hideOldChrome()` — remove legacy chrome elements
+14. `wfInitModals()` — modal dialog system
+15. `wfInitThreadPanel()` — thread/comment panel
+16. `wfCheckActions()` — process pending modal actions from sessionStorage
+17. `randomizeTornEdges()` / `randomizeWobble()` — paper aesthetic randomization
+18. `wfInitScatterTransition()` — scatter GL transition setup
+19. `buildStencilLayer()` — stencil overlay for blueprint aesthetic
 
 ## 2. Global Data Structures
 
@@ -49,6 +55,8 @@ All set in `project-data.js` on `window` before proto-nav.js loads:
 | `DESIGN_STORIES` | No | Array of rich story objects — user stories, acceptance criteria, phased implementation, decisions, SFDC suggestions. Living design document source of truth |
 | `PROJECT_PHASES` | No | Array of project-level phase definitions — groups stories into delivery phases with system dependencies |
 | `PAGE_BLUEPRINT` | No | Declarative page definition — consumed by proto-gen.js (see §6) |
+| `COMPOSE` | No | Compose-format page definition — consumed by proto-compose.js, transformed into PAGE_BLUEPRINT |
+| `COMPOSE_FLOW` | No | Multi-page flow definition — consumed by compose-flow.js to wire wizard navigation, auto-generate SCENARIOS, sync stepper state |
 
 ## 3. CSS Module Ownership
 
@@ -113,6 +121,19 @@ proto-nav.js  (wfNavInit on DOMContentLoaded)
 ├──→ Surface CSS (one per page): salesforce.css | slack.css | internal-ds.css
 │
 ├──→ Page HTML: .wf-* classes, data-* attributes, .wf-design-notes content
+│
+├──→ proto-compose.js [optional] (synchronous transform + DOMContentLoaded block registration)
+│      Reads: window.COMPOSE
+│      Transforms: COMPOSE → PAGE_BLUEPRINT (template resolution, variable substitution, layout assembly)
+│      Registers block types: component-card, wizard-hero, wizard-body, action-bar, alert, filter-bar, skeleton
+│      Layout assemblers: record page, list view, wizard page
+│
+├──→ compose-flow.js [optional] (synchronous mutation of PAGE_BLUEPRINT + SCENARIOS generation)
+│      Reads: window.COMPOSE_FLOW
+│      Injects: navigation URLs into action-bar blocks (nextUrl, backUrl, exitUrl)
+│      Generates: SCENARIOS array for proto-nav.js guided walkthroughs
+│      Syncs: wizard stepper state across pages via sessionStorage
+│      Wires: button click handlers to flow entry points after DOM renders
 │
 ├──→ proto-gen.js [optional] (wfBlueprintInit on DOMContentLoaded)
 │      Reads: window.PAGE_BLUEPRINT

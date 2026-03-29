@@ -17,6 +17,7 @@
 | Multi-system theming | `design-system-theme.md` + `navigation.md` |
 | Paper/blueprint features | `components.md` | Paper utility classes, confidence attribute |
 | Declarative page from data | `page-blueprint.md` + surface ref |
+| Compose-format pages | `page-compose.md` + surface ref |
 
 | Building a sitemap page | `project-deliverables.md` |
 | Writing design notes | `design-notes-guide.md` |

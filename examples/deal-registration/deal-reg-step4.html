@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registration — Step 4: Review & Submit</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registration — Step 4: Review & Submit",
+    "layout": "wizard > wizard_page_shell",
+    "width": 1440,
+    "sections": {
+        "hero": {
+            "data": {
+                "$SUBTITLE": "Review all details before submitting.",
+                "$REG_TYPE": "Referral",
+                "$PROSPECT_NAME": "Meridian Capital Group"
+            }
+        },
+        "stepper": {
+            "template": "wizard > progress_stepper",
+            "data": {
+                "$STEPS": [
+                    {
+                        "number": 1,
+                        "label": "Prospect Information",
+                        "state": "complete"
+                    },
+                    {
+                        "number": 2,
+                        "label": "Deal Details",
+                        "state": "complete"
+                    },
+                    {
+                        "number": 3,
+                        "label": "Sales Contact",
+                        "state": "complete"
+                    },
+                    {
+                        "number": 4,
+                        "label": "Review",
+                        "state": "current"
+                    }
+                ]
+            }
+        },
+        "form": [
+            {
+                "template": "wizard > review_accordion",
+                "data": {
+                    "$SECTION_TITLE": "Prospect Information",
+                    "$N": "1",
+                    "$rows": [
+                        {
+                            "$LABEL": "Company Name",
+                            "$VALUE": "Meridian Capital Group"
+                        },
+                        {
+                            "$LABEL": "Website",
+                            "$VALUE": "meridiancapital.com"
+                        },
+                        {
+                            "$LABEL": "DUNS Number",
+                            "$VALUE": "84-729-3041"
+                        },
+                        {
+                            "$LABEL": "Industry",
+                            "$VALUE": "Financial Services"
+                        },
+                        {
+                            "$LABEL": "Headquarters",
+                            "$VALUE": "New York, NY"
+                        }
+                    ]
+                }
+            },
+            {
+                "template": "wizard > review_accordion",
+                "data": {
+                    "$SECTION_TITLE": "Deal Details",
+                    "$N": "2",
+                    "$rows": [
+                        {
+                            "$LABEL": "Deal Name",
+                            "$VALUE": "Meridian — Colocation + Fabric"
+                        },
+                        {
+                            "$LABEL": "Deal Value / TCV",
+                            "$VALUE": "$1,620,000"
+                        },
+                        {
+                            "$LABEL": "Expected Close",
+                            "$VALUE": "Jun 30, 2026"
+                        },
+                        {
+                            "$LABEL": "Deal Type",
+                            "$VALUE": "New Business"
+                        },
+                        {
+                            "$LABEL": "Distributor",
+                            "$VALUE": "None (direct)"
+                        },
+                        {
+                            "$LABEL": "Locations",
+                            "$VALUE": "SG1 — Singapore, DC6 — Ashburn"
+                        },
+                        {
+                            "$LABEL": "Primary Services",
+                            "$VALUE": "Colocation, Equinix Fabric, Network Edge"
+                        },
+                        {
+                            "$LABEL": "Additional Services",
+                            "$VALUE": "Cross Connect"
+                        },
+                        {
+                            "$LABEL": "Alliance Partners",
+                            "$VALUE": "AWS, Cisco"
+                        },
+                        {
+                            "$LABEL": "Description",
+                            "$VALUE": "Meridian Capital Group is building a low-latency trading platform..."
+                        }
+                    ]
+                }
+            },
+            {
+                "template": "wizard > review_accordion",
+                "data": {
+                    "$SECTION_TITLE": "Sales Contact",
+                    "$N": "3",
+                    "$rows": [
+                        {
+                            "$LABEL": "Name",
+                            "$VALUE": "Steve Rogers"
+                        },
+                        {
+                            "$LABEL": "Title",
+                            "$VALUE": "Senior Solutions Architect"
+                        },
+                        {
+                            "$LABEL": "Company",
+                            "$VALUE": "CloudBridge Solutions"
+                        },
+                        {
+                            "$LABEL": "Email",
+                            "$VALUE": "steve.rogers@cloudbridge.com"
+                        },
+                        {
+                            "$LABEL": "Phone",
+                            "$VALUE": "+1 (617) 555-0194"
+                        },
+                        {
+                            "$LABEL": "Partner ID",
+                            "$VALUE": "P-0047291"
+                        }
+                    ]
+                }
+            }
+        ],
+        "guidance": {
+            "template": "wizard > guidance_sidebar",
+            "data": {
+                "$SIDEBAR_TITLE": "Guidance",
+                "$STEP_LABEL": "Step 4 of 4",
+                "$DESCRIPTION": "Review all information before submitting. Click Edit on any section to make changes. Once submitted, your PSM will review within 2 business days.",
+                "$checklist": [
+                    "All sections show correct information",
+                    "Deal description is detailed enough",
+                    "Supporting documents are attached",
+                    "Sales contact email is monitored"
+                ]
+            }
+        },
+        "action_bar": {
+            "template": "wizard > wizard_action_bar",
+            "data": {
+                "$back_label": "Back",
+                "$next_label": "Submit Deal Registration",
+                "$next_variant": "success"
+            }
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>

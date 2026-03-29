@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registration Detail</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registration Detail",
+    "layout": "page-layouts > record_page",
+    "width": 1440,
+    "sections": {
+        "header": {
+            "template": "record-header > base",
+            "data": {
+                "$ICON": "DR",
+                "$RECORD_TYPE": "Deal Registration",
+                "$RECORD_NAME": "Meridian Capital Group — Colocation + Fabric",
+                "$highlights": [
+                    {
+                        "$LABEL": "Status",
+                        "$VALUE": "Under Review"
+                    },
+                    {
+                        "$LABEL": "Submitted",
+                        "$VALUE": "Mar 15, 2026"
+                    },
+                    {
+                        "$LABEL": "Partner",
+                        "$VALUE": "CloudBridge Solutions"
+                    },
+                    {
+                        "$LABEL": "Equinix PSM",
+                        "$VALUE": "Marcus Chen"
+                    }
+                ]
+            }
+        },
+        "path": {
+            "template": "path-bar > base",
+            "data": {
+                "$stages": [
+                    {
+                        "$STAGE_NAME": "Submitted",
+                        "state": "complete"
+                    },
+                    {
+                        "$STAGE_NAME": "Under Review",
+                        "state": "current"
+                    },
+                    {
+                        "$STAGE_NAME": "Approved",
+                        "state": "future"
+                    },
+                    {
+                        "$STAGE_NAME": "Active",
+                        "state": "future"
+                    },
+                    {
+                        "$STAGE_NAME": "Closed",
+                        "state": "future"
+                    }
+                ]
+            }
+        },
+        "left": [
+            {
+                "template": "component-card > base",
+                "data": {
+                    "$COMPONENT_TITLE": "Related Partners",
+                    "$ICON": "AC",
+                    "$ICON_BG": "#7F8DE1",
+                    "$COUNT": "2"
+                },
+                "body": {
+                    "template": "related-list > base",
+                    "repeat": [
+                        {
+                            "$INITIALS": "CB",
+                            "$TITLE": "CloudBridge Solutions",
+                            "$SUBTITLE": "Gold Partner",
+                            "$META": "Referral"
+                        },
+                        {
+                            "$INITIALS": "MC",
+                            "$TITLE": "Meridian Capital Group",
+                            "$SUBTITLE": "Prospect",
+                            "$META": "End Customer"
+                        }
+                    ]
+                }
+            },
+            {
+                "template": "component-card > compact",
+                "data": {
+                    "$COMPONENT_TITLE": "Quick Actions",
+                    "$ACTION": ""
+                },
+                "body": "_buttons: [Edit, Clone, Submit for Approval, Change Owner]"
+            }
+        ],
+        "main": [
+            {
+                "template": "component-card > base",
+                "data": {
+                    "$COMPONENT_TITLE": "Deal Details",
+                    "$ICON": "DR",
+                    "$ICON_BG": "#FCB95B",
+                    "$COUNT": ""
+                },
+                "body": {
+                    "template": "detail-grid > base",
+                    "repeat": [
+                        {
+                            "$LABEL": "Deal Type",
+                            "$VALUE": "New Business · Referral"
+                        },
+                        {
+                            "$LABEL": "Distributor",
+                            "$VALUE": "None (direct)"
+                        },
+                        {
+                            "$LABEL": "Locations",
+                            "$VALUE": "SG1 — Singapore, DC6 — Ashburn"
+                        },
+                        {
+                            "$LABEL": "Primary Services",
+                            "$VALUE": "Colocation, Equinix Fabric, Network Edge"
+                        },
+                        {
+                            "$LABEL": "Partner Project Code",
+                            "$VALUE": "CB-2026-4401"
+                        },
+                        {
+                            "$LABEL": "Submitted By",
+                            "$VALUE": "Jordan Reeves"
+                        }
+                    ]
+                }
+            },
+            {
+                "template": "component-card > base",
+                "data": {
+                    "$COMPONENT_TITLE": "Sales Contact",
+                    "$ICON": "CT",
+                    "$ICON_BG": "#A094ED",
+                    "$COUNT": ""
+                },
+                "body": {
+                    "template": "detail-grid > base",
+                    "repeat": [
+                        {
+                            "$LABEL": "Name",
+                            "$VALUE": "Steve Rogers"
+                        },
+                        {
+                            "$LABEL": "Title",
+                            "$VALUE": "Senior Solutions Architect"
+                        },
+                        {
+                            "$LABEL": "Email",
+                            "$VALUE": "steve.rogers@cloudbridge.com"
+                        },
+                        {
+                            "$LABEL": "Phone",
+                            "$VALUE": "+1 (617) 555-0194"
+                        },
+                        {
+                            "$LABEL": "Partner ID",
+                            "$VALUE": "P-0047291"
+                        }
+                    ]
+                }
+            },
+            {
+                "template": "component-card > base",
+                "data": {
+                    "$COMPONENT_TITLE": "Description",
+                    "$ICON": "NT",
+                    "$ICON_BG": "#E6D478",
+                    "$COUNT": ""
+                },
+                "body": "_text: Meridian Capital Group is building a low-latency trading platform requiring sub-millisecond connectivity to NASDAQ and NYSE matching engines. Evaluating SG1 for APAC expansion and DC6 for primary US presence. CloudBridge has existing relationship through their managed hosting engagement."
+            }
+        ],
+        "right": [
+            {
+                "template": "component-card > base",
+                "data": {
+                    "$COMPONENT_TITLE": "Activity",
+                    "$ICON": "EV",
+                    "$ICON_BG": "#EB7092",
+                    "$COUNT": "5"
+                },
+                "body": {
+                    "template": "feed-item > user",
+                    "repeat": [
+                        {
+                            "$INITIALS": "MC",
+                            "$TEXT": "Marcus Chen assigned as PSM reviewer",
+                            "$TIME": "2 hours ago"
+                        },
+                        {
+                            "$INITIALS": "JR",
+                            "$TEXT": "Jordan Reeves submitted deal registration",
+                            "$TIME": "Mar 15, 2026"
+                        },
+                        {
+                            "$INITIALS": "JR",
+                            "$TEXT": "Jordan Reeves uploaded Meridian_Infrastructure_Brief.pdf",
+                            "$TIME": "Mar 15, 2026"
+                        }
+                    ]
+                }
+            },
+            {
+                "template": "component-card > compact",
+                "data": {
+                    "$COMPONENT_TITLE": "Files",
+                    "$ACTION": "Upload"
+                },
+                "body": "_file: Meridian_Infrastructure_Brief.pdf (2.4 MB)"
+            }
+        ]
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>

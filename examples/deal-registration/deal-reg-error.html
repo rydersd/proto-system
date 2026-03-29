@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registrations — Error State</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registrations — Error State",
+    "layout": "page-layouts > list_view",
+    "width": 1440,
+    "sections": {
+        "header": {
+            "data": {
+                "$PAGE_TITLE": "Deal Registrations"
+            }
+        },
+        "body": {
+            "template": "alert > error",
+            "data": {
+                "$TITLE": "Unable to Load Deal Registrations",
+                "$MESSAGE": "We couldn't retrieve your deal registrations. This may be due to a sync issue with Salesforce. Please try again or contact support if the issue persists.",
+                "$actions": [
+                    {
+                        "template": "button > neutral",
+                        "data": {
+                            "$LABEL": "Try Again"
+                        }
+                    },
+                    {
+                        "template": "button > neutral",
+                        "data": {
+                            "$LABEL": "Contact Support"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>

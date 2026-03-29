@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registration — Step 3: Sales Contact</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registration — Step 3: Sales Contact",
+    "layout": "wizard > wizard_page_shell",
+    "width": 1440,
+    "sections": {
+        "hero": {
+            "data": {
+                "$SUBTITLE": "All required fields must be filled out in English.",
+                "$REG_TYPE": "Referral",
+                "$PROSPECT_NAME": "Meridian Capital Group"
+            }
+        },
+        "stepper": {
+            "template": "wizard > progress_stepper",
+            "data": {
+                "$STEPS": [
+                    {
+                        "number": 1,
+                        "label": "Prospect Information",
+                        "state": "complete"
+                    },
+                    {
+                        "number": 2,
+                        "label": "Deal Details",
+                        "state": "complete"
+                    },
+                    {
+                        "number": 3,
+                        "label": "Sales Contact",
+                        "state": "current"
+                    },
+                    {
+                        "number": 4,
+                        "label": "Review",
+                        "state": "future"
+                    }
+                ]
+            }
+        },
+        "form": [
+            {
+                "section_title": "Sales Contact",
+                "_note": "Checkbox to auto-fill from logged-in user profile",
+                "prefill_checkbox": {
+                    "$LABEL": "I am the sales contact for this deal",
+                    "$checked": true
+                },
+                "fields": [
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "First Name *",
+                            "$VALUE": "Steve"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Last Name *",
+                            "$VALUE": "Rogers"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Job Title *",
+                            "$VALUE": "Senior Solutions Architect"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Partner Company *",
+                            "$VALUE": "CloudBridge Solutions"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Email Address *",
+                            "$VALUE": "steve.rogers@cloudbridge.com"
+                        }
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Phone Number",
+                            "$VALUE": "+1 (617) 555-0194"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Equinix Partner ID",
+                            "$VALUE": "P-0047291",
+                            "$PLACEHOLDER": "P-XXXXXX"
+                        },
+                        "half_width": true
+                    }
+                ]
+            }
+        ],
+        "guidance": {
+            "template": "wizard > guidance_sidebar",
+            "data": {
+                "$SIDEBAR_TITLE": "Guidance",
+                "$STEP_LABEL": "Step 3 of 4",
+                "$DESCRIPTION": "Confirm the sales contact who will be the primary point of contact for this deal. Your PSM will reach out to this person.",
+                "$checklist": [
+                    "Verify contact details are current",
+                    "Ensure email is monitored for PSM communications",
+                    "Partner ID helps speed up review"
+                ]
+            }
+        },
+        "action_bar": {
+            "template": "wizard > wizard_action_bar",
+            "data": {
+                "$back_label": "Back",
+                "$next_label": "Next: Review"
+            }
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>

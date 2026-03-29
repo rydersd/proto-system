@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" class="wireframe">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Registration — Step 2: Deal Details</title>
+  <link rel="stylesheet" href="../../core/proto-core.css">
+  <link rel="stylesheet" href="../../surfaces/salesforce.css">
+</head>
+<body>
+
+  <script src="project-data.js"></script>
+  <script src="../../core/proto-nav.js"></script>
+  <script>
+  var COMPOSE = {
+    "name": "Deal Registration — Step 2: Deal Details",
+    "layout": "wizard > wizard_page_shell",
+    "width": 1440,
+    "sections": {
+        "hero": {
+            "data": {
+                "$SUBTITLE": "All required fields must be filled out in English.",
+                "$REG_TYPE": "Referral",
+                "$PROSPECT_NAME": "Meridian Capital Group"
+            }
+        },
+        "stepper": {
+            "template": "wizard > progress_stepper",
+            "data": {
+                "$STEPS": [
+                    {
+                        "number": 1,
+                        "label": "Prospect Information",
+                        "state": "complete"
+                    },
+                    {
+                        "number": 2,
+                        "label": "Deal Details",
+                        "state": "current"
+                    },
+                    {
+                        "number": 3,
+                        "label": "Sales Contact",
+                        "state": "future"
+                    },
+                    {
+                        "number": 4,
+                        "label": "Review",
+                        "state": "future"
+                    }
+                ]
+            }
+        },
+        "form": [
+            {
+                "section_title": "Deal Information",
+                "fields": [
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Deal Name *",
+                            "$PLACEHOLDER": "e.g., Meridian — Colocation + Fabric"
+                        }
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Deal Value / TCV *",
+                            "$PLACEHOLDER": "$0.00"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Expected Close Date *",
+                            "$PLACEHOLDER": "MM/DD/YYYY"
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > select",
+                        "data": {
+                            "$LABEL": "Distributor",
+                            "$VALUE": "Select distributor..."
+                        },
+                        "half_width": true
+                    },
+                    {
+                        "template": "form-elements > select",
+                        "data": {
+                            "$LABEL": "Deal Registration Type *",
+                            "$VALUE": "Select type..."
+                        },
+                        "half_width": true,
+                        "_options": [
+                            "New Business",
+                            "Expansion/Upsell",
+                            "Renewal Influence",
+                            "Migration"
+                        ]
+                    },
+                    {
+                        "template": "form-elements > input",
+                        "data": {
+                            "$LABEL": "Partner Project Code",
+                            "$PLACEHOLDER": "Optional internal reference"
+                        }
+                    }
+                ]
+            },
+            {
+                "section_title": "Locations",
+                "_note": "Region filter pills + dual listbox for IBX selection",
+                "region_pills": [
+                    "Americas",
+                    "EMEA",
+                    "Asia-Pacific"
+                ],
+                "fields": [
+                    {
+                        "template": "wizard > dual_listbox",
+                        "data": {
+                            "$available": [
+                                "NY5 — New York",
+                                "NY7 — New York",
+                                "NY9 — New York",
+                                "DC2 — Ashburn",
+                                "DC6 — Ashburn",
+                                "CH1 — Chicago",
+                                "CH2 — Chicago",
+                                "SV1 — Silicon Valley",
+                                "SV5 — Silicon Valley",
+                                "LA1 — Los Angeles",
+                                "DA1 — Dallas",
+                                "DA3 — Dallas",
+                                "SE2 — Seattle",
+                                "AT1 — Atlanta",
+                                "MI1 — Miami",
+                                "TR1 — Toronto",
+                                "TR2 — Toronto",
+                                "SP2 — São Paulo",
+                                "SP4 — São Paulo"
+                            ],
+                            "$selected": []
+                        }
+                    }
+                ]
+            },
+            {
+                "section_title": "Services",
+                "fields": [
+                    {
+                        "template": "form-elements > checkbox",
+                        "data": {
+                            "$LABEL": "Primary Services *"
+                        },
+                        "_options": [
+                            "Colocation",
+                            "Equinix Fabric",
+                            "Equinix Metal",
+                            "Network Edge",
+                            "Internet Exchange",
+                            "Equinix Connect"
+                        ]
+                    },
+                    {
+                        "template": "form-elements > checkbox",
+                        "data": {
+                            "$LABEL": "Additional Services"
+                        },
+                        "_options": [
+                            "Smart Hands / Remote Hands",
+                            "Cross Connect",
+                            "ECIA / Advanced Suite",
+                            "Peering / Private Interconnect"
+                        ]
+                    }
+                ]
+            },
+            {
+                "section_title": "Deal Description",
+                "fields": [
+                    {
+                        "template": "form-elements > textarea",
+                        "data": {
+                            "$LABEL": "Description *",
+                            "$PLACEHOLDER": "Describe the opportunity, customer needs, and your engagement... (min 50 characters)"
+                        }
+                    },
+                    {
+                        "_note": "File upload zone",
+                        "label": "Supporting Documents",
+                        "hint": "PDF, DOCX, PPTX — max 10MB"
+                    }
+                ]
+            },
+            {
+                "section_title": "Alliance Partners",
+                "_note": "Optional multi-select",
+                "fields": [
+                    {
+                        "template": "wizard > dual_listbox",
+                        "data": {
+                            "$available": [
+                                "AWS",
+                                "Azure",
+                                "GCP",
+                                "IBM Cloud",
+                                "Oracle Cloud",
+                                "Salesforce",
+                                "ServiceNow",
+                                "Cisco",
+                                "VMware",
+                                "Zscaler"
+                            ],
+                            "$selected": []
+                        }
+                    }
+                ]
+            }
+        ],
+        "guidance": {
+            "template": "wizard > guidance_sidebar",
+            "data": {
+                "$SIDEBAR_TITLE": "Guidance",
+                "$STEP_LABEL": "Step 2 of 4",
+                "$DESCRIPTION": "Provide details about the deal including locations, services, and expected value. More detail helps your PSM review faster.",
+                "$checklist": [
+                    "Name the deal clearly (customer + services)",
+                    "Select all relevant IBX locations",
+                    "Choose primary and additional services",
+                    "Add a description (min 50 characters)",
+                    "Attach supporting documents if available"
+                ]
+            }
+        },
+        "action_bar": {
+            "template": "wizard > wizard_action_bar",
+            "data": {
+                "$back_label": "Back",
+                "$next_label": "Next: Sales Contact"
+            }
+        }
+    }
+};
+  </script>
+  <script src="../../core/proto-compose.js"></script>
+  <script src="../../core/compose-flow.js"></script>
+  <script src="../../core/proto-gen.js"></script>
+
+</body>
+</html>
