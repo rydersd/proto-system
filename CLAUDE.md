@@ -4,9 +4,32 @@
 
 Nib is an agent-consumable wireframe prototyping framework. It provides shared CSS, JS, and reference documentation so that agents can rapidly generate consistent, professional wireframe pages for any project.
 
+## Documentation lives in `docs/` (the wiki)
+
+The framework's documentation surface is `docs/` — Markdown files with `[[Page-Name]]` wikilinks. `ref/` is **deprecated**; its files now carry deprecation banners pointing at the matching wiki page. Edit the wiki version when contributing docs.
+
+Entry points: `docs/Home.md`, `docs/_Sidebar.md`. Canonical pages for the recent additions: `docs/Spreadsheet-Authoring.md`, `docs/Service-Blueprint.md`, `docs/Templates.md`, `docs/Create-Project.md`, `docs/Feedback.md`, `docs/Context-Bar.md`, `docs/Project-Wiki.md`.
+
 ## How to Use This Framework
 
-### Before generating any page:
+### Quickest start: one-command create
+```
+npx create-nib <project-name>     # opens a browser wizard
+npx create-nib foo --workbook ./brief.xlsx   # headless: ingest a workbook
+npx create-nib foo --template service-blueprint   # headless: clone a template
+```
+Read `docs/Create-Project.md` for the full flag set + how distribution works.
+
+### From a spreadsheet (manual)
+1. Read `docs/Spreadsheet-Authoring.md` — workbook schema + CLI
+2. Run `node tools/nib-ingest.js <your-workbook>.xlsx --out <project-dir>`
+3. The CLI generates `data/*.js` for the whole project — pages, tokens, personas, blueprints, stories — **and** a `docs/` wiki documenting all of them.
+
+### Or pick a template
+1. Read `docs/Templates.md` — catalog of `examples/` project scaffolds (clone-whole)
+2. Copy the closest template into your project; replace `data/` from your workbook.
+
+### Before generating any page (manual path):
 1. Read `ref/_index.md` — routing table for which refs to load
 2. Read `ref/tokens.md` — color and typography tokens (never hardcode hex)
 3. Read `ref/page-template.md` — required HTML boilerplate
@@ -69,23 +92,56 @@ framework/
 │   ├── proto-feedback.css  # Toast, modals, notifications
 │   ├── proto-keyframes.css # Animations
 │   ├── proto-story.css     # Story/narrative layout styles
-│   ├── proto-nav.js        # Context bar, drawer, toast, modal, normalizeJourneys, detectSurface, buildSurfaceHeader
+│   ├── proto-nav.js        # Context bar, drawer, toast, modal, wfCopyDeepLink, normalizeJourneys, detectSurface
+│   ├── proto-search.js     # Opt-in portal header + search widget + AI search mode (loaded via WIREFRAME_CONFIG flags)
+│   ├── proto-search.css    # Portal header + search widget styles
 │   ├── proto-compose.js    # Compose runtime (COMPOSE → PAGE_BLUEPRINT transformation)
 │   ├── compose-flow.js     # Multi-page flow wiring (wizard navigation, scenarios, stepper sync)
 │   ├── proto-gen.js        # Declarative Page Blueprint renderer (PAGE_BLUEPRINT → HTML)
-│   └── proto-scatter-gl.js # Scatter plot GL visualization
+│   ├── proto-scatter-gl.js # Scatter plot GL visualization
+│   ├── schema/             # JSON Schema for the canonical Nib project shape
+│   │   └── workbook.schema.json
+│   ├── ingest/             # Adapter-agnostic Excel/Sheets → project pipeline (consumed by tools/nib-ingest.js)
+│   │   ├── util.js         # Shared kebab/list/header helpers
+│   │   ├── parsers.js      # Per-tab parsers (meta, pages, tokens, personas, stories, flow, registry)
+│   │   ├── build.js        # Orchestrator: tabs dict → canonical project shape
+│   │   ├── emit.js         # Project shape → data/*.js + tokens.css + sidecar
+│   │   ├── xlsx.js         # SheetJS adapter (.xlsx files)
+│   │   ├── sheets-csv.js   # Google Sheets via /export?format=xlsx or per-tab CSV (no auth)
+│   │   └── sheets-api.js   # Google Sheets via googleapis service account (--auth)
+│   └── blueprint/          # React Flow service blueprint canvas (loaded as ES modules in pages)
+│       ├── canvas.js       # Canvas component, Toolbar, Overview panel, breadcrumb drill-down
+│       ├── node-types.js   # Custom React Flow node types (lane, phase, journey card, csat cell)
+│       ├── layout.js       # BlueprintFlow → React Flow nodes/edges with positions
+│       ├── operations.js   # Pure flow ops (move/rename/add/remove for nodes/lanes/phases/edges)
+│       ├── history.js      # Snapshot-based undo/redo
+│       ├── exporters.js    # JSON / YAML / xlsx round-trip writers
+│       ├── sync-adapter.js # Pluggable persistence (localStorage default)
+│       └── canvas.css      # Canvas styling (Nib-token-driven)
 ├── surfaces/     # Platform CSS overlays
 │   ├── slack.css           # Slack app shell, messages, threads
 │   ├── salesforce.css      # SFDC record pages, path bar, feed
 │   └── internal-ds.css     # Portal KPIs, form groups, cards
+├── tools/        # Node CLIs
+│   ├── nib-cli.js          # Validate / pull-reviews / brief / dashboard
+│   ├── nib-ingest.js       # Excel / Sheets → Nib project (Track 1)
+│   └── nib-sync.js         # Idempotent re-ingest with diff (Track 1)
 ├── ref/          # Agent reference docs (read before building)
-├── starters/     # Copy-paste HTML + JS templates
-└── examples/     # Reference implementations
+├── docs/         # Wiki — human-facing companion to ref/
+├── starters/     # Single-file copy-paste HTML templates
+└── examples/     # Multi-file project templates (clone whole)
 ```
 
 ## Current Phase
 
-Phase 1 (documentation + starters) and Phase 2 (core CSS/JS extraction + consolidation) are complete. Core includes:
+Phases 1 + 2 (documentation, starters, core CSS/JS extraction) are complete. **Phase 3** (eqPartners back-port + spreadsheet bootstrap) is now shipped:
+- **Spreadsheet-driven project bootstrap** — `tools/nib-ingest.js` turns one workbook (xlsx, Google Sheets sharing URL via CSV, or Sheets API with `--auth`) into a complete Nib project (sections, tokens, personas, stories, blueprints, registries). `tools/nib-sync.js` does idempotent re-ingest with diff. Schema in `core/schema/workbook.schema.json`. See `ref/spreadsheet-authoring.md`.
+- **Service blueprint canvas** — React Flow-based editable swimlane canvas (`core/blueprint/`). Overview/Detail toggle. Breadcrumb drill-down through nested blueprints (via `meta:parent` + `childBlueprintId`). Round-trip xlsx export. `examples/service-blueprint/` is the worked example. See `ref/service-blueprint.md`.
+- **Feedback → Issue consolidation** — Worker (`examples/cloudflare-worker/`) now supports `node_id` labels, `/api/nodes/counts` cache, and `/api/card-sort`. Triage tool lifted to `examples/feedback-triage/`. Panel sends `node_id` from `window._wfActiveNodeId`. See `ref/feedback.md`.
+- **Context bar evolution** — `wfCopyDeepLink()` always-on (click current breadcrumb to copy URL); `document.lastModified` timestamp; `core/proto-search.js` opt-in portal header + search widget + Ask AI mode (gated by `WIREFRAME_CONFIG.portalHeader` / `.search`). See `ref/context-bar.md`.
+- **Project templates** — `examples/spreadsheet-bootstrap/`, `service-blueprint/`, `feedback-triage/`, `research-study/` (lifted card-sort), plus existing `deal-registration/` etc. cataloged in `ref/templates.md`.
+
+Phase 2 features (still active):
 - **Tabbed design notes** — 3-tab panel (Context / Design / Technical) with auto-split
 - **normalizeJourneys** — journey data normalization for consistent rendering
 - **detectSurface** — automatic surface detection from page markup
