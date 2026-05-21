@@ -27,6 +27,7 @@
 
   <!-- Generated data — produced by `node tools/nib-ingest.js example.xlsx --out .` -->
   <script src="data/wireframe-config.js"></script>
+  <script src="data/personas.js"></script>
   <script src="data/blueprints/_index.js"></script>
   <script src="data/blueprints/program.js"></script>
   <script src="data/blueprints/deal-reg.js"></script>
@@ -40,6 +41,11 @@
       index: window.NIB_BLUEPRINT_INDEX,
       rootFlowId: 'program',
       adapter: debounced(localStorageAdapter('nib-bp-svc-example')),
+      // ── viewer features (additive, optional) ──────────────────────
+      search: true,         // text search + browser-find nav
+      filterRail: true,     // popover filter rail in the toolbar
+      personaKey: true,     // persona-key raise/knock-back panel
+      personas: window.PERSONAS,   // data-driven persona colours + labels
     });
   </script>
 </body>

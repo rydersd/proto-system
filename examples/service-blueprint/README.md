@@ -24,6 +24,7 @@ python3 -m http.server 8000
 - **Undo/redo** — every operation is undoable. ⌘Z / ⇧⌘Z (or use the toolbar arrows).
 - **Round-trip export** — `Export → XLSX (all flows)` produces a workbook that re-ingests cleanly. Use this to push canvas edits back into the source workbook.
 - **Persistence** — edits auto-save to localStorage under `nib-bp-svc-example::<flowId>`. Clear the storage to reset to the workbook source.
+- **Viewer features (optional)** — this example turns on `search`, `filterRail`, and `personaKey` in `mountCanvas`. Try the toolbar search box (Enter / Shift+Enter to jump between matches), the filter popovers, and the persona-key panel bottom-right (click a persona to raise its cards). Escape clears filters. These are additive — the editor still works exactly as above. See [`docs/Service-Blueprint.md`](../../docs/Service-Blueprint.md) for the full option set.
 
 ## What's deferred to v1.1
 
@@ -51,11 +52,16 @@ examples/service-blueprint/
 
 The runtime files live in `core/blueprint/`:
 
-- `canvas.js` — React Flow wrapper + Toolbar + breadcrumb + Overview panel
-- `node-types.js` — custom React Flow node components
+- `canvas.js` — React Flow wrapper + Toolbar + breadcrumb + Overview panel + viewer wiring
+- `node-types.js` — custom React Flow node components (incl. thumbnail card layout)
 - `layout.js` — BlueprintFlow → React Flow nodes/edges with positions
 - `operations.js` — pure flow transformations (move/rename/add/remove)
 - `history.js` — snapshot-based undo/redo
 - `exporters.js` — JSON / YAML / xlsx round-trip writers
 - `sync-adapter.js` — pluggable persistence (localStorage by default)
+- `search.js` — text search + browser-find navigation helpers (viewer)
+- `filter-rail.js` — filter pipeline + `<details>`-popover filter rail (viewer)
+- `evidence.js` — reusable research-evidence model (viewer; standalone)
+- `thumbnails.js` — 57-SVG UI-archetype thumbnail manifest + `thumb()` (viewer)
+- `thumbnails/` — the 57 thumbnail SVG files
 - `canvas.css` — token-driven styling

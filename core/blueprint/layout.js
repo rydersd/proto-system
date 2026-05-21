@@ -122,6 +122,12 @@ export function computeLayout(flow, viewMode = 'detail') {
         data: {
           sentiment: cell.sentiment || {},
           note: cell.note || '',
+          // Viewer features read these — evidence drives the chip + drawer;
+          // phase / lane label title the drawer. Editor ignores them.
+          evidence: Array.isArray(cell.evidence) ? cell.evidence : [],
+          phase: cell.phase,
+          phaseLabel: (phases.find((p) => p.id === cell.phase) || {}).label || cell.phase,
+          laneLabel: lane.label || lane.id,
         },
       });
     }

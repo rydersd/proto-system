@@ -44,8 +44,25 @@ mountCanvas(container: HTMLElement, options: {
   index: { ids: string[]; tree: TreeNode[] };
   rootFlowId: string;
   adapter?: SyncAdapter;
+
+  // ── optional analytical-viewer features (all default false / 'editor') ──
+  mode?: 'editor' | 'viewer';   // 'viewer' = read-only (no drag/rename/add/undo)
+  search?: boolean;             // text search + browser-find navigation
+  filterRail?: boolean;         // <details>-popover filter rail in the toolbar
+  personaKey?: boolean;         // persona-key raise / knock-back panel
+  personas?: { [id: string]: { label?: string; color?: string } | string };
 });
 ```
+
+The viewer features are **additive and optional** — back-ported from eqPartners' read-only journey viewer. With no viewer options the canvas is the plain editor (drag-relane, inline rename, add/remove, undo/redo, round-trip export, drill-down) — unchanged.
+
+- `search` — node text = label + summary + interaction phrase + persona + status + gap notes; cell text = note + sentiment + evidence. AND of space-separated terms. Non-matches get `is-search-dimmed` (40%); current find match gets `is-search-current` (accent ring). Enter / Shift+Enter step the cursor and pan-zoom (`setCenter`). Helpers in `core/blueprint/search.js`.
+- `filterRail` — Persona / Status / Actor / Initiatives multi-select popovers, a Tier segmented control, a Gaps chip, presets, Reset. Filters dim, never hide. Helpers + the React component factory (`makeFilterRail`) in `core/blueprint/filter-rail.js`.
+- `personaKey` — collapsible legend; clicking a persona raises matching cards (`is-raised`) and knocks others back (`is-knocked-back`, 70%).
+- Two-stage **Escape**: closes an open filter popover; with none open, resets all filters + search.
+- A node with a `thumbnail` key renders a thumbnail interaction card (persona strip → title → summary → inset SVG → core-interaction phrase). 57 SVGs in `core/blueprint/thumbnails/`; manifest + `thumb(name, variant)` in `core/blueprint/thumbnails.js`.
+- A signal-lane cell with an `evidence[]` array (`{ kind, label, source?, sourceUrl? }`) shows an evidence chip and opens an evidence drawer. Reusable helpers — `EVIDENCE_KIND_RANK`, `strongestEvidence`, `evidenceState`, `evidenceChip` — are in the standalone `core/blueprint/evidence.js`.
+- **Persona colours are data-driven** — pass `personas` (e.g. `window.PERSONAS` from `data/personas.js`). No Equinix personas are hardcoded; an unconfigured project gets a generic `--wf-*` token palette.
 
 `SyncAdapter` is `{ load(flowId), save(flowId, flow), clear?(flowId) }` returning Promises. Built-ins:
 
