@@ -279,6 +279,26 @@ function buildContextBar() {
   var file = currentFile();
   var timestamp = formatTimestamp();
 
+  // Recent-changes badge — counts changelog entries < 14 days old.
+  var wfClRecentBadge = '';
+  (function () {
+    var entries = (typeof wfReadChangelog === 'function') ? wfReadChangelog() : [];
+    var RECENT_DAYS = 14;
+    var recent = 0;
+    for (var i = 0; i < entries.length; i++) {
+      var t = new Date(entries[i].date).getTime();
+      if (!isNaN(t) && (Date.now() - t) < RECENT_DAYS * 864e5) recent++;
+    }
+    if (recent > 0) {
+      wfClRecentBadge =
+        '<span class="wf-ctx-changelog-badge" ' +
+        'onclick="wfDnOpen();wfDnSwitchTab(\'changelog\');" ' +
+        'title="' + recent + ' change' + (recent > 1 ? 's' : '') +
+        ' in the last ' + RECENT_DAYS + ' days — click to view">' +
+        recent + ' change' + (recent > 1 ? 's' : '') + '</span>';
+    }
+  })();
+
   var contextBarHTML = (
     '<div class="wf-ctx-bar">' +
       '<div class="wf-ctx-inner">' +
@@ -294,6 +314,7 @@ function buildContextBar() {
         '</div>' +
         '<div class="wf-ctx-right">' +
           '<span class="wf-ctx-timestamp">' + timestamp + '</span>' +
+          wfClRecentBadge +
           '<button class="wf-ctx-btn" id="wf-story-mode-btn" onclick="wfStoryModeToggle()" title="Story mode — guided scenario walkthroughs">📖 Stories</button>' +
           '<button class="wf-ctx-btn" onclick="wfDnToggle()" title="Show notes">📋 Notes</button>' +
           '<button class="wf-ctx-btn wf-ctx-feedback-btn" onclick="wfFbOpen()" title="Send feedback on this page">💬 Feedback</button>' +
@@ -463,12 +484,14 @@ function buildDesignNotesPanel() {
       '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-design" id="wf-dn-tab-btn-design" onclick="wfDnSwitchTab(\'design\')">Design</button>' +
       '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-impl" id="wf-dn-tab-btn-impl" onclick="wfDnSwitchTab(\'impl\')">Technical</button>' +
       '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-reviews" id="wf-dn-tab-btn-reviews" onclick="wfDnSwitchTab(\'reviews\')">Reviews</button>' +
+      '<button class="wf-dn-tab" role="tab" aria-selected="false" aria-controls="wf-dn-tab-changelog" id="wf-dn-tab-btn-changelog" onclick="wfDnSwitchTab(\'changelog\')">Changelog</button>' +
     '</div>' +
     '<div class="wf-dn-body" id="wf-dn-body">' +
       '<div class="wf-dn-tab-content active" id="wf-dn-tab-context" role="tabpanel" aria-labelledby="wf-dn-tab-btn-context"></div>' +
       '<div class="wf-dn-tab-content" id="wf-dn-tab-design" role="tabpanel" aria-labelledby="wf-dn-tab-btn-design"></div>' +
       '<div class="wf-dn-tab-content" id="wf-dn-tab-impl" role="tabpanel" aria-labelledby="wf-dn-tab-btn-impl"></div>' +
       '<div class="wf-dn-tab-content" id="wf-dn-tab-reviews" role="tabpanel" aria-labelledby="wf-dn-tab-btn-reviews"></div>' +
+      '<div class="wf-dn-tab-content" id="wf-dn-tab-changelog" role="tabpanel" aria-labelledby="wf-dn-tab-btn-changelog"></div>' +
     '</div>';
 
   document.body.appendChild(overlay);
@@ -511,6 +534,18 @@ function wfDnToggle() {
   } else {
     wfDnOpen();
   }
+}
+
+/**
+ * Read the optional per-page changelog: a <script id="wf-changelog"
+ * type="application/json"> block holding an array of { date, note }.
+ * Returns [] when absent or malformed.
+ */
+function wfReadChangelog() {
+  var el = document.querySelector('script#wf-changelog[type="application/json"]');
+  if (!el) return [];
+  try { return JSON.parse(el.textContent) || []; }
+  catch (e) { return []; }
 }
 
 /**
@@ -622,6 +657,28 @@ function wfDnOpen() {
   var reviewsTab = document.getElementById('wf-dn-tab-reviews');
   if (reviewsTab) {
     wfReviewPopulateTab(reviewsTab);
+  }
+
+  // Populate Changelog tab — per-page JSON, newest first.
+  var changelogTab = document.getElementById('wf-dn-tab-changelog');
+  if (changelogTab) {
+    var clEntries = wfReadChangelog();
+    if (!clEntries.length) {
+      changelogTab.innerHTML =
+        '<p class="wf-dn-placeholder">No changelog entries for this page.</p>';
+    } else {
+      clEntries.sort(function (a, b) {
+        return String(b.date).localeCompare(String(a.date));
+      });
+      changelogTab.innerHTML = clEntries.map(function (e) {
+        var date = String(e.date || '').replace(/[<>&]/g, '');
+        var note = String(e.note || '').replace(/[<>&]/g, '');
+        return '<div class="wf-dn-changelog-entry">' +
+          '<span class="wf-dn-changelog-date">' + date + '</span>' +
+          '<span class="wf-dn-changelog-note">' + note + '</span>' +
+        '</div>';
+      }).join('');
+    }
   }
 
   panel.classList.add('open');

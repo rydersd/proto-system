@@ -24,12 +24,14 @@ Nib is an agent-consumable wireframe prototyping framework. It provides shared C
 - [[Themes]] — Nib / SLDS / Material / High-Contrast + custom theme builder
 - [[Fidelity-Levels]] — Napkin / Blueprint / Polished
 - [[Confidence-Levels]] — `data-wf-confidence` for per-element certainty
+- [[Evidence]] — `data-wf-evidence`: the prototype as a heatmap of design certainty
 
 ## Authoring pages
 
 - [[Page-Template]] — Required HTML boilerplate
 - [[Page-Blueprint]] — Declarative `PAGE_BLUEPRINT` rendering
 - [[Page-Compose]] — Template-level authoring (SLDS record pages, list views, wizards)
+- [[Decks]] — Scroll-snapping review-presentation decks with SVG export
 - [[Layouts]] — Grid, sidebar, split-view, app-shell recipes
 - [[Design-Notes]] — Per-page notes structure, JTBD, friction points
 
@@ -63,6 +65,7 @@ Nib is an agent-consumable wireframe prototyping framework. It provides shared C
 ## For AI agents
 
 - [[For-Agents]] — How agents read and use this framework
+- [[Agentic-Retrieval]] — Make a large wireframe project AI-navigable in ≤2000 tokens
 - [`ref/_index.md`](../ref/_index.md) — Agent routing table
 
 ## Project updates

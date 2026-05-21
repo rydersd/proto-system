@@ -27,6 +27,8 @@
 | Paper/blueprint features | `components.md` | Paper utility classes, confidence attribute |
 | Declarative page from data | `page-blueprint.md` + surface ref |
 | Compose-format pages | `page-compose.md` + surface ref |
+| Deck / review presentation | `decks.md` |
+| Evidence-driven fidelity (`data-wf-evidence`) | `evidence.md` |
 
 | Building a sitemap page | `project-deliverables.md` |
 | Writing design notes | `design-notes-guide.md` |
@@ -39,6 +41,8 @@
 | Running page diagnostics | `doctor.md` |
 | Global compliance concerns | `compliance-global.md` |
 | Feedback → GitHub issues endpoint | `feedback.md` |
+| Analytics, KPI-card filters, signal bar | load `core/proto-analytics.js` / `proto-kpi-filter.js` / `proto-signals.js` |
+| Making a large project AI-navigable | `docs/Agentic-Retrieval.md` + `tools/nib-seed-topics.js` |
 | Salesforce UX review | `agent-sfdc-ux.md` + `surface-salesforce-rules.md` |
 | Salesforce dev feasibility | `agent-sfdc-dev.md` + `surface-salesforce-rules.md` |
 | Agent installation guide | `agent-install.md` |

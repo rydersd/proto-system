@@ -7,6 +7,7 @@
 - [[New-Project]]
 - [[Philosophy]]
 - [[For-Agents]]
+- [[Agentic-Retrieval]]
 
 **Design system**
 - [[Design-Tokens]]
@@ -16,6 +17,7 @@
 - [[Themes]]
 - [[Fidelity-Levels]]
 - [[Confidence-Levels]]
+- [[Evidence]]
 
 **Authoring**
 - [[Spreadsheet-Authoring]]
@@ -23,6 +25,7 @@
 - [[Page-Template]]
 - [[Page-Blueprint]]
 - [[Page-Compose]]
+- [[Decks]]
 - [[Layouts]]
 - [[Design-Notes]]
 
