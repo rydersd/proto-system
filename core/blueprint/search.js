@@ -117,7 +117,8 @@ export function matchReadout(matchIndex, matchCount) {
  * @param {object} [opts] { zoom?, duration? }
  */
 export function centerOnNode(rfInstance, rfNode, opts = {}) {
-  if (!rfInstance || !rfNode || typeof rfInstance.setCenter !== 'function') return;
+  if (!rfInstance || !rfNode || !rfNode.position ||
+      typeof rfInstance.setCenter !== 'function') return;
   const w = (rfNode.style && rfNode.style.width) || 200;
   const ht = (rfNode.style && rfNode.style.height) || 120;
   rfInstance.setCenter(

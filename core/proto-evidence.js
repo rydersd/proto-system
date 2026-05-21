@@ -23,7 +23,7 @@
  * Opt-in: include the script + core/proto-evidence.css. It self-initialises
  * on DOMContentLoaded and is a no-op on pages with no `data-wf-evidence`.
  *
- * API: window.wfEvidence = { refresh, heatmap, summary, LEVELS }.
+ * API: window.wfEvidence = { refresh, heatmap, summary, flashLevel, LEVELS, ORDER }.
  */
 
 (function () {
@@ -102,6 +102,18 @@
     var source = (el.getAttribute('data-wf-evidence-source') || '').trim();
     var unsourced = SOURCED_LEVELS.indexOf(level) !== -1 && !source;
     el.classList.toggle('wf-ev--unsourced', unsourced);
+
+    // Table-structural and root elements can't host an absolutely-positioned
+    // child reliably (and `position:relative` on them is invalid/ignored), so
+    // skip the position mutation + chip entirely — the border treatment from
+    // the wf-ev classes above still applies.
+    var NO_CHIP_TAGS = ['TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TD', 'TH',
+                        'COL', 'COLGROUP', 'BODY', 'HTML'];
+    if (NO_CHIP_TAGS.indexOf(el.tagName) !== -1) {
+      var staleChip = el.querySelector(':scope > .wf-ev-chip');
+      if (staleChip) staleChip.remove();
+      return { el: el, level: level, source: source, unsourced: unsourced };
+    }
 
     // Containing block for the absolutely-positioned chip.
     if (getComputedStyle(el).position === 'static') {

@@ -88,7 +88,7 @@
   border: 1px solid var(--wf-line);
   border-radius: 4px;
   min-width: 220px;
-  box-shadow: 0 4px 12px rgba(30, 42, 58, 0.08);
+  box-shadow: 0 4px 12px rgba(26, 27, 30, 0.08);
   display: none;
   flex-direction: column;
   z-index: 10;
@@ -276,7 +276,7 @@
   cursor: grab;
   font-size: 12px;
 }
-.nib-bp-card:hover { border-color: var(--wf-accent); box-shadow: 0 2px 6px rgba(30, 42, 58, 0.08); }
+.nib-bp-card:hover { border-color: var(--wf-accent); box-shadow: 0 2px 6px rgba(26, 27, 30, 0.08); }
 .nib-bp-card.is-selected { box-shadow: 0 0 0 2px var(--wf-accent); }
 .nib-bp-card.is-live    { border-left-color: var(--wf-green, #45785a); }
 .nib-bp-card.is-future  { border-left-color: var(--wf-purple, #6b5b8a); }
@@ -375,10 +375,10 @@
 .nib-bp-card.is-raised:hover {
   transform: translateY(-13px);
   box-shadow:
-    0 3px 6px   rgba(30, 42, 58, 0.11),
-    0 10px 18px rgba(30, 42, 58, 0.11),
-    0 22px 38px rgba(30, 42, 58, 0.09),
-    0 38px 66px rgba(30, 42, 58, 0.06);
+    0 3px 6px   rgba(26, 27, 30, 0.11),
+    0 10px 18px rgba(26, 27, 30, 0.11),
+    0 22px 38px rgba(26, 27, 30, 0.09),
+    0 38px 66px rgba(26, 27, 30, 0.06);
 }
 .nib-bp-card.is-knocked-back { opacity: 0.7; }
 
@@ -422,7 +422,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.12s ease;
-  text-shadow: 0 1px 2px rgba(30, 42, 58, 0.35);
+  text-shadow: 0 1px 2px rgba(26, 27, 30, 0.35);
   z-index: 2;
 }
 .nib-bp-card.has-thumb:hover .nib-bp-card-personastrip-label { opacity: 1; }
@@ -596,7 +596,7 @@
   background: #fff;
   border: 1px solid var(--wf-line, #c4c5c7);
   border-radius: 4px;
-  box-shadow: 0 6px 18px rgba(30, 42, 58, 0.12);
+  box-shadow: 0 6px 18px rgba(26, 27, 30, 0.12);
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -725,7 +725,7 @@
   background: rgba(255, 255, 255, 0.97);
   border: 1px solid var(--wf-line, #c4c5c7);
   border-radius: 6px;
-  box-shadow: 0 2px 10px rgba(30, 42, 58, 0.14);
+  box-shadow: 0 2px 10px rgba(26, 27, 30, 0.14);
   overflow: hidden;
 }
 .nib-bp-legend-toggle {
@@ -781,7 +781,7 @@
   height: 13px;
   flex-shrink: 0;
   border-radius: 2px;
-  border: 1px solid rgba(30, 42, 58, 0.12);
+  border: 1px solid rgba(26, 27, 30, 0.12);
   background-color: var(--persona-color, var(--wf-muted, #646567));
 }
 
@@ -789,7 +789,7 @@
 .nib-bp-csat-drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 42, 58, 0.35);
+  background: rgba(26, 27, 30, 0.35);
   z-index: 9100;
   display: flex;
   align-items: center;
@@ -799,7 +799,7 @@
 .nib-bp-csat-drawer {
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(30, 42, 58, 0.3);
+  box-shadow: 0 10px 40px rgba(26, 27, 30, 0.3);
   max-width: 520px;
   width: 100%;
   max-height: calc(100vh - 64px);

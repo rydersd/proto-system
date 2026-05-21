@@ -350,14 +350,22 @@ html.wireframe[data-wf-fidelity="polished"]::after {
    canonical cards keep their superior randomized seeds. Per-element opt-out:
    add [data-fidelity-skip] to any element. Back-ported from eqPartners
    wf-fidelity.css, rewired from var(--wf-wobble-filter) (which is `none` in
-   Nib napkin) to url(#wf-line-wobble) so the coverage actually renders. */
+   Nib napkin) to url(#wf-line-wobble) so the coverage actually renders.
+
+   Type roughening is NOT applied per-element: a container carrying `filter`
+   already rasterizes/roughens all of its descendant text in one pass, so a
+   per-p/li/heading filter would be redundant (and applying an SVG filter to
+   every paragraph on a page is a real performance hazard). The container and
+   table blocks below carry the coverage. */
 
 /* Containers — broad attribute coverage. Excludes the four canonical card
-   classes (handled above), badges/chips (too small for a wobble radius), and
+   classes (handled above), badges/chips (too small for a wobble radius),
    .slide / .slide-pane (the deck presentation surface — see proto-deck.css —
-   which must stay crisp and is expensive to filter on scroll-snap pages). */
+   which must stay crisp and is expensive to filter on scroll-snap pages), and
+   the fixed-position framework chrome panels (.wf-dn-panel / .wf-settings-panel)
+   which must stay crisp. */
 html.wireframe[data-wf-fidelity="napkin"] [class*="card"]:not([data-fidelity-skip]):not([class*="badge"]):not([class*="chip"]):not(.wf-card):not(.ds-card):not(.ds-kpi-card):not(.sfdc-card),
-html.wireframe[data-wf-fidelity="napkin"] [class*="panel"]:not([data-fidelity-skip]),
+html.wireframe[data-wf-fidelity="napkin"] [class*="panel"]:not([data-fidelity-skip]):not(.wf-dn-panel):not(.wf-settings-panel),
 html.wireframe[data-wf-fidelity="napkin"] [class*="-box"]:not([data-fidelity-skip]),
 html.wireframe[data-wf-fidelity="napkin"] [class$="box"]:not([data-fidelity-skip]),
 html.wireframe[data-wf-fidelity="napkin"] [class*="tile"]:not([data-fidelity-skip]),
@@ -366,23 +374,6 @@ html.wireframe[data-wf-fidelity="napkin"] [class*="-frame"]:not([data-fidelity-s
 html.wireframe[data-wf-fidelity="napkin"] [class*="-pane"]:not([data-fidelity-skip]):not(.slide):not(.slide-pane) {
   border-radius: var(--wf-wobble-radius);
   filter: url(#wf-line-wobble);
-}
-
-/* Roughened type — headings, body copy, list items, quotes. Lighter wobble
-   for body text; heavier wobble for display h1s. */
-html.wireframe[data-wf-fidelity="napkin"] h2:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] h3:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] h4:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] h5:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] h6:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] p:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] li:not([data-fidelity-skip]),
-html.wireframe[data-wf-fidelity="napkin"] blockquote:not([data-fidelity-skip]) {
-  filter: url(#wf-line-wobble);
-}
-
-html.wireframe[data-wf-fidelity="napkin"] h1:not([data-fidelity-skip]) {
-  filter: url(#wf-heavy-wobble);
 }
 
 /* Tables — wobble at the <table> level only. The filter rasterizes the whole

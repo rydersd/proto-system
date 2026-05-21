@@ -109,6 +109,13 @@
 
 /* ── Horizontal Stepper ───────────────────────────────────────────── */
 .ds-stepper { display: flex; align-items: flex-start; margin-bottom: 32px; }
+/* Reset — base `.ds-step` (internal-ds.css) is a bordered, flex:1, padded
+   step tab. Inside .ds-stepper it's only a node wrapper, so neutralize the
+   inherited border / flex / padding / background here. */
+.ds-stepper .ds-step {
+  flex: none; border: 0; padding: 0; background: transparent;
+  text-align: left; font-size: inherit; font-weight: 400; position: static;
+}
 .ds-step-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--wf-surface); border: 2px solid var(--wf-line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--wf-muted); flex-shrink: 0; }
 .ds-step.current .ds-step-circle { background: var(--wf-accent); color: var(--wf-white); border-color: var(--wf-accent); }
 .ds-step.current { color: var(--wf-ink); font-weight: 600; }

@@ -671,8 +671,8 @@ function wfDnOpen() {
         return String(b.date).localeCompare(String(a.date));
       });
       changelogTab.innerHTML = clEntries.map(function (e) {
-        var date = String(e.date || '').replace(/[<>&]/g, '');
-        var note = String(e.note || '').replace(/[<>&]/g, '');
+        var date = String(e.date || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        var note = String(e.note || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         return '<div class="wf-dn-changelog-entry">' +
           '<span class="wf-dn-changelog-date">' + date + '</span>' +
           '<span class="wf-dn-changelog-note">' + note + '</span>' +

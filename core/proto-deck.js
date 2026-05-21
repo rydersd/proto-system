@@ -37,14 +37,20 @@
 
   // Auto-inject slide-header + section watermark on every non-cover/non-closing slide,
   // so per-deck HTML stays slim (data-num + data-title + body content only).
-  const total = slides.length;
-  slides.forEach((s, i) => {
+  // Section numbering is computed from the content slides only, so decks that
+  // aren't shaped exactly cover+content+closing still number correctly.
+  const contentSlides = Array.from(slides).filter(
+    s => !s.classList.contains('cover') && !s.classList.contains('closing'));
+  const contentTotal = contentSlides.length;
+  slides.forEach((s) => {
     if (s.classList.contains('cover') || s.classList.contains('closing')) return;
     // In fixed-canvas mode the chrome lives inside the scaled stage.
     const host = s.querySelector('.slide-stage') || s;
     // Skip if author already supplied a slide-header (allow override)
     if (host.querySelector('.slide-header')) return;
-    const num = s.dataset.num || String(i).padStart(2, '0');
+    // 1-based position of this content slide within the content slides.
+    const contentIdx = contentSlides.indexOf(s) + 1;
+    const num = s.dataset.num || String(contentIdx).padStart(2, '0');
     const title = s.dataset.title || '';
 
     const watermark = document.createElement('div');
@@ -59,10 +65,10 @@
       : '';
     header.innerHTML =
       '<div class="left">' +
-        '<span class="pill">' + num + ' / ' + String(total - 2).padStart(2, '0') + '</span>' +
+        '<span class="pill">' + num + ' / ' + String(contentTotal).padStart(2, '0') + '</span>' +
         '<span class="dim">' + title + '</span>' +
       '</div>' +
-      '<div class="right">Section ' + (i) + ' of ' + (total - 2) + homeLink + '</div>';
+      '<div class="right">Section ' + contentIdx + ' of ' + contentTotal + homeLink + '</div>';
 
     host.insertBefore(header, host.firstChild);
     host.insertBefore(watermark, host.firstChild);
@@ -96,6 +102,10 @@
 
   // Keyboard navigation — arrow keys, page up/down, space, home/end
   function currentIdx() {
+    // Prefer the IntersectionObserver-driven active dot — offsetTop/scrollY
+    // are pre-transform and so wrong when a .slides--fit deck is CSS-scaled.
+    const activeDot = dots.findIndex(d => d.classList.contains('active'));
+    if (activeDot !== -1) return activeDot;
     const top = window.scrollY + window.innerHeight / 2;
     let idx = 0;
     slides.forEach((s, i) => { if (s.offsetTop <= top) idx = i; });
@@ -106,7 +116,8 @@
     slides[idx].scrollIntoView({ behavior: 'smooth' });
   }
   document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' ||
+        e.target.tagName === 'SELECT' || e.target.isContentEditable) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
       e.preventDefault(); jump(currentIdx() + 1);
     } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
@@ -128,7 +139,8 @@
   // ============================================================
   if (document.querySelector('.slides--fit')) {
     const CW = 1600, CH = 900;
-    const barH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--deck-bar-h'), 10) || 36;
+    let barH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--deck-bar-h'), 10);
+    if (isNaN(barH)) barH = 36;
     const setScale = () => {
       const scale = Math.min(window.innerWidth / CW, (window.innerHeight - barH) / CH);
       document.documentElement.style.setProperty('--deck-scale', scale.toFixed(4));
@@ -167,6 +179,22 @@
     // Inline all <style> blocks + fetched stylesheet contents so the SVG renders standalone
     const styleParts = [];
     document.querySelectorAll('style').forEach(s => styleParts.push(s.textContent));
+    let sheetsInlined = false;
+    // Fallback: read a stylesheet's rules straight from document.styleSheets
+    // (cross-origin sheets throw on .cssRules — swallow those).
+    const readSheetRules = (href) => {
+      for (let i = 0; i < document.styleSheets.length; i++) {
+        const ss = document.styleSheets[i];
+        if (ss.href !== href) continue;
+        try {
+          let css = '';
+          const rules = ss.cssRules;
+          for (let j = 0; j < rules.length; j++) css += rules[j].cssText + '\n';
+          return css;
+        } catch (_) { return ''; }
+      }
+      return '';
+    };
     const sheetLinks = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
     await Promise.all(sheetLinks.map(async link => {
       try {
@@ -181,8 +209,13 @@
             catch (_) { return m; }
           });
           styleParts.push(css);
+          sheetsInlined = true;
         }
-      } catch (_) { /* ignore */ }
+      } catch (_) {
+        // fetch() fails on file:// — read the parsed rules instead.
+        const css = readSheetRules(link.href);
+        if (css) { styleParts.push(css); sheetsInlined = true; }
+      }
     }));
     const allCSS = styleParts.join('\n');
 
@@ -211,7 +244,11 @@
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 1500);
 
-    showToast('Downloaded ' + fname);
+    if (sheetLinks.length && !sheetsInlined) {
+      showToast('Export incomplete — serve the deck over http:// for full styling');
+    } else {
+      showToast('Downloaded ' + fname);
+    }
   }
 
   // Tiny toast for export feedback

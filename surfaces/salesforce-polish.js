@@ -123,9 +123,9 @@
       var items = panel.querySelectorAll('.sfdc-feed-item');
       var anyVisible = false;
       for (var j = 0; j < items.length; j++) {
-        // Filter logic uses inline `display: none` to hide. Anything not
-        // explicitly hidden counts as visible.
-        if (items[j].style.display !== 'none') { anyVisible = true; break; }
+        // Filter logic may hide items via a CSS class (not just inline
+        // style), so test the computed display rather than the inline one.
+        if (getComputedStyle(items[j]).display !== 'none') { anyVisible = true; break; }
       }
       var hasItems = items.length > 0;
       panel.classList.toggle('is-empty', hasItems && !anyVisible);
