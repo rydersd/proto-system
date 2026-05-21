@@ -5,7 +5,7 @@
   top: 0;
   z-index: 1000;
   background: #fff;
-  border-bottom: 1px solid var(--wf-line, #b0bdd0);
+  border-bottom: 1px solid var(--wf-line, #c4c5c7);
   font-family: var(--wf-font);
 }
 .wf-header-inner {
@@ -25,7 +25,7 @@
 .wf-header-logo { height: 24px; width: auto; }
 .wf-header-title {
   font-weight: 700;
-  color: var(--wf-ink, #1e2a3a);
+  color: var(--wf-ink, #27282a);
   font-size: 14px;
 }
 .wf-header-nav {
@@ -34,7 +34,7 @@
   flex: 1;
 }
 .wf-header-nav-link {
-  color: var(--wf-text, #3b4f68);
+  color: var(--wf-text, #4a4c4e);
   text-decoration: none;
   font-size: 13px;
   padding: 4px 0;
